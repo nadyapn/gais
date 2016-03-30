@@ -14,13 +14,16 @@ class EmployeeTable extends Migration
     {
         //
         Schema::create('employee', function (Blueprint $table) {
-            $table->string('idemployee')->unique();
+            $table->string('idemployee');
             $table->string('name');
             $table->string('email');
             $table->string('password');
             $table->string('division');
             $table->string('postition');
             $table->string('role');
+            $table->string('supervisor');
+            $table->primary('idemployee');
+            $table->foreign('supervisor')->references('idemployee')->on('employee')->onDelete('restrict')->onUpdate('cascade');
         });
     }
 
