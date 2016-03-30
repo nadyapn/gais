@@ -14,7 +14,7 @@ class EmployeeTable extends Migration
     {
         //
         Schema::create('employee', function (Blueprint $table) {
-            $table->string('idemployee');
+            $table->string('id_employee');
             $table->string('name');
             $table->string('email');
             $table->string('password');
@@ -22,8 +22,8 @@ class EmployeeTable extends Migration
             $table->string('postition');
             $table->string('role');
             $table->string('supervisor');
-            $table->primary('idemployee');
-            $table->foreign('supervisor')->references('idemployee')->on('employee')->onDelete('restrict')->onUpdate('cascade');
+            $table->primary('id_employee');
+            $table->foreign('supervisor')->references('id_employee')->on('employee')->onDelete('restrict')->onUpdate('cascade');
         });
     }
 
