@@ -1,0 +1,12 @@
+diff a/database/migrations/2016_03_30_114336_employeeTable.php b/database/migrations/2016_03_30_114336_employeeTable.php	(rejected hunks)
+@@ -22,8 +22,8 @@
+             $table->string('postition');
+             $table->string('role');
+             $table->string('supervisor');
+-            $table->primary('idemployee');
+-            $table->foreign('supervisor')->references('idemployee')->on('employee')->onDelete('restrict')->onUpdate('cascade');
++            $table->primary('id_employee');
++            $table->foreign('supervisor')->references('id_employee')->on('employee')->onDelete('restrict')->onUpdate('cascade');
+         });
+     }
+ 

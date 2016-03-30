@@ -22,8 +22,8 @@ class EmployeeTable extends Migration
             $table->string('postition');
             $table->string('role');
             $table->string('supervisor');
-            $table->primary('id_employee');
-            $table->foreign('supervisor')->references('id_employee')->on('employee')->onDelete('restrict')->onUpdate('cascade');
+            $table->primary('idemployee');
+            $table->foreign('supervisor')->references('idemployee')->on('employee')->onDelete('restrict')->onUpdate('cascade');
         });
     }
 

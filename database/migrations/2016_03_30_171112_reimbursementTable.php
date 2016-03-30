@@ -33,5 +33,6 @@ class ReimbursementTable extends Migration
     public function down()
     {
         //
+        Schema::drop('reimbursement');
     }
 }
