@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class ReimbursementTable extends Migration
+class OvertimeTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,18 +13,13 @@ class ReimbursementTable extends Migration
     public function up()
     {
         //
-        Schema::create('reimbursement', function (Blueprint $table) {
+        Schema::create('overtime', function (Blueprint $table) {
             $table->string('selfservice_id', 30);
             $table->timestamp('date');
-            $table->binary('photo');
-            $table->string('category',30);
-            $table->text('business_purpose');
-            $table->integer('cost');
-            $table->tinyInteger('payment');
-            $table->string('project_id', 30);
+            $table->time('time_start');
+            $table->time('time_end');
             $table->primary('selfservice_id');
             $table->foreign('selfservice_id')->references('kodeSS')->on('selfservice')->onDelete('restrict')->onUpdate('cascade');
-            $table->foreign('project_id')->references('id')->on('project')->onDelete('restrict')->onUpdate('cascade');
         });
     }
 
@@ -36,6 +31,6 @@ class ReimbursementTable extends Migration
     public function down()
     {
         //
-        Schema::drop('reimbursement');
+        Schema::drop('overtime');
     }
 }
