@@ -12,7 +12,6 @@ class EmployeeTable extends Migration
      */
     public function up()
     {
-        //
         Schema::create('employee', function (Blueprint $table) {
             $table->string('id_employee', 30);
             $table->string('name', 30);
