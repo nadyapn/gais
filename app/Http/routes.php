@@ -11,8 +11,20 @@
 |
 */
 
-/**Route::get('/', function () {
+Route::get('/', function () {
     return view('welcome');
-}); */
+});
 
-Route::get('/','WelcomeController@index');
+// Reimbursement
+Route::get('/formReimbursement', 'SelfServiceController@formReimbursement');
+Route::post('/addReimbursement', 'SelfServiceController@addReimbursement');
+Route::get('/addReimbursement', 'SelfServiceController@addReimbursementFbd');
+
+// Paid Leave
+Route::get('/formPaidLeave', 'SelfServiceController@formPaidLeave');
+
+// Overtime
+Route::get('/formOvertime', 'SelfServiceController@formOvertime');
+
+// Detail
+Route::get('/getDetail/{selfservice_id}', 'SelfServiceController@getDetail');
