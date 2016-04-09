@@ -11,6 +11,13 @@
 |
 */
 
-Route::get('/', function () {
+/*Route::get('/', function () {
     return view('welcome');
-});
+});*/
+
+Route::get('/','UserController@index');
+Route::post('/dologin','UserController@login');
+Route::get('/dologout', 'UserController@logout');
+
+//Route::get('/logout','UserController@login');
+//Route::post('/logout','UserController@logout');
