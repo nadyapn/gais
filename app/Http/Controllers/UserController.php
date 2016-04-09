@@ -19,7 +19,7 @@ class UserController extends Controller
         $nama= DB::table('employee')->where('email','=',$request->email)->value('name');
         
         if($user===null){
-            echo "tidak ada";
+            echo "Maaf kamu belum terdaftar tau";
             die;
         }
         else
@@ -30,7 +30,7 @@ class UserController extends Controller
         $_SESSION['role']=$user->role;
         
         if($_SESSION['role']==='Non-Admin'){//cek apakah user admin atau bukan
-            return view('/non-admin'); // kalau user adalah non-admin ,masuk ke halaman non-admin, halaman non-admin nya belom dibikin
+            return view('/nonadmin'); // kalau user adalah non-admin ,masuk ke halaman non-admin, halaman non-admin nya belom dibikin
 
         }
         else{
