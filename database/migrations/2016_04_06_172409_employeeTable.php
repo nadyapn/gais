@@ -23,7 +23,7 @@ class EmployeeTable extends Migration
             $table->string('supervisor', 30)->nullable();
             $table->primary('id_employee');
             $table->unique('email');
-            $table->foreign('supervisor')->references('id_employee')->on('employee')->onDelete('restrict')->onUpdate('cascade');
+            $table->foreign('supervisor')->references('id_employee')->on('employee')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 

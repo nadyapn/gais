@@ -22,8 +22,8 @@ class ReimbursementTable extends Migration
             $table->integer('cost');
             $table->tinyInteger('payment');
             $table->string('project_id', 30)->nullable();
-            $table->foreign('selfservice_id')->references('kodeSS')->on('selfservice')->onDelete('restrict')->onUpdate('cascade');
-            $table->foreign('project_id')->references('id')->on('project')->onDelete('restrict')->onUpdate('cascade');
+            $table->foreign('selfservice_id')->references('kodeSS')->on('selfservice')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('project_id')->references('id')->on('project')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 

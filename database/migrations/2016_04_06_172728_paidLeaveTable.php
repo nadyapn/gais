@@ -19,7 +19,7 @@ class PaidLeaveTable extends Migration
             $table->integer('period_of_leave');
             $table->string('category',30);
             $table->integer('total_leave');
-            $table->foreign('selfservice_id')->references('kodeSS')->on('selfservice')->onDelete('restrict')->onUpdate('cascade');
+            $table->foreign('selfservice_id')->references('kodeSS')->on('selfservice')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 

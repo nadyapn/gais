@@ -18,7 +18,7 @@ class OvertimeTable extends Migration
             $table->date('date');
             $table->time('time_start');
             $table->time('time_end');
-            $table->foreign('selfservice_id')->references('kodeSS')->on('selfservice')->onDelete('restrict')->onUpdate('cascade');
+            $table->foreign('selfservice_id')->references('kodeSS')->on('selfservice')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 

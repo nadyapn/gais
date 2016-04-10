@@ -20,8 +20,8 @@ class ObServiceTable extends Migration
             $table->text('detail');
             $table->string('employee_id',30);
             $table->string('ob_id',30);
-            $table->foreign('employee_id')->references('id_employee')->on('employee')->onDelete('restrict')->onUpdate('cascade');
-            $table->foreign('ob_id')->references('id_employee')->on('employee')->onDelete('restrict')->onUpdate('cascade');
+            $table->foreign('employee_id')->references('id_employee')->on('employee')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('ob_id')->references('id_employee')->on('employee')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 

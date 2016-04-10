@@ -20,7 +20,7 @@ class SelfServiceTable extends Migration
             $table->timestamp('approval_date');
             $table->text('description');
             $table->tinyInteger('status');
-            $table->foreign('employee_id')->references('id_employee')->on('employee')->onDelete('restrict')->onUpdate('cascade');
+            $table->foreign('employee_id')->references('id_employee')->on('employee')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 

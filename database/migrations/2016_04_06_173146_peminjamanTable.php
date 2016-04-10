@@ -23,7 +23,7 @@ class PeminjamanTable extends Migration
             $table->string('employee_id', 30);
             $table->string('facilities_id', 30);
             $table->primary(['facilities_id','kodePinjam']);
-            $table->foreign('employee_id')->references('id_employee')->on('employee')->onDelete('restrict')->onUpdate('cascade');
+            $table->foreign('employee_id')->references('id_employee')->on('employee')->onDelete('cascade')->onUpdate('cascade');
             $table->foreign('facilities_id')->references('kode')->on('facilities')->onDelete('cascade')->onUpdate('cascade');
         });
     }

@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class PaidLeave extends Model extends SelfService
+class PaidLeave extends Model
 {
     //
     protected $table = 'paidLeave';
