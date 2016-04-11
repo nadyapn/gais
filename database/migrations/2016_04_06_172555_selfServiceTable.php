@@ -33,6 +33,6 @@ class SelfServiceTable extends Migration
     public function down()
     {
         //
-         Schema::drop('selfservice');
+        Schema::drop('selfservice');
     }
 }
