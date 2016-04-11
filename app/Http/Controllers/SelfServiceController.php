@@ -159,6 +159,11 @@ class SelfServiceController extends Controller
         return \View::make('selfservice/getDetail')->with(compact('ss'))->with(compact('rm'))->with(compact('ot'))->with(compact('pl'));
     }
 
+    // coba doang
+    function getDetailTemplate() {
+        return \View::make('selfservice/getDetailTemplate');
+    }
+
     // get detail for supervisor (self service)
     function getReqForSupervisor() {
         $ss = DB::table('selfservice')
