@@ -65,8 +65,12 @@
 						
 						@if($rm->status == 0) 
 							Status : Not approved yet by Supervisor 
-						@else	
+						@elseif ($rm->status == 1 )	
 							Status : Approved by Supervisor
+						@elseif ($rm->status == 2)
+							Status : Approved by Business Unit
+						@elseif ($rm->status == -1)
+							Status : Deleted by Employee
 						@endif<br/>
 
 						Request Date : {{$ss->request_date}}<br/>
@@ -82,9 +86,13 @@
 
 						@if($pl->status == 0) 
 							Status : Not approved yet by Supervisor 
-						@else	
+						@elseif ($pl->status == 1 )	
 							Status : Approved by Supervisor
-						@endif
+						@elseif ($pl->status == 2)
+							Status : Approved by HR
+						@elseif ($pl->status == -1)
+							Status : Deleted by Employee
+						@endif<br/>
 
 						Request Date : {{$ss->request_date}}<br/>
 					@elseif ($ot != "")
@@ -96,8 +104,12 @@
 
 						@if($ot->status == 0) 
 							Status : Not approved yet by Supervisor 
-						@else	
+						@elseif ($ot->status == 1 )	
 							Status : Approved by Supervisor
+						@elseif ($ot->status == 2)
+							Status : Approved by Business Unit
+						@elseif ($ot->status == -1)
+							Status : Deleted by Employee
 						@endif<br/>
 
 						Request Date : {{$ss->request_date}}<br/>

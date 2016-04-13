@@ -33,7 +33,7 @@
 						<ul class="sub-menu collapse" id="myHistory">
 							<li data-toggle="collapse" data-target="#Employee-Self-Service2"><a href="#">Employee Self-Service
 								<ul class="sub-menu collapse" id="Employee-Self-Service2">
-									<li><a href="{{url('/getLogReimburse')}}">Reimburse</a></li>		
+									<li><a href="{{url('/getLogReimbursement')}}">Reimburse</a></li>		
 									<li><a href="{{url('/getLogPaidLeave')}}">Paid Leave</a></li>
 									<li><a href="{{url('/getLogOvertime')}}">Overtime</a></li>
 								</ul>
@@ -60,15 +60,15 @@
 							Employee ID: {{$e->employee_id}}<br/>
 							Name : {{$e->name}}<br/>
 							
-							@if ($e->status == 0)
-									Status : Not approved yet by Supervisor <br/>
-							@elseif ($e->status == 1)
-									Status : Approved by Supervisor <br/>
+							@if($e->status == 0) 
+								Status : Not approved yet by Supervisor 
+							@elseif ($e->status == 1 )	
+								Status : Approved by Supervisor
 							@elseif ($e->status == 2)
-									Status : Approved by HR <br/>
-							@elseif ($e->status == 3)
-									Status : Approved by Business Unit <br/>
-							@endif
+								Status : Approved by HR
+							@elseif ($e->status == -1)
+								Status : Deleted by Employee
+							@endif<br/>
 					 
 						@endforeach
 					</table>

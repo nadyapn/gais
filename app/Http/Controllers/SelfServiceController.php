@@ -277,6 +277,7 @@ class SelfServiceController extends Controller
             ->join('selfservice','reimbursement.selfservice_id','=','selfservice.kodeSS')
             ->join('employee','selfservice.employee_id','=','employee.id_employee')
             ->where('id_employee',$id_employee)
+            ->where('status','>=','0')
             ->get();
 
         return \View::make('selfservice/getMyReimbursement')->with(compact('rm'));
@@ -288,6 +289,7 @@ class SelfServiceController extends Controller
             ->join('selfservice','paidLeave.selfservice_id','=','selfservice.kodeSS')
             ->join('employee','selfservice.employee_id','=','employee.id_employee')
             ->where('id_employee',$id_employee)
+            ->where('status','>=','0')
             ->get();
 
         return \View::make('selfservice/getMyPaidLeave')->with(compact('pl'));
@@ -299,9 +301,64 @@ class SelfServiceController extends Controller
             ->join('selfservice','overtime.selfservice_id','=','selfservice.kodeSS')
             ->join('employee','selfservice.employee_id','=','employee.id_employee')
             ->where('id_employee',$id_employee)
+            ->where('status','>=','0')
             ->get();
 
         return \View::make('selfservice/getMyOvertime')->with(compact('ot'));
+    }
+
+    function updateReimbursement($kodeSS) {
+        $selfservice = \App\SelfService::where('kodeSS',$kodeSS)->first();
+        $reimbursement = \App\Reimbursement::where('selfservice_id',$kodeSS)->first();
+        return \View::make('selfservice/updateReimbursement')->with(compact('selfservice'))->with(compact('reimbursement'));
+    }
+
+    function updateReimbursementPost($kodeSS) {
+        $businesspurpose = \Request::input('businesspurpose');
+        $category = \Request::input('category');
+        $date = \Request::input('dateRem');
+        $description = \Request::input('descriptionRem');
+        $cost = \Request::input('cost'); 
+        
+        //$user = \App\User::where("id", "=", $id)->first();
+
+        $selfservice = \App\SelfService::where('kodeSS',$kodeSS)->first();
+        $selfservice->description = $description;
+        $mydate = Carbon::now();
+        $selfservice->request_date = $mydate;
+        $selfservice->approval_date = $mydate;
+        $selfservice->status = 0;
+        $selfservice->employee_id = '12345'; // harusnya diganti session
+
+        $reimbursement = \App\Reimbursement::where('selfservice_id',$kodeSS)->first();
+        $reimbursement->business_purpose = $businesspurpose;
+        $reimbursement->category = $category;
+        $reimbursement->date = $date;
+        $reimbursement->cost = $cost;
+        $reimbursement->payment = 0;
+
+        $selfservice->save();
+        $kodeSS = DB::table('selfservice')->where('request_date', $mydate)->value('kodeSS');
+
+        if (\Request::hasFile('foto')) {
+            if (\Request::file('foto')->isValid()) {
+                $extension = \Request::file('foto')->getClientOriginalExtension();
+                $foto = $kodeSS.".".$extension;
+
+                \Request::file('foto')->move('./foto', $foto);
+                //\Request::file('logo')->move(base_path().'/logo', $logo);
+
+                $reimbursement->photo = $foto;
+            }
+        }
+        
+        if($selfservice->save()) {
+            $reimbursement->selfservice_id = $kodeSS;
+            if ($reimbursement->save()) {
+                return "berhasil";
+            }
+        }
+
     }
 
 }

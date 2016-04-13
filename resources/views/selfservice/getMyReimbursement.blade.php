@@ -60,15 +60,15 @@
 					@foreach($rm as $e)
 						Kode : {{$e->kodeSS}}<br/>
 						
-						@if ($e->status == 0)
-								Status : Not approved yet by Supervisor <br/>
-						@elseif ($e->status == 1)
-								Status : Approved by Supervisor <br/>
+						@if($e->status == 0) 
+							Status : Not approved yet by Supervisor 
+						@elseif ($e->status == 1 )	
+							Status : Approved by Supervisor
 						@elseif ($e->status == 2)
-								Status : Approved by HR <br/>
-						@elseif ($e->status == 3)
-								Status : Approved by Business Unit <br/>
-						@endif
+							Status : Approved by Business Unit
+						@elseif ($e->status == -1)
+							Status : Deleted by Employee
+						@endif<br/>
 				 
 					@endforeach
 				</table>

@@ -46,7 +46,7 @@ Route::post('/addOvertime', 'SelfServiceController@addOvertime');
 Route::get('/addOvertime', 'SelfServiceController@addOvertimeFbd');
 
 // Read Detail
-Route::get('/getDetail/{selfservice_id}', 'SelfServiceController@getDetail');
+Route::get('/getDetail/{kodeSS}', 'SelfServiceController@getDetail');
 Route::get('/getDetailTemplate', 'SelfServiceController@getDetailTemplate');
 Route::get('/getReqForSupervisor', 'SelfServiceController@getReqForSupervisor');
 Route::get('/getReqForHR', 'SelfServiceController@getReqForHR');
@@ -58,31 +58,6 @@ Route::get('/getMyReimbursement', 'SelfServiceController@getMyReimbursement');
 Route::get('/getMyPaidLeave', 'SelfServiceController@getMyPaidLeave');
 Route::get('/getMyOvertime', 'SelfServiceController@getMyOvertime');
 
-
-
-//punya ariq
-
-Route::get('/viewReimburse','Homepage@viewReimburse');
-
-Route::get('/viewPaidLeave','Homepage@viewPaidLeave');
-
-Route::get('/viewOvertime','Homepage@viewOvertime');
-
-//Route::get('/viewDetailsReimburse','Homepage@viewDetailsReimburse');
-
-//Route::get('/viewDetailsPaidLeave','Homepage@viewDetailsPaidLeave');
-
-//Route::get('/viewDetailsOvertime','Homepage@viewDetailsOvertime');
-
-//Route::get('/createReimburse','Homepage@createReimburse');
-
-//Route::get('/createPaidLeave','Homepage@createPaidLeave');
-
-//Route::get('/createOvertime','Homepage@createOvertime');
-
-
-//Route::get('/adminViewReimburse','Homepage@adminViewReimburse');
-
-//Route::get('/adminViewPaidLeave','Homepage@adminViewPaidLeave');
-
-//Route::get('/adminViewOvertime','Homepage@adminViewOvertime');
+// update
+Route::get('/updateReimbursement/{kodeSS}', 'SelfServiceController@updateReimbursement');
+Route::post('/updateReimbursement/{kodeSS}', 'SelfServiceController@updateReimbursementPost');
