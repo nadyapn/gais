@@ -11,6 +11,7 @@
 |
 */
 
+<<<<<<< HEAD
 /**Route::get('/', function () {
     return view('welcome');
 }); */
@@ -92,3 +93,8 @@ Route::get('/viewOvertime','Homepage@viewOvertime');
 //Route::get('/adminViewPaidLeave','Homepage@adminViewPaidLeave');
 
 //Route::get('/adminViewOvertime','Homepage@adminViewOvertime');
+=======
+Route::get('/', function () {
+    return view('welcome');
+});
+>>>>>>> f717c27a566d6246a77f0362ac191395495ef0dc

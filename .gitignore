@@ -1,0 +1,15 @@
+/vendor
+/node_modules
+/public/storage
+Homestead.yaml
+Homestead.json
+.env
+<<<<<<< Updated upstream
+<<<<<<< Updated upstream
+.DS_Store
+=======
+.DS_Store
+>>>>>>> Stashed changes
+=======
+.DS_Store
+>>>>>>> Stashed changes

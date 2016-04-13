@@ -23,6 +23,9 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+<<<<<<< HEAD
 
     protected $table = 'employee';
+=======
+>>>>>>> f717c27a566d6246a77f0362ac191395495ef0dc
 }
