@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class selfservice extends Model
+class SelfService extends Model
 {
     //
     protected $table = 'selfservice';

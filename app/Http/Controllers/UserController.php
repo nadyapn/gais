@@ -3,57 +3,97 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Validator;
-use Session;
-use Auth;
-use DB;
-use App\Http\Requests;
-use App\Http\Controllers\Controller;
 
+use App\Http\Requests;
 
 class UserController extends Controller
 {
-    public function login(Request $request)
-    {   session_start();
-        $user= DB::table('employee')->where([['email','=',$request->email],['password','=',$request->password]])->first();
-        $nama= DB::table('employee')->where('email','=',$request->email)->value('name');
-        
-        if($user===null){
-            echo "Maaf kamu belum terdaftar tau";
-            die;
-        }
-        else
-            {
-            $_SESSION["username"] = $nama;
+    // login
+	function login() {
+		return \View::make('user/welcome');
+	}
+
+	
+	// post log in
+	function isLogin() {
+		//return \View::make('user/homepageGAIS');
+	}
+
+	// logout
+	function logout() {
+		return \Redirect::to('login');
+
+	}
+
+	function homepageGAIS() {
+		return \View::make('user/homepageGAIS');
+	}
+
+	function dashboardAdmin() {
+		return \View::make('user/dashboardAdmin');
+	}
+
+
+	function dashboardNonAdmin() {
+		$ss = \DB::table('selfservice')
+            ->join('employee','employee.id_employee','=','selfservice.employee_id')
+            ->where('supervisor','6789')
+            ->where('status','0')
+            ->get();
+
+        if($ss == "") return "not found";
+
+        //$array = array();
+        //array_push()
+        //$x = 0;
+
+        foreach ($ss as $e) {
+            $kodeSS = $e->kodeSS;
+            $rm = \App\Reimbursement::where("selfservice_id", "=", $kodeSS)->count();
+            $ot = \App\Overtime::where("selfservice_id", "=", $kodeSS)->count();
+            $pl = \App\PaidLeave::where("selfservice_id", "=", $kodeSS)->count();
+            if ($rm > 0) {
+                $e->tipe = "Reimbursement";
+               // $array = array_push($array, $tipe); 
+                //$x = $x + 1;
+                // return $rm;  
             }
-
-        $_SESSION['role']=$user->role;
-        
-        if($_SESSION['role']==='Non-Admin'){//cek apakah user admin atau bukan
-            return view('/nonadmin'); // kalau user adalah non-admin ,masuk ke halaman non-admin, halaman non-admin nya belom dibikin
-
+            else if ($pl > 0) {
+                $e->tipe = "PaidLeave";
+                //$array = array_push($array, $tipe); 
+               // $x = $x + 1;
+               // return $pl; 
+            }
+            else if ($ot > 0) {
+                $e->tipe = "Overtime";
+                //$array = array_push($array, $tipe); 
+               // $x = $x + 1;
+                // return $ot; 
+            } 
+            else
+            {
+                //default case. should never went here
+                $e->tipe = "Error : " . $rm . " " . $pl . " " . $ot;
+                //$x = $x + 1;
+            }
         }
-        else{
-           
-            return view('/welcome'); // kalau user adalah admin, masuk ke halaman admin=welcome.blade.php
 
-        }
-        
+		return \View::make('user/dashboardNonAdmin')->with(compact('ss'));
+	}
 
+    //Sidebar
 
-     
+    function sidebarHomepage() {
+        return \View::make('user/sidebarHomepage');
     }
 
-
-    public function index()
-    {
-        return view('./auth/login');
+    function sidebarNonAdmin() {
+        return \View::make('user/sidebarNonAdmin');
     }
-    public function logout(){
-        session_unset();
-        return view('./auth/login');
+    
+    function sidebarAdmin() {
+        return \View::make('user/sidebarAdmin');
     }
 
+	//protected $layout = 'layouts.master';
 }
-
-

@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class overtime extends Model
+class Overtime extends Model
 {
     //
     protected $table = 'overtime';

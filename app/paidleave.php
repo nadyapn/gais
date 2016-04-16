@@ -4,8 +4,8 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class paidleave extends Model
+class PaidLeave extends Model
 {
     //
-    protected $table = 'paidleave';
+    protected $table = 'paidLeave';
 }
