@@ -1,16 +1,30 @@
 @extends('user.sidebarNonAdmin')
 
 @section('contentNonAdmin')
+	<div class="breadcrumb">
+		<ul class="isiBreadcrumb">
+			<input type="image" class="btnDashboard" src="img/symbol.png">
+				<ul class="isiBreadcrumb2">
+				<li><a href="#">Homepage</a></li>
+				<li><a href="#">Dashboard Non Admin</a></li>
+				<li><a href="#" class="active">View Reimburse</a></li>
+			</ul>
+			<button type="button" class="btn btn-secondary2">Back to Home</button>
+		</ul>
+	</div>
+	<div id="color">
+		<p id="move">Dashboard Reimburse</p>
+		<p id="move2">A detailed look of your Reimburse history</p>
+	</div>
+	<section id="content">
 		<section id="content">
 			<div class="container">
 				<div class="titleContent">
-				  <h2>Reimburse History</h2>
-				  <h4>List of your Reimburse  History</h4>
 				</div>
 			</div>			
 			<!-- /#table-->
 			<div class="table-responsive">
-				<table class="table">
+				<table class="table" id="dataTable">
 					<thead>
 							<tr>
 							  <th>ID</th>
@@ -38,7 +52,7 @@
 								<td><a href="{{url('/getDetail/'.$e->kodeSS)}}" class="btn btn-view">View</td>
 								@if ($e->status == 0)
 									<td><a href="{{url('/update/'.$e->kodeSS)}}" class="btn btn-view">Update</td>
-									<td><a href="{{url('/delete/'.$e->kodeSS)}}" class="btn btn-view">Delete</td>
+									<td><a href="{{url('/delete/'.$e->kodeSS)}}" class="btn btn-view" onclick="return confirm('Are you sure?')">Delete</td>
 								@endif
 							</tr>
 							@endforeach
@@ -46,28 +60,5 @@
 				</table>
 					
 			</div>
-			<div class="paginationNumber">
-					<ul class="pagination">
-					  <li>
-						<a href="#" aria-label="Previous">
-						  <span aria-hidden="true">
-							<i class="fa fa-caret-left"></i>
-						  </span>
-						</a>
-					  </li>
-					  <li class="active"><a href="#">1</a></li>
-					  <li><a href="#">2</a></li>
-					  <li><a href="#">3</a></li>
-					  <li><a href="#">4</a></li>
-					  <li><a href="#">5</a></li>
-					  <li>
-						<a href="#" aria-label="Next">
-						  <span aria-hidden="true">
-							<i class="fa fa-caret-right"></i>
-						  </span>
-						</a>
-					  </li>
-					</ul>
-				</div>
 		</section>
 @endsection

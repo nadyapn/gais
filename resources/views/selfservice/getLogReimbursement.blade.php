@@ -1,11 +1,25 @@
 @extends('user.sidebarAdmin')
 
 @section('contentAdmin')
+	<div class="breadcrumb">
+				<ul class="isiBreadcrumb">
+					<input type="image" class="btnDashboard" src="img/symbol.png">
+						<ul class="isiBreadcrumb2">
+							<li><a href="#">Homepage</a></li>
+							<li><a href="#">Dashboard Admin</a></li>
+							<li><a href="#" class="active">Reimburse</a></li>
+						</ul>
+					<button type="button" class="btn btn-secondary2">Back to Home</button>
+				</ul>
+			</div>
+	<div id="color">
+		<p id="move">Dashboard Reimburse Log</p>
+		<p id="move2">List of Reimburse Request</p>
+	</div>
 		<section id="content">
 			<div class="container">
 				<div class="titleContent">
-				  <h2>Reimburse Data Log</h2>
-				  <h4>List of Reimburse Request</h4>
+				  
 				</div>
 			</div>			
 			<!-- /#table-->

@@ -1,24 +1,43 @@
 @extends('user.sidebarHomepage')
 
 @section('contentAdd')
-
+	<div class="breadcrumb">
+				<ul class="isiBreadcrumb">
+					<input type="image" class="btnDashboard" src="img/symbol.png">
+						<ul class="isiBreadcrumb2">
+							<li><a href="#">Homepage</a></li>
+							<li><a href="#">Employee Self Service</a></li>
+							<li><a href="#" class="active">Create Paid Leave</a></li>
+						</ul>
+					<button type="button" class="btn btn-secondary2">Back to Home</button>
+				</ul>
+			</div>
+	<div id="color">
+		<p id="move">Dashboard</p>
+		<p id="move2">Pembuatan pengajuan Paid Leave</p>
+	</div>
 	<section id="content">
-
 			<div class="container">
 			  <div class="row">
 				<div class="col-md-8">
-				  <h2>Create Paid Leave Request</h2>
-				  <h4>Make your Paid Leave request</h4>
 				  <br>
-				  
+				  <br>
+				  <br>
+				  @if(isset($messages))
+				  <?php
+				  	$temp = JSON_decode($messages);
+				  ?>
+				  @endif
 				  <form action="{{url('/addPaidLeave')}}" method="post">
 						<input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
 						<div class="form-inline">
 						  <div class="form-group">
+						  	@if(isset($temp->datehired[0])){{$temp->datehired[0]}}@endif<br/>
 							<input type="date" class="form-control" placeholder="Enter Date Hired" name="datehired">
 						  </div>
 						   <div class="form-group">
-							<select name="periodofleave" >
+						   	@if(isset($temp->periodofleave[0])){{$temp->periodofleave[0]}}@endif<br/>
+							<select name="periodofleave" class="selectpicker form-control">
 								<option selected disabled>Choose Your Month Of Leave</option>
 								<option value="jan">January</option>
 								<option value="feb">February</option>
@@ -35,10 +54,12 @@
 							</select>
 						  </div>
 						  <div class="form-group">
+						  	@if(isset($temp->rsnofleave[0])){{$temp->rsnofleave[0]}}@endif<br/>
 							<input type="text" class="form-control" placeholder="Explain Your Reason" name="rsnofleave">
 						  </div>
 						  <div class="form-group">
-							<select name="category">
+						  	@if(isset($temp->category[0])){{$temp->category[0]}}@endif<br/>
+							<select name="category" class="selectpicker form-control">
 								<option selected disabled>Choose Your Reason Category</option>
 								<option value="sick">Sick</option>
 								<option value="maternity">Maternity</option>

@@ -3,12 +3,35 @@
 @section('contentNonAdmin')
 
 @if (isset($rm))
+	<div class="breadcrumb">
+				<ul class="isiBreadcrumb">
+					<input type="image" class="btnDashboard" src="{{asset('img/symbol.png')}}">
+						<ul class="isiBreadcrumb2">
+							<li><a href="#">Homepage</a></li>
+							<li><a href="#">Dashboard Non Admin</a></li>
+							<li><a href="#">Reimbursement History</a></li>
+							<li><a href="#" class="active">Edit Reimbursement</a></li>
+						</ul>
+					<button type="button" class="btn btn-secondary2">Back to Home</button>
+				</ul>
+			</div>
+		<div id="color">
+			<p id="move">Edit Reimbursement</p>
+			<p id="move2">Perbarui Pengajuan Reimbursement</p>
+			<br>
+				  @if(isset($messages))
+				  <?php
+				  	$temp = JSON_decode($messages);
+				  ?>
+					@foreach ($messages->all() as $message)
+						{{$message}} <br/>
+					@endforeach
+				@endif
+	</div>
 	<section id="content">
-			<div class="container">
-			  <div class="row">
+		<div class="container">
+			<div class="row">
 				<div class="col-md-8">
-				  <h2>Edit Reimburse Request</h2>
-				  <br>
 				  	<form action="{{url('/update/'.$ss->kodeSS)}}" method="post"  enctype="multipart/form-data">
 						<input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
 						<div class="form-inline">
@@ -17,7 +40,7 @@
 						  	  <div class="form-control">
 					              <div class='input-group date'>
 					                <span class="input-group-addon">
-					                      <img style="margin-left:10%;" src="img/Icon - Calendar.png"> Date of Event 
+					                      <img style="margin-left:10%;" src="{{asset('img/Icon - Calendar.png')}}"> Date of Event  
 					                       <input style="margin-right:50%;" class="btn btn-default2" type="date" name="dateRem">
 					                </span>
 					              </div>
@@ -53,11 +76,35 @@
 	</section>
 	
 @elseif (isset($pl))
+	<div class="breadcrumb">
+				<ul class="isiBreadcrumb">
+					<input type="image" class="btnDashboard" src="{{asset('img/symbol.png')}}">
+						<ul class="isiBreadcrumb2">
+							<li><a href="#">Homepage</a></li>
+							<li><a href="#">Dashboard Non Admin</a></li>
+							<li><a href="#">Paid Leave History</a></li>
+							<li><a href="#" class="active">Edit Paid Leave</a></li>
+						</ul>
+					<button type="button" class="btn btn-secondary2">Back to Home</button>
+				</ul>
+			</div>
+		<div id="color">
+			<p id="move">Edit Paid Leave</p>
+			<p id="move2">Perbarui Pengajuan Paid Leave</p>
+			<br>
+				  @if(isset($messages))
+				  <?php
+				  	$temp = JSON_decode($messages);
+				  ?>
+					@foreach ($messages->all() as $message)
+						{{$message}} <br/>
+					@endforeach
+				@endif
+		</div>
 	<section id="content">
 			<div class="container">
 			  <div class="row">
 				<div class="col-md-8">
-				  <h2>Edit Paid Leave Request</h2>
 				  <br>
 				  
 				  <form action="{{url('/update/'.$ss->kodeSS)}}" method="post">
@@ -104,11 +151,35 @@
 			</div>
 	</section>
 @elseif (isset($ot))
+<div class="breadcrumb">
+				<ul class="isiBreadcrumb">
+					<input type="image" class="btnDashboard" src="{{asset('img/symbol.png')}}">
+						<ul class="isiBreadcrumb2">
+							<li><a href="#">Homepage</a></li>
+							<li><a href="#">Dashboard Non Admin</a></li>
+							<li><a href="#">Overtime History</a></li>
+							<li><a href="#" class="active">Edit Overtime</a></li>
+						</ul>
+					<button type="button" class="btn btn-secondary2">Back to Home</button>
+				</ul>
+			</div>
+		<div id="color">
+			<p id="move">Edit Overtime</p>
+			<p id="move2">Perbarui Pengajuan Overtime</p>
+			<br>
+				  @if(isset($messages))
+				  <?php
+				  	$temp = JSON_decode($messages);
+				  ?>
+					@foreach ($messages->all() as $message)
+						{{$message}} <br/>
+					@endforeach
+				@endif
+		</div>
 	<section id="content">
 			<div class="container">
 			  <div class="row">
 				<div class="col-md-8">
-				  <h2>Edit Overtime Request</h2>
 				  <br>
 				  <form action="{{url('/update/'.$ss->kodeSS)}}" method="post">
 					<input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
