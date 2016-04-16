@@ -14,7 +14,7 @@ class PeminjamanTable extends Migration
     {
         //
         Schema::create('peminjaman', function (Blueprint $table) {
-            $table->string('kodePinjam', 30);
+            $table->string('kodePinjam');
             $table->timestamp('request_date');
             $table->date('used_date');
             $table->time('time_start');
@@ -22,8 +22,8 @@ class PeminjamanTable extends Migration
             $table->tinyInteger('status');
             $table->string('employee_id', 30);
             $table->string('facilities_id', 30);
-            $table->primary(['kodePinjam','facilities_id']);
-            $table->foreign('employee_id')->references('id_employee')->on('employee')->onDelete('restrict')->onUpdate('cascade');
+            $table->primary(['facilities_id','kodePinjam']);
+            $table->foreign('employee_id')->references('id_employee')->on('employee')->onDelete('cascade')->onUpdate('cascade');
             $table->foreign('facilities_id')->references('kode')->on('facilities')->onDelete('cascade')->onUpdate('cascade');
         });
     }

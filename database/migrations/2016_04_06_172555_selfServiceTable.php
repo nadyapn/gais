@@ -14,14 +14,13 @@ class SelfServiceTable extends Migration
     {
         //
         Schema::create('selfservice', function (Blueprint $table) {
-            $table->string('kodeSS', 30);
+            $table->increments('kodeSS');
             $table->string('employee_id', 30);
             $table->timestamp('request_date');
             $table->timestamp('approval_date');
             $table->text('description');
             $table->tinyInteger('status');
-            $table->primary('kodeSS');
-            $table->foreign('employee_id')->references('id_employee')->on('employee')->onDelete('restrict')->onUpdate('cascade');
+            $table->foreign('employee_id')->references('id_employee')->on('employee')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 
