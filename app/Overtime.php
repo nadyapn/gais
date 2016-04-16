@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Overtime extends Model
 {
+	public $primaryKey  = 'selfservice_id';
     //
     protected $table = 'overtime';
 }

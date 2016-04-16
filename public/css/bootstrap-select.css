@@ -49,6 +49,7 @@
 .form-horizontal .bootstrap-select.btn-group,
 .form-group .bootstrap-select.btn-group {
   margin-bottom: 0;
+  background-color: transparent;
 }
 .form-group-lg .bootstrap-select.btn-group.form-control,
 .form-group-sm .bootstrap-select.btn-group.form-control {

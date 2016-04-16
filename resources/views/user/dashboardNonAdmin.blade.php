@@ -73,7 +73,7 @@
 						  <td>{{$e->tipe}}</td>
 						  <td>{{$e->request_date}}</td>
 						  <td><a href="{{url('/getDetail/'.$e->kodeSS)}}" class="btn btn-view">View</a></td>
-						  <td><button class="btn btn-update">Update</button></td>
+						  <td><a href="{{url('/updateReimbursement/'.$e->kodeSS)}}" class="btn btn-view">Update</a></td>
 						  <td><button class="btn btn-delete">Delete</button></td>
 						</tr>
 						@endforeach

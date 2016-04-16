@@ -1,46 +1,6 @@
+@extends('user.sidebarHomepage')
 
-
-
-@extends('layouts.master')
-
-
-@section('content')
-<html>
-	<head>
-		<!-- Custom CSS -->
-		<link href="css/simple-sidebar.css" rel="stylesheet">
-	</head>
-	<body>
-
-        <!-- Sidebar -->
-        <div class="nav-side-menu">
-			<div class="brand"><a href="{{url('/homepageGAIS')}}">GAIS</a></div>
-			<i class="fa fa-bars fa-2x toggle-btn" data-toggle="collapse" data-target="#menu-content"></i>
-				<div class="menu-list">
-					<ul id="menu-content" class="menu-content collapse out">
-						<li class="active">
-						  <img style="margin-left:10px;margin-right:5px"src="img/dashboard.png"><a href="#"> Dashboard <b> Supervisor </b>
-						  </a>
-						</li>
-
-						<li  data-toggle="collapse" data-target="#Employee-Self-Service" class="collapsed">
-						  <a href="#"><img style="margin-left:10px;margin-right:5px"src="img/selfservice.png"> Employee Self Service <span class="arrow"></span></a>
-						</li>
-						<ul class="sub-menu collapse" id="Employee-Self-Service">
-							<li><a href="{{url('/createReimbursement')}}">Reimburse</a></li>		
-							<li><a href="{{url('/createPaidLeave')}}">Paid Leave</a></li>
-							<li><a href="{{url('/createOvertime')}}">Overtime</a></li>
-						</ul>
-						
-						<li class="collapsed">
-						  <a href="#"><img style="margin-left:10px;margin-right:5px"src="img/scheduler.png"> Shared Facilities</a>
-						</li>
-						<li class="collapsed">
-						  <a href="#"><img style="margin-left:10px;margin-right:5px"src="img/observice.png"> Office Boy Service</a>
-						</li> 
-			 </div>
-		</div>    
-        <!-- /#sidebar-wrapper -->
+@section('contentAdd')
 	<section id="content">
 			<div class="container">
 			  <div class="row">
@@ -48,54 +8,58 @@
 				  <h2>Create Reimburse Request</h2>
 				  <h4>Make your reimburse request</h4>
 				  <br>
+				  @if(isset($messages))
+				  <?php
+				  	$temp = JSON_decode($messages);
+				  ?>
+					@foreach ($messages->all() as $message)
+						{{$message}} <br/>
+					@endforeach
+				@endif
 				  	<form action="{{url('/addReimbursement')}}" method="post"  enctype="multipart/form-data">
 						<input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
-					<div class="form-inline">
-						<select name="category">
-						<option disabled>Select Category</option>
-						  <option value="project">Project</option>
-						  <option value="other">Other</option>
-						</select> <br/>
-					  <div class="form-group">
-						<input type="date" class="form-control" placeholder="Date Reimbursement" name="dateRem">
-					  </div>
-					  <div class="form-group">
-						<input type="text" class="form-control" placeholder="Total Cost" name="cost">
-					  </div>
-					  <div class="form-group">
-						<input type="text" class="form-control" placeholder="Enter Business Purpose" name="businesspurpose">
-					  </div>
-					  <div class="form-group">
-						<input type="text" class="form-control" placeholder="Enter Description" name="descriptionRem">
-					  </div>
-					  	<div class="form-group">
-						<input type="file" class="form-control" title="Upload Reimburse File" name="foto" accept="image/*">
-					  </div>
-					  <div class="form-group">
-						<button type="submit" class="btn btn-secondary">Submit</button>
-					  </div>
-					</div>
+						<div class="form-inline">
+						  
+						  <div class="form-group">
+						  	  <div class="form-control">
+					              <div class='input-group date'>
+					                <span class="input-group-addon">
+					                	@if(isset($temp->dateRem[0])){{$temp->dateRem[0]}}@endif<br/>
+					                      <img style="margin-left:10%;" src="img/Icon - Calendar.png"> Date of Event 
+					                       <input style="margin-right:50%;" class="btn btn-default2" type="date" name="dateRem">
+					                </span>
+					              </div>
+					          </div>
+				          </div>
+				          <div class="form-group">
+				          	@if(isset($temp->businesspurpose[0])){{$temp->businesspurpose[0]}}@endif<br/>
+							<input value="@if(isset($in)){{$in['businesspurpose']}}@endif" type="text" class="form-control" placeholder="Enter Your Business Purpose (e.g. Shopping)" name="businesspurpose">
+						  </div>
+						  <div class="form-group">
+					        <select name="category">
+					          <option disabled selected>Choose Your Reimburse Category</option>
+					          <option>Project</option>
+					          <option>Other</option>
+					        </select>
+					      </div>
+						  <div class="form-group">
+							<input type="text" class="form-control" placeholder="Explain Detail of Spending" name="descriptionRem">
+						  </div>
+						  <div class="form-group">
+							<input type="text" class="form-control" placeholder="Enter Total of Spending (e.g. 99999)" name="cost">
+						  </div>
+						  	<div class="form-group">
+							<input type="file" class="form-control" title="Upload Reimburse File" name="foto" accept="image/*">
+						  </div>
+						  <div class="form-group">
+							<input type="submit" value="Submit" class="btn btn-secondary"></input>
+						  </div>
+						</div>
 					</form> 
 				</div>
 			  </div>
 			</div>
 	</section>
-	
-	    <!-- jQuery -->
-    <script src="js/jquery.js"></script>
-
-    <!-- Bootstrap Core JavaScript -->
-    <script src="js/bootstrap.min.js"></script>
-
-    <!-- Menu Toggle Script -->
-    <script>
-    $("#menu-toggle").click(function(e) {
-        e.preventDefault();
-        $("#wrapper").toggleClass("toggled");
-    });
-    </script>
-	</body>
-</html>
 @endsection
 
 

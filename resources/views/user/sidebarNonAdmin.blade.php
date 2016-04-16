@@ -1,15 +1,7 @@
 @extends('layouts.master')
 
 @section('content')
-
-<html>
-	<head>
-		<!-- Custom CSS -->
-		<link href="css/simple-sidebar.css" rel="stylesheet">
-	</head>
-	<body>
-
-        <!-- Sidebar -->
+       <!-- Sidebar -->
         <div class="nav-side-menu">
 			<div class="brand"><a href="{{url('/homepageGAIS')}}">GAIS</a></div>
 			<i class="fa fa-bars fa-2x toggle-btn" data-toggle="collapse" data-target="#menu-content"></i>
@@ -17,25 +9,26 @@
 					<ul id="menu-content" class="menu-content collapse out">
 						<li class="active">
 						  <a href="#">
-						  <img style="margin-left:10px;margin-right:5px"src="img/dashboard.png"> Dashboard <b> Supervisor </b>
+						  <img style="margin-left:10px;margin-right:5px"src="img/dashboard.png"> Dashboard <b> {{\Auth::user()->position}} </b> <!--ini di yield aja!-->
 						  </a>
 						</li>
-
+						@if(\Auth::user()->position === 'Supervisor' || \Auth::user()->position === 'Business Unit' || \Auth::user()->position === 'Human Resource')
 						<li  data-toggle="collapse" data-target="#Employee-Self-Service" class="collapsed">
 						  <a href="#"><img style="margin-left:10px;margin-right:5px"src="img/approval.png"> My Approval <span class="arrow"></span></a>
 						</li>
 						<ul class="sub-menu collapse" id="Employee-Self-Service">
-							<li><a href="#">Employee Self Service</li>
+							<li><a href="{{url('/myApproval')}}">Employee Self Service</li>
 						</ul>
+						@endif
 						<li  data-toggle="collapse" data-target="#myHistory" class="collapsed">
 						  <a href="#"><img style="margin-left:10px;margin-right:5px"src="img/history.png"> My History<span class="arrow"></span></a>
 						</li>
 						<ul class="sub-menu collapse" id="myHistory">
 							<li data-toggle="collapse" data-target="#Employee-Self-Service2"><a href="#">Employee Self-Service
 								<ul class="sub-menu collapse" id="Employee-Self-Service2">
-									<li><a href="{{url('/createReimburse')}}">Reimburse</a></li>		
-									<li><a href="{{url('/createPaidLeave')}}">Paid Leave</a></li>
-									<li><a href="{{url('/createOvertime')}}">Overtime</a></li>
+									<li><a href="{{url('/getMyReimbursement')}}">Reimburse</a></li>		
+									<li><a href="{{url('/getMyPaidLeave')}}">Paid Leave</a></li>
+									<li><a href="{{url('/getMyOvertime')}}">Overtime</a></li>
 								</ul>
 							</li>
 							<li><a href="#">Shared Facilities Scheduler</li>
@@ -44,34 +37,7 @@
 			 </div>
 		</div>    
         <!-- /#sidebar-wrapper -->
-	<section id="content">
-			<div class="container">
-			  <div class="row">
-				<div class="col-md-8">
-				  <h2>Details</h2>
-				  <h4>View Your Details</h4>
-				  <br>
-				  	@yield('detailContent')
-				  <br/>
-				</div>
-			  </div>
-			</div>
-	</section>
-	
-	    <!-- jQuery -->
-    <script src="js/jquery.js"></script>
-
-    <!-- Bootstrap Core JavaScript -->
-    <script src="js/bootstrap.min.js"></script>
-
-    <!-- Menu Toggle Script -->
-    <script>
-    $("#menu-toggle").click(function(e) {
-        e.preventDefault();
-        $("#wrapper").toggleClass("toggled");
-    });
-    </script>
-	</body>
-</html>
+        
+        @yield('contentNonAdmin')
 
 @endsection
