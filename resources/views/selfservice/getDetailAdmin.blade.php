@@ -1,21 +1,19 @@
-@extends('user.sidebarNonAdmin')
+@extends('user.sidebarAdmin')
 
-@section('contentNonAdmin')
+@section('contentAdmin')
 	<div class="breadcrumb">
 				<ul class="isiBreadcrumb">
 					<input type="image" class="btnDashboard" src="{{asset('img/symbol.png')}}">
 						<ul class="isiBreadcrumb2">
 							<li><a href="#">Homepage</a></li>
-							<li><a href="#">Dashboard Non Admin</a></li>
-							<li><a href="#">Reimbursement History</a></li>
-							<li><a href="#" class="active">Detail Request</a></li>
+							<li><a href="#">Dashboard Admin</a></li>
+							<li><a href="#" class="active">Log of Request</a></li>
 						</ul>
 					<button type="button" class="btn btn-secondary2">Back to Home</button>
 				</ul>
 			</div>
 		<div id="color">
-			<p id="move">Detail of Request</p>
-			<p id="move2">Rincian Pengajuan</p>
+			<p id="move">Log of Request</p>
 		</div>
 	<section id="content">
 			<div class="container">
@@ -86,9 +84,6 @@
 						not found
 					@endif
 				  <br/>
-
-				  <a href="{{url('/aprove')}}" class="btn btn-view" onclick="return confirm('Are you sure?')">Approve</a>
-				  <a href="{{url('/rejection')}}" class="btn btn-view" onclick="return confirm('Are you sure?')">Reject</a>
 					
 				  <!-- Button trigger modal -->
 				</div>

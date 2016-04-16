@@ -2,7 +2,7 @@
 <script>
 $(document).ready(function(){
     $("button").click(function(){
-        $("p").toggle();
+        $("#conDashboard2").toggle();
     });
 });
 </script>

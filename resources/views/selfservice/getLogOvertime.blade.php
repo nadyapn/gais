@@ -1,16 +1,24 @@
 @extends('user.sidebarAdmin')
 
 @section('contentAdmin')
-		<section id="content">
-			<div class="container">
-				<div class="titleContent">
-				  <h2>Overtime Data Log</h2>
-				  <h4>List of Overtime Request</h4>
-				</div>
-			</div>			
+			<div class="breadcrumb">
+						<ul class="isiBreadcrumb">
+							<input type="image" class="btnDashboard" src="img/symbol.png">
+								<ul class="isiBreadcrumb2">
+									<li><a href="#">Homepage</a></li>
+									<li><a href="#">Dashboard Admin</a></li>
+									<li><a href="#" class="active">Overtime</a></li>
+								</ul>
+							<button type="button" class="btn btn-secondary2">Back to Home</button>
+						</ul>
+					</div>
+			<div id="color">
+				<p id="move">Dashboard Overtime Log</p>
+				<p id="move2">List of Overtime Request</p>
+			</div>
 			<!-- /#table-->
 			<div class="table-responsive">
-					<table class="table">
+					<table class="table" id="dataTable">
 					  	<thead>
 							<tr>
 							  <th>Kode</th>
@@ -45,28 +53,5 @@
 						</tbody>
 					</table>
 			</div>
-			<div class="paginationNumber">
-					<ul class="pagination">
-					  <li>
-						<a href="#" aria-label="Previous">
-						  <span aria-hidden="true">
-							<i class="fa fa-caret-left"></i>
-						  </span>
-						</a>
-					  </li>
-					  <li class="active"><a href="#">1</a></li>
-					  <li><a href="#">2</a></li>
-					  <li><a href="#">3</a></li>
-					  <li><a href="#">4</a></li>
-					  <li><a href="#">5</a></li>
-					  <li>
-						<a href="#" aria-label="Next">
-						  <span aria-hidden="true">
-							<i class="fa fa-caret-right"></i>
-						  </span>
-						</a>
-					  </li>
-					</ul>
-				</div>
 		</section>
 @endsection

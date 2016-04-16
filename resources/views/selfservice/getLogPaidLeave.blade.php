@@ -1,18 +1,28 @@
 @extends('user.sidebarAdmin')
 
 @section('contentAdmin')
-
+	<div class="breadcrumb">
+				<ul class="isiBreadcrumb">
+					<input type="image" class="btnDashboard" src="img/symbol.png">
+						<ul class="isiBreadcrumb2">
+							<li><a href="#">Homepage</a></li>
+							<li><a href="#">Dashboard Admin</a></li>
+							<li><a href="#" class="active">Paid Leave</a></li>
+						</ul>
+					<button type="button" class="btn btn-secondary2">Back to Home</button>
+				</ul>
+			</div>
+	<div id="color">
+		<p id="move">Dashboard Paid Leave Log</p>
+		<p id="move2">List of Paid Leave Request</p>
+	</div>
 		<section id="content">
 			<div class="container">
 				<div class="titleContent">
-				  <h2>Paid Leave History</h2>
-				  <h4>List of your Paid Leave History</h4>
+
 				</div>
 			</div>			
-
-
 			<!-- /#table-->
-
 			<div class="table-responsive">
 					<table class="table" id="dataTable">
 					  	<thead>
@@ -73,5 +83,4 @@
 					</ul>
 				</div>
 		</section>
-		
 @endsection

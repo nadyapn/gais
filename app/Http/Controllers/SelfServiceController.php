@@ -98,7 +98,7 @@ class SelfServiceController extends Controller
         return \View::make('selfservice/addPaidLeave');
     }
 
-    function addPaidLeave() {
+    function addPaidLeave(Request $request) {
         $datehired = \Request::input('datehired');
         $periodofleave = \Request::input('periodofleave');
         $category = \Request::input('category');
@@ -156,7 +156,7 @@ class SelfServiceController extends Controller
         return \View::make('selfservice/addOvertime');
     }
 
-    function addOvertime() {
+    function addOvertime(Request $request) {
         $dateot = \Request::input('dateot');
         $timestarts = \Request::input('timestarts');
         $timeends = \Request::input('timeends');
@@ -218,7 +218,12 @@ class SelfServiceController extends Controller
 
         if($ss == "") return "not found";
 
-        return \View::make('selfservice/getDetail')->with(compact('ss'))->with(compact('rm'))->with(compact('ot'))->with(compact('pl'));
+        if(\Auth::user()->role != 'Admin') {
+            return \View::make('selfservice/getDetail')->with(compact('ss'))->with(compact('rm'))->with(compact('ot'))->with(compact('pl'));
+        }
+        else {
+            return \View::make('selfservice/getDetailAdmin')->with(compact('ss'))->with(compact('rm'))->with(compact('ot'))->with(compact('pl'));
+        }
     }
 
     function getLogReimbursement() {
@@ -404,7 +409,7 @@ class SelfServiceController extends Controller
             }
     }
 
-    function updatePost($kodeSS) {
+    function updatePost($kodeSS, Request $request) {
         $ss = \App\SelfService::where("kodeSS","=", $kodeSS)->first();
         $rm = \App\Reimbursement::where("selfservice_id", "=", $kodeSS)->first();
         $ot = \App\Overtime::where("selfservice_id", "=", $kodeSS)->first();
@@ -418,7 +423,23 @@ class SelfServiceController extends Controller
             $category = \Request::input('category');
             $date = \Request::input('dateRem');
             $description = \Request::input('descriptionRem');
-            $cost = \Request::input('cost'); 
+            $cost = \Request::input('cost');
+
+            $validator = \Validator::make($request->all(), [
+            'businesspurpose' => 'required',
+            'category' => 'required',
+            'dateRem' => 'required',
+            'descriptionRem' => 'required',
+            'cost' => 'required|digits_between:0,100000000',
+            ]);
+
+            if ($validator->fails()) {
+                $in = \Request::all();
+                $messages = $validator->errors();
+                return \View::make('selfservice/addReimbursement')
+                            ->with(compact('messages'))
+                            ->with(compact('in'));
+            } 
             
             $ss->description = $description;
             $ss->request_date = $mydate;
@@ -457,6 +478,22 @@ class SelfServiceController extends Controller
             $periodofleave = \Request::input('periodofleave');
             $category = \Request::input('category');
             $description = \Request::input('rsnofleave');
+
+            $validator = \Validator::make($request->all(), [
+            'datehired' => 'required',
+            'periodofleave' => 'required',
+            'category' => 'required',
+            'rsnofleave' => 'required',
+
+            ]);
+
+            if ($validator->fails()) {
+                $in = \Request::all();
+                $messages = $validator->errors();
+                return \View::make('selfservice/addPaidLeave')
+                            ->with(compact('messages'))
+                            ->with(compact('in'));
+            }
             
             $ss->description = $description;
             $ss->request_date = $mydate;
@@ -482,9 +519,24 @@ class SelfServiceController extends Controller
             $timestarts = \Request::input('timestarts');
             $timeends = \Request::input('timeends');
             $description = \Request::input('rsnofot');
+
+            $validator = \Validator::make($request->all(), [
+            'dateot' => 'required',
+            'timestarts' => 'required',
+            'timeends' => 'required',
+            'rsnofot' => 'required',
+
+            ]);
+
+            if ($validator->fails()) {
+                $in = \Request::all();
+                $messages = $validator->errors();
+                return \View::make('selfservice/addOvertime')
+                            ->with(compact('messages'))
+                            ->with(compact('in'));
+            }
             
             $ss->description = $description;
-
             $ss->request_date = $mydate;
             $ss->approval_date = $mydate;
 
