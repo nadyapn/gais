@@ -13,16 +13,20 @@
 			  <div class="row">
 				<div class="col-md-8">
 				  <h1>Log-in GAIS</h1>
-				  <form>
+				  @if(isset($msg))
+				  	<h6>Wrong email or password</h6>
+				  @endif
+				  <form action="{{url('/login')}}" method="post">
+				  	<input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
 					<div class="form-inline">
 					  <div class="form-group">
-						<input type="email" class="form-control" id="exampleInputEmail3" placeholder="Enter email">
+						<input type="email" class="form-control" id="exampleInputEmail3" placeholder="Enter email" name="email">
 					  </div>
 					  <div class="form-group">
-						<input type="password" class="form-control" id="exampleInputPassword3" placeholder="Enter Password">
+						<input type="password" class="form-control" id="exampleInputPassword3" placeholder="Enter Password" name="password">
 					  </div>
 					  <div class="form-group">
-						<button type="submit" class="btn btn-secondary">Login</button>
+						<input type="submit" value="Login" class="btn btn-secondary"></input>
 					  </div>
 					</div>
 					<div class="form-group">
@@ -36,7 +40,6 @@
 			  </div>
 			</div>
 		</section>
-	
 	    <!-- jQuery -->
     <script src="js/jquery.js"></script>
 

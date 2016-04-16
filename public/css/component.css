@@ -1,5 +1,6 @@
 #content {
-	padding: 25px 0;
+	
+	min-width: 700px !important;
 }
 
 #content.login {

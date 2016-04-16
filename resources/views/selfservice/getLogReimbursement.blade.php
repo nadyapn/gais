@@ -1,50 +1,6 @@
-	
+@extends('user.sidebarAdmin')
 
-@extends('layouts.master')
-
-
-@section('content')
-<html>
-	<head>
-		<!-- Custom CSS -->
-		<link href="css/simple-sidebar.css" rel="stylesheet">
-	</head>
-	<body>
-
-        <div class="nav-side-menu">
-			<div class="brand"><a href="{{url('/homepageGAIS')}}">GAIS</a></div>
-			<i class="fa fa-bars fa-2x toggle-btn" data-toggle="collapse" data-target="#menu-content"></i>
-				<div class="menu-list">
-					<ul id="menu-content" class="menu-content collapse out">
-						<li class="active">
-					
-						  <img style="margin-left:10px;margin-right:5px"src="img/dashboard.png"> Dashboard <b> Admin </b>
-					
-						</li>
-
-						<li  data-toggle="collapse" data-target="#Employee-Self-Service" class="collapsed">
-						  <a href="#"><img style="margin-left:10px;margin-right:5px"src="img/log.png"> View My Log <span class="arrow"></span></a>
-						</li>
-						<ul class="sub-menu collapse" id="Employee-Self-Service">
-							<li data-toggle="collapse" data-target="#Employee-Self-Service2"><a href="#">Employee Self-Service
-								<ul class="sub-menu collapse" id="Employee-Self-Service2">
-									<li><a href="{{url('/getLogReimbursement')}}">Reimburse</a></li>		
-									<li><a href="{{url('/getLogPaidLeave')}}">Paid Leave</a></li>
-									<li><a href="{{url('/getLogOvertime')}}">Overtime</a></li>
-								</ul>
-							</li>
-							<li><a href="#">Shared Facilities Scheduler</li>
-							<li><a href="#">Office Boy Service<i> Beta</i></li>
-						</ul>
-						
-						<li data-toggle="collapse" data-target="#service" class="collapsed">
-						  <a href="#"><img style="margin-left:10px;margin-right:5px"src="img/scheduler.png"> Shared Facilities <b>Special Menu</b></a>
-						</li> 
-			 </div>
-		</div>    
-
-        <!-- /#sidebar-wrapper -->
-		
+@section('contentAdmin')
 		<section id="content">
 			<div class="container">
 				<div class="titleContent">
@@ -54,23 +10,39 @@
 			</div>			
 			<!-- /#table-->
 			<div class="table-responsive">
-					<table class="table">
-					  	@foreach($rm as $e)
-							Kode : {{$e->kodeSS}}<br/>
-							Employee ID: {{$e->employee_id}}<br/>
-							Name : {{$e->name}}<br/>
-							
-							@if($e->status == 0) 
-								Status : Not approved yet by Supervisor 
-							@elseif ($e->status == 1 )	
-								Status : Approved by Supervisor
-							@elseif ($e->status == 2)
-								Status : Approved by Business Unit
-							@elseif ($e->status == -1)
-								Status : Deleted by Employee
-							@endif<br/>
-					 
-						@endforeach
+					<table class="table" id="dataTable">
+					  	<thead>
+							<tr>
+							  <th>Kode</th>
+							  <th>Date Requested</th>
+							  <th>Employee's ID</th>
+							  <th>Employee's Name</th>
+							  <th>Status</th>
+							  <th>View Details</th>
+							</tr>
+					  	</thead>
+					  	<tbody>
+						  	@foreach($rm as $e)
+						  	<tr>
+								<td>{{$e->kodeSS}}</td>
+								<td>{{$e->request_date}}</td>
+								<td>{{$e->id_employee}}</td>
+								<td>{{$e->name}}</td>
+								<td>
+									@if ($e->status == 0)
+											Not approved yet by Supervisor
+									@elseif ($e->status == 1)
+											Approved by Supervisor  
+									@elseif ($e->status == 2)
+											Approved by Business Unit
+									@elseif ($e->status == -1)
+											Canceled by Employee
+									@endif
+								</td>
+								<td><a href="{{url('/getDetail/'.$e->kodeSS)}}" class="btn btn-view">View</td>
+							</tr>
+							@endforeach
+						</tbody>
 					</table>
 			</div>
 			<div class="paginationNumber">
@@ -97,20 +69,4 @@
 					</ul>
 				</div>
 		</section>
-	
-	    <!-- jQuery -->
-    <script src="js/jquery.js"></script>
-
-    <!-- Bootstrap Core JavaScript -->
-    <script src="js/bootstrap.min.js"></script>
-
-    <!-- Menu Toggle Script -->
-    <script>
-    $("#menu-toggle").click(function(e) {
-        e.preventDefault();
-        $("#wrapper").toggleClass("toggled");
-    });
-    </script>
-	</body>
-</html>
 @endsection
