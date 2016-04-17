@@ -31,15 +31,20 @@
 						Detail of Spending : {{$ss->description}}<br/>
 						Total Cost : {{$rm->cost}}<br/>
 						Photo : <img src="{{url('./foto/'.$rm->photo)}}" style="width:500px;"/><br/>
-						
-						@if ($rm->status == 0)
+						Status: {{$ss->status}}</br>
+
+						@if ($ss->status == 0)
 							Not approved yet by Supervisor
-						@elseif ($rm->status == 1)
+						@elseif ($ss->status == 1)
 							Approved by Supervisor 
-						@elseif ($rm->status == 2)
+						@elseif ($ss->status == 2)
 							Approved by Business Unit
-						@elseif ($rm->status == -1)
+						@elseif ($ss->status == -1)
 							Canceled by Employee
+						@elseif ($ss->status == 3)
+							Rejected by Supervisor
+						@elseif ($ss->status == 4)
+							Rejected by Business Unit
 						@endif<br/>
 
 						Request Date : {{$ss->request_date}}<br/>
@@ -52,15 +57,20 @@
 						Total Leave : {{$pl->total_leave}}<br/>
 						Reason of Leave : {{$ss->description}}<br/>
 						Category : {{$pl->category}}<br/>
+						Status: {{$ss->status}}</br>
 
-						@if ($pl->status == 0)
+						@if ($ss->status == 0)
 							Not approved yet by Supervisor
-						@elseif ($pl->status == 1)
+						@elseif ($ss->status == 1)
 							Approved by Supervisor 
-						@elseif ($pl->status == 2)
+						@elseif ($ss->status == 2)
 							Approved by HR
-						@elseif ($pl->status == -1)
+						@elseif ($ss->status == -1)
 							Canceled by Employee
+						@elseif ($ss->status == 3)
+							Rejected by Supervisor
+						@elseif ($ss->status == 4)
+							Rejected by Business Unit
 						@endif<br/>
 
 						Request Date : {{$ss->request_date}}<br/>
@@ -70,15 +80,20 @@
 						Time Starts : {{$ot->time_start}}<br/>
 						Time Ends : {{$ot->time_end}}<br/>
 						Reason of Overtime : {{$ss->description}}<br/>
+						Status: {{$ss->status}}</br>
 
-						@if ($ot->status == 0)
+						@if ($ss->status == 0)
 							Not approved yet by Supervisor
-						@elseif ($ot->status == 1)
+						@elseif ($ss->status == 1)
 							Approved by Supervisor 
-						@elseif ($ot->status == 2)
+						@elseif ($ss->status == 2)
 							Approved by Business Unit
-						@elseif ($ot->status == -1)
+						@elseif ($ss->status == -1)
 							Canceled by Employee
+						@elseif ($ss->status == 3)
+							Rejected by Supervisor
+						@elseif ($ss->status == 4)
+							Rejected by Business Unit
 						@endif<br/>
 
 						Request Date : {{$ss->request_date}}<br/>
@@ -87,9 +102,13 @@
 					@endif
 				  <br/>
 
-				  <a href="{{url('/aprove')}}" class="btn btn-view" onclick="return confirm('Are you sure?')">Approve</a>
-				  <a href="{{url('/rejection')}}" class="btn btn-view" onclick="return confirm('Are you sure?')">Reject</a>
-					
+				  	@if (\Auth::user()->position === 'Supervisor' && $ss->status == 0)
+					  <a href="{{url('/approval/'.$ss->kodeSS)}}" class="btn btn-view" onclick="return confirm('Are you sure?')">Approve</a>
+					  <a href="{{url('/rejection')}}" class="btn btn-view" onclick="return confirm('Are you sure?')">Reject</a>
+					@elseif ((\Auth::user()->position === 'Business Unit' || \Auth::user()->position === 'Human Resource') && $ss->status == 1)
+					  <a href="{{url('/approval/'.$ss->kodeSS)}}" class="btn btn-view" onclick="return confirm('Are you sure?')">Approve</a>
+					  <a href="{{url('/rejection')}}" class="btn btn-view" onclick="return confirm('Are you sure?')">Reject</a>
+					@endif
 				  <!-- Button trigger modal -->
 				</div>
 			  </div>

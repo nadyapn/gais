@@ -28,8 +28,8 @@ Route::group(['middleware' => 'auth'], function(){
 
 
 	// dashboard
-	//Route::get('/dashboardNonAdmin','UserController@dashboardNonAdmin');
-	//Route::get('/dashboardAdmin','UserController@dashboardAdmin');
+	Route::get('/dashboardNonAdmin','UserController@dashboardNonAdmin');
+	Route::get('/dashboardAdmin','UserController@dashboardAdmin');
 	Route::get('/sidebarNonAdmin','UserController@sidebarNonAdmin');
 	Route::get('/sidebarAdmin','UserController@sidebarAdmin');
 	Route::get('/sidebarHomepage','UserController@sidebarHomepage');
@@ -51,7 +51,7 @@ Route::group(['middleware' => 'auth'], function(){
 
 	// Read Detail
 	Route::get('/getDetail/{kodeSS}', 'SelfServiceController@getDetail');
-	Route::get('/getDetailTemplate', 'SelfServiceController@getDetailTemplate');
+	Route::get('/getDetailAdmin/{kodeSS}', 'SelfServiceController@getDetailAdmin');
 	Route::get('/getReqForSupervisor', 'SelfServiceController@getReqForSupervisor');
 	Route::get('/getReqForHR', 'SelfServiceController@getReqForHR');
 	Route::get('/getReqForBU', 'SelfServiceController@getReqForBU');
@@ -71,6 +71,8 @@ Route::group(['middleware' => 'auth'], function(){
 
 	// approval
 	Route::get('/myApproval', 'SelfServiceController@myApproval');
+	Route::get('/approval/{kodeSS}', 'SelfServiceController@approval');
+	Route::get('/rejection/{kodeSS}', 'SelfServiceController@rejection');
 });	
 
 Route::get('/generate/{isi}', function($isi) {return \Hash::make($isi);});

@@ -20,9 +20,6 @@
 			<div class="container">
 			  <div class="row">
 				<div class="col-md-8">
-				  <br>
-				  <br>
-				  <br>
 				  @if(isset($messages))
 				  <?php
 				  	$temp = JSON_decode($messages);

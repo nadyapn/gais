@@ -78,18 +78,20 @@
         <!-- Collect the nav links, forms, and other content for toggling -->
 		    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
           <ul class="nav navbar-nav navbar-right">
+            @if (\Auth::user() !== null) 
             <li>
               <a href="#" id="togglemenu" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                 <img class="icon-menu" src="{{asset('/img/Icon - User.png')}}">
               </a>
               <ul class="dropdown-menu" id="menu" role="menu">
-                <li><a href="#">Supervisor</a></li>
-                <li><a href="#">Administrator</a></li>
-                <li><a href="#">HR Unit</a></li>
+                @if (\Auth::user()->role == 'Admin')
+                <li><a href="#">Administrator</a></li> <!-- ganti jadi dashboard admin -->
                 <li class="divider"></li>
-                <li><a href="#">Logout</a></li>
+                @endif
+                <li><a href="{{url('/logout')}}">Logout</a></li>
               </ul>
             </li>
+            @endif
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="" aria-expanded="false">
 
