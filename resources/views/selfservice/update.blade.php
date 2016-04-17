@@ -3,6 +3,11 @@
 @section('contentNonAdmin')
 
 @if (isset($rm))
+	@if(isset($messages))
+		<?php
+			$temp = JSON_decode($messages);
+		?>
+	@endif
 	<div class="breadcrumb">
 				<ul class="isiBreadcrumb">
 					<input type="image" class="btnDashboard" src="{{asset('img/symbol.png')}}">
@@ -18,15 +23,6 @@
 		<div id="color">
 			<p id="move">Edit Reimbursement</p>
 			<p id="move2">Perbarui Pengajuan Reimbursement</p>
-			<br>
-				  @if(isset($messages))
-				  <?php
-				  	$temp = JSON_decode($messages);
-				  ?>
-					@foreach ($messages->all() as $message)
-						{{$message}} <br/>
-					@endforeach
-				@endif
 	</div>
 	<section id="content">
 		<div class="container">
@@ -40,6 +36,7 @@
 						  	  <div class="form-control">
 					              <div class='input-group date'>
 					                <span class="input-group-addon">
+					                      @if(isset($temp->dateot[0])){{$temp->dateot[0]}}@endif<br/>
 					                      <img style="margin-left:10%;" src="{{asset('img/Icon - Calendar.png')}}"> Date of Event  
 					                       <input style="margin-right:50%;" class="btn btn-default2" type="date" name="dateRem">
 					                </span>
@@ -47,22 +44,27 @@
 					          </div>
 				          </div>
 				          <div class="form-group">
+							@if(isset($temp->businesspurpose[0])){{$temp->businesspurpose[0]}}@endif<br/>
 							<input type="text" class="form-control" placeholder="Enter Your Business Purpose (e.g. Shopping)" name="businesspurpose">
 						  </div>
 						  <div class="form-group">
-					        <select name="category">
+					        @if(isset($temp->category[0])){{$temp->category[0]}}@endif<br/>
+					        <select name="category" class="selectpicker form-control">
 					          <option disabled selected>Choose Your Reimburse Category</option>
 					          <option>Project</option>
 					          <option>Other</option>
 					        </select>
 					      </div>
 						  <div class="form-group">
+							@if(isset($temp->descriptionRem[0])){{$temp->descriptionRem[0]}}@endif<br/>
 							<input type="text" class="form-control" placeholder="Explain Detail of Spending" name="descriptionRem">
 						  </div>
 						  <div class="form-group">
+							@if(isset($temp->cost[0])){{$temp->cost[0]}}@endif<br/>
 							<input type="text" class="form-control" placeholder="Enter Total of Spending (e.g. 99999)" name="cost">
 						  </div>
 						  	<div class="form-group">
+							@if(isset($temp->foto[0])){{$temp->foto[0]}}@endif<br/>
 							<input type="file" class="form-control" title="Upload Reimburse File" name="foto" accept="image/*">
 						  </div>
 						  <div class="form-group">
@@ -76,6 +78,11 @@
 	</section>
 	
 @elseif (isset($pl))
+	@if(isset($messages))
+	<?php
+	  	$temp = JSON_decode($messages);
+	?>
+	@endif
 	<div class="breadcrumb">
 				<ul class="isiBreadcrumb">
 					<input type="image" class="btnDashboard" src="{{asset('img/symbol.png')}}">
@@ -91,15 +98,6 @@
 		<div id="color">
 			<p id="move">Edit Paid Leave</p>
 			<p id="move2">Perbarui Pengajuan Paid Leave</p>
-			<br>
-				  @if(isset($messages))
-				  <?php
-				  	$temp = JSON_decode($messages);
-				  ?>
-					@foreach ($messages->all() as $message)
-						{{$message}} <br/>
-					@endforeach
-				@endif
 		</div>
 	<section id="content">
 			<div class="container">
@@ -111,10 +109,12 @@
 						<input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
 						<div class="form-inline">
 						  <div class="form-group">
+						  	@if(isset($temp->datehired[0])){{$temp->datehired[0]}}@endif<br/>
 							<input type="date" class="form-control" placeholder="Enter Date Hired" name="datehired">
 						  </div>
 						   <div class="form-group">
-							<select name="periodofleave">
+						   	@if(isset($temp->periodofleave[0])){{$temp->periodofleave[0]}}@endif<br/>
+							<select name="periodofleave" class="selectpicker form-control">
 								<option selected disabled>Choose Your Month Of Leave</option>
 								<option value="jan">January</option>
 								<option value="feb">February</option>
@@ -131,9 +131,11 @@
 							</select>
 						  </div>
 						  <div class="form-group">
+						  	@if(isset($temp->rsnofleave[0])){{$temp->rsnofleave[0]}}@endif<br/>
 							<input type="text" class="form-control" placeholder="Explain Your Reason" name="rsnofleave">
 						  </div>
 						  <div class="form-group">
+							@if(isset($temp->category[0])){{$temp->category[0]}}@endif<br/>
 							<select name="category" class="selectpicker form-control">
 								<option selected disabled>Choose Your Reason Category</option>
 								<option value="sick">Sick</option>
@@ -151,6 +153,11 @@
 			</div>
 	</section>
 @elseif (isset($ot))
+	@if(isset($messages))
+		<?php
+			$temp = JSON_decode($messages);
+		?>
+	@endif
 <div class="breadcrumb">
 				<ul class="isiBreadcrumb">
 					<input type="image" class="btnDashboard" src="{{asset('img/symbol.png')}}">
@@ -166,15 +173,6 @@
 		<div id="color">
 			<p id="move">Edit Overtime</p>
 			<p id="move2">Perbarui Pengajuan Overtime</p>
-			<br>
-				  @if(isset($messages))
-				  <?php
-				  	$temp = JSON_decode($messages);
-				  ?>
-					@foreach ($messages->all() as $message)
-						{{$message}} <br/>
-					@endforeach
-				@endif
 		</div>
 	<section id="content">
 			<div class="container">
@@ -185,15 +183,19 @@
 					<input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
 					<div class="form-inline">
 					  <div class="form-group">
+					  	@if(isset($temp->dateot[0])){{$temp->dateot[0]}}@endif<br/>
 						<input type="date" class="form-control" placeholder="Enter Date of Overtime" name="dateot">
 					  </div>
 					  <div class="form-group">
+					  	@if(isset($temp->timestarts[0])){{$temp->timestarts[0]}}@endif<br/>
 						<input type="time" class="form-control" placeholder="Overtime time start" name="timestarts">
 					  </div>
 					  <div class="form-group">
+					  	@if(isset($temp->timeends[0])){{$temp->timeends[0]}}@endif<br/>
 						<input type="time" class="form-control" placeholder="Overtime time end" name="timeends">
 					  </div>
 					  <div class="form-group">
+						@if(isset($temp->rsnofot[0])){{$temp->rsnofot[0]}}@endif<br/>
 						<input type="text" class="form-control" placeholder="Reason of Overtime" name="rsnofot">
 					  </div>
 					  <div class="form-group">

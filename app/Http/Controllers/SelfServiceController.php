@@ -14,7 +14,13 @@ class SelfServiceController extends Controller
 {
     // reimbursement
     function formReimbursement() {
-    	return \View::make('selfservice/addReimbursement');
+    	if (\Auth::user()->position != 'Business Unit') {
+            return \View::make('selfservice/addReimbursement');
+        }
+        else {
+            return \View::make('user/homepageGAIS');
+        }
+        
     }
 
     function addReimbursement(Request $request) {
@@ -50,6 +56,9 @@ class SelfServiceController extends Controller
         if (\Auth::user()->position === 'Supervisor') {
             $selfservice->status = 1;
         }
+        else if (\Auth::user()->position === 'Human Resource') {
+            $selfservice->status = 1;
+        }
         else {
             $selfservice->status = 0;    
         }
@@ -83,19 +92,24 @@ class SelfServiceController extends Controller
         if($selfservice->save()) {
             $reimbursement->selfservice_id = $kodeSS;
             if ($reimbursement->save()) {
-                return "berhasil";
+                return \Redirect::to('/dashboardNonAdmin');
             }
         }
         
     }
 
     function addReimbursementFbd() {
-        return "Forbidden";
+        return \View::make('selfservice/addReimbursement');
     }
 
     // paid leave
     function formPaidLeave() {
-        return \View::make('selfservice/addPaidLeave');
+        if (\Auth::user()->position != 'Human Resource') {
+            return \View::make('selfservice/addPaidLeave');
+        }
+        else {
+            return \View::make('user/homepageGAIS');
+        }
     }
 
     function addPaidLeave(Request $request) {
@@ -127,7 +141,16 @@ class SelfServiceController extends Controller
         $selfservice->description = $description;
         $selfservice->request_date = $mydate;
         $selfservice->approval_date = $mydate;
-        $selfservice->status = 0;
+        
+        if (\Auth::user()->position === 'Supervisor') {
+            $selfservice->status = 1;
+        }
+        else if (\Auth::user()->position === 'Business Unit') {
+            $selfservice->status = 1;
+        }
+        else {
+            $selfservice->status = 0;    
+        }
         $selfservice->employee_id = \Auth::user()->id_employee; // harusnya diganti session
  
         $paidLeave = new \App\PaidLeave();
@@ -141,19 +164,24 @@ class SelfServiceController extends Controller
         if($selfservice->save()) {
             $paidLeave->selfservice_id = $kodeSS;
             if ($paidLeave->save()) {
-                return "berhasil";
+                return \Redirect::to('/dashboardNonAdmin');
             }
         }
         
     }
 
     function addPaidLeaveFbd() {
-        return "Forbidden";
+        return \View::make('selfservice/addPaidLeave');
     }
 
     // overtime
     function formOvertime() {
-        return \View::make('selfservice/addOvertime');
+        if (\Auth::user()->position != 'Business Unit') {
+            return \View::make('selfservice/addOvertime');
+        }
+        else {
+            return \View::make('user/homepageGAIS');
+        }
     }
 
     function addOvertime(Request $request) {
@@ -185,7 +213,16 @@ class SelfServiceController extends Controller
         $selfservice->description = $description;
         $selfservice->request_date = $mydate;
         $selfservice->approval_date = $mydate;
-        $selfservice->status = 0;
+        
+        if (\Auth::user()->position === 'Supervisor') {
+            $selfservice->status = 1;
+        }
+        else if (\Auth::user()->position === 'Human Resource') {
+            $selfservice->status = 1;
+        }
+        else {
+            $selfservice->status = 0;    
+        }
         $selfservice->employee_id = \Auth::user()->id_employee; // harusnya diganti session
 
         $overtime = new \App\Overtime();
@@ -199,14 +236,14 @@ class SelfServiceController extends Controller
         if($selfservice->save()) {
             $overtime->selfservice_id = $kodeSS;
             if ($overtime->save()) {
-                return "berhasil";
+                return \Redirect::to('/dashboardNonAdmin');
             }
         }
         
     }
 
     function addOvertimeFbd() {
-        return "Forbidden";
+        return \View::make('selfservice/addOvertime');
     }
 
     // get detail
@@ -218,11 +255,28 @@ class SelfServiceController extends Controller
 
         if($ss == "") return "not found";
 
-        if(\Auth::user()->role != 'Admin') {
+        if($ss->employee_id == \Auth::user()->id_employee) {
             return \View::make('selfservice/getDetail')->with(compact('ss'))->with(compact('rm'))->with(compact('ot'))->with(compact('pl'));
         }
         else {
+            return \Redirect::to('/dashboardNonAdmin');
+        }
+        
+    }
+
+     function getDetailAdmin($kodeSS) {
+        $ss = \App\SelfService::where("kodeSS", "=", $kodeSS)->first();
+        $rm = \App\Reimbursement::where("selfservice_id", "=", $kodeSS)->first();
+        $ot = \App\Overtime::where("selfservice_id", "=", $kodeSS)->first();
+        $pl = \App\PaidLeave::where("selfservice_id", "=", $kodeSS)->first();
+
+        if($ss == "") return "not found";
+
+        if($ss->employee_id == \Auth::user()->id_employee) {
             return \View::make('selfservice/getDetailAdmin')->with(compact('ss'))->with(compact('rm'))->with(compact('ot'))->with(compact('pl'));
+        }
+        else {
+            return \Redirect::to('/dashboardAdmin');
         }
     }
 
@@ -232,7 +286,13 @@ class SelfServiceController extends Controller
             ->join('employee','selfservice.employee_id','=','employee.id_employee')
             ->get();
 
-        return \View::make('selfservice/getLogReimbursement')->with(compact('rm'));
+        if(\Auth::user()->role == 'Admin')  {
+            return \View::make('selfservice/getLogReimbursement')->with(compact('rm'));
+        }
+        else {
+            return \View::make('user/homepageGAIS');
+        }
+        
     }
 
     function getLogPaidLeave() {
@@ -241,7 +301,12 @@ class SelfServiceController extends Controller
             ->join('employee','selfservice.employee_id','=','employee.id_employee')
             ->get();
 
-        return \View::make('selfservice/getLogPaidLeave')->with(compact('pl'));
+        if(\Auth::user()->role == 'Admin')  {
+            return \View::make('selfservice/getLogPaidLeave')->with(compact('pl'));
+        }
+        else {
+            return \View::make('user/homepageGAIS');
+        }
     }
 
     function getLogOvertime() {
@@ -250,7 +315,12 @@ class SelfServiceController extends Controller
             ->join('employee','selfservice.employee_id','=','employee.id_employee')
             ->get();
 
-        return \View::make('selfservice/getLogOvertime')->with(compact('ot'));
+        if(\Auth::user()->role == 'Admin')  {
+            return \View::make('selfservice/getLogOvertime')->with(compact('ot'));
+        }
+        else {
+            return \View::make('user/homepageGAIS');
+        }
     }
 
     function getMyReimbursement() {
@@ -262,7 +332,7 @@ class SelfServiceController extends Controller
             ->where('status','>=','0')
             ->get();
 
-        return \View::make('selfservice/getMyReimbursement')->with(compact('rm'));
+            return \View::make('selfservice/getMyReimbursement')->with(compact('rm'));
     }
 
     function getMyPaidLeave() {
@@ -274,7 +344,7 @@ class SelfServiceController extends Controller
             ->where('status','>=','0')
             ->get();
 
-        return \View::make('selfservice/getMyPaidLeave')->with(compact('pl'));
+           return \View::make('selfservice/getMyPaidLeave')->with(compact('pl'));
     }
 
     function getMyOvertime() {
@@ -286,7 +356,7 @@ class SelfServiceController extends Controller
             ->where('status','>=','0')
             ->get();
 
-        return \View::make('selfservice/getMyOvertime')->with(compact('ot'));
+            return \View::make('selfservice/getMyOvertime')->with(compact('ot'));
     }
 
     function myApproval() {
@@ -379,7 +449,9 @@ class SelfServiceController extends Controller
 
             return \View::make('selfservice/myApproval')->with(compact('ss'))->with(compact('position'));
         }
-           
+        else {
+            return \View::make('user/homepageGAIS');
+        }    
     }
   
 
@@ -390,22 +462,37 @@ class SelfServiceController extends Controller
         $pl = \App\PaidLeave::where("selfservice_id", "=", $kodeSS)->count();
             if ($rm > 0) {
                 $rm = \App\Reimbursement::where("selfservice_id", "=", $kodeSS)->first();
-                //return($rm);
-                return \View::make('selfservice/update')->with(compact('rm'))->with(compact('ss'));
+                $id_employee = $ss->employee_id;
+                if($id_employee = \Auth::user()->id_employee) {
+                    return \View::make('selfservice/update')->with(compact('rm'))->with(compact('ss'));
+                }
+                else {
+                    return \View::make('user/dashboardNonAdmin'); //harusnya dashboard non admin
+                }
             }
             else if ($pl > 0) {
                $pl = \App\PaidLeave::where("selfservice_id", "=", $kodeSS)->first();
-               //return($pl);
-               return \View::make('selfservice/update')->with(compact('pl'))->with(compact('ss'));
+               $id_employee = $ss->employee_id;
+               if($id_employee = \Auth::user()->id_employee) {
+                    return \View::make('selfservice/update')->with(compact('pl'))->with(compact('ss'));
+                }
+                else {
+                    return \View::make('user/dashboardNonAdmin'); //harusnya dashboard non admin
+                }
             }
             else if ($ot > 0) {
                 $ot = \App\Overtime::where("selfservice_id", "=", $kodeSS)->first();
-                //return($ot);
-                return \View::make('selfservice/update')->with(compact('ot'))->with(compact('ss'));
+                if($id_employee = \Auth::user()->id_employee) {
+                    return \View::make('selfservice/update')->with(compact('ot'))->with(compact('ss'));
+                }
+                else {
+                    return \View::make('user/dashboardNonAdmin'); //harusnya dashboard non admin
+                }
+                
             } 
             else
             {
-                $ss->tipe = "Error : " . $rm . " " . $pl . " " . $ot;
+                return \View::make('user/dashboardNonAdmin'); // harusnya dashboard non admin
             }
     }
 
@@ -569,7 +656,7 @@ class SelfServiceController extends Controller
             if($ss->save()) {
                 //$rm->selfservice_id = $kodeSS;
                 if ($rm->save()) {
-                    return "berhasil";
+                    return \View::make('user/getMyReimbursement');
                 }
             }
         }
@@ -582,7 +669,7 @@ class SelfServiceController extends Controller
             if($ss->save()) {
                 //$pl->selfservice_id = $kodeSS;
                 if ($pl->save()) {
-                    return "berhasil";
+                    return \View::make('user/getMyPaidLeave');
                 }
             }
         
@@ -596,9 +683,57 @@ class SelfServiceController extends Controller
             if($ss->save()) {
                 //$ot->selfservice_id = $kodeSS;
                 if ($ot->save()) {
-                    return "berhasil";
+                    return \View::make('user/getMyOvertime');
                 }
             }
+        }
+    }
+
+    function approval($kodeSS) {
+        if(\Auth::user()->position == 'Supervisor') {
+            $ss = \App\SelfService::where("kodeSS","=", $kodeSS)->first();
+            $ss->status = 1;
+            $ss->save();
+            if($ss->save()) {
+                $ss = \App\SelfService::where("kodeSS","=", $kodeSS)->first();
+                return \Redirect::to('/myApproval');
+            }
+        }
+        else if(\Auth::user()->position == 'Business Unit' || \Auth::user()->position == 'Human Resource') {
+            $ss = \App\SelfService::where("kodeSS","=", $kodeSS)->first();
+            $ss->status = 2;
+            $ss->save();
+            if($ss->save()) {
+                $ss = \App\SelfService::where("kodeSS","=", $kodeSS)->first();
+                return \Redirect::to('/myApproval');
+            }
+        }
+        else {
+            return \View::make('user/homepageGAIS');
+        }
+    }
+
+    function rejection($kodeSS) {
+        if(\Auth::user()->position == 'Supervisor') {
+            $ss = \App\SelfService::where("kodeSS","=", $kodeSS)->first();
+            $ss->status = 3;
+            $ss->save();
+            if($ss->save()) {
+                $ss = \App\SelfService::where("kodeSS","=", $kodeSS)->first();
+                return \Redirect::to('/myApproval');
+            }
+        }
+        else if(\Auth::user()->position == 'Business Unit' || \Auth::user()->position == 'Human Resource') {
+            $ss = \App\SelfService::where("kodeSS","=", $kodeSS)->first();
+            $ss->status = 4;
+            $ss->save();
+            if($ss->save()) {
+                $ss = \App\SelfService::where("kodeSS","=", $kodeSS)->first();
+                return \Redirect::to('/myApproval');
+            }
+        }
+        else {
+            return \View::make('user/homepageGAIS');
         }
     }
 

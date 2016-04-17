@@ -48,7 +48,9 @@
 							</div>
 						</div>
 					</div>
+					
 					<div id="conDashboard2" class="containerDashboard2">
+						@if (\Auth::user()->position != 'Business Unit')
 						<div class="col-homepage-left">
 							<div class="well">
 								<li> <div class="createReimburse">
@@ -57,6 +59,8 @@
 								</div> </li>
 							</div>
 						</div>
+						@endif
+						@if (\Auth::user()->position != 'Human Resource')
 						<div class="col-homepage-center">
 							<div class="well">
 								<div class="createPaidLeave">
@@ -65,6 +69,8 @@
 								</div>
 							</div>
 						</div>
+						@endif
+						@if (\Auth::user()->position != 'Business Unit')
 						<div class="col-homepage-right">
 							<div class="well">
 								<div class="createOvertime">
@@ -73,6 +79,7 @@
 								</div>
 							</div>
 						</div>
+						@endif
 					</div>
 				</div>
 			  </div>

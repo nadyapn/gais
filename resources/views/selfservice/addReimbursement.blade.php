@@ -49,7 +49,7 @@
 						  </div>
 						  <div class="form-group">
 						  	@if(isset($temp->category[0])){{$temp->category[0]}}@endif<br/>
-					        <select name="category" class="selectpicker form-control">
+					        <select name="category" >
 					          <option disabled selected>Choose Your Reimburse Category</option>
 					          <option>Project</option>
 					          <option>Other</option>

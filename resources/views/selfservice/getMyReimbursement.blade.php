@@ -16,7 +16,7 @@
 		<p id="move">Dashboard Reimburse</p>
 		<p id="move2">A detailed look of your Reimburse history</p>
 	</div>
-	<section id="content">
+	
 		<section id="content">
 			<div class="container">
 				<div class="titleContent">
@@ -58,7 +58,7 @@
 							@endforeach
 						</tbody>
 				</table>
-					
 			</div>
-		</section>
+		
+	</section>
 @endsection

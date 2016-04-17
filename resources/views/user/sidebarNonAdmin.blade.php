@@ -8,7 +8,7 @@
 				<div class="menu-list">
 					<ul id="menu-content" class="menu-content collapse out">
 						<li class="active">
-						  <a href="#">
+						  <a href="{{url('/dashboardNonAdmin')}}">
 						  <img style="margin-left:10px;margin-right:5px"src="img/dashboard-white.png"> Dashboard <b> {{\Auth::user()->position}} </b>
 						  </a>
 						</li>
