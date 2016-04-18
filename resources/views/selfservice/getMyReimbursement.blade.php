@@ -9,7 +9,7 @@
 				<li><a href="#">Dashboard Non Admin</a></li>
 				<li><a href="#" class="active">View Reimburse</a></li>
 			</ul>
-			<button type="button" class="btn btn-secondary2">Back to Home</button>
+			<a href="{{url('/homepageGAIS')}}" class="btn btn-secondary2">Back to Home</a>
 		</ul>
 	</div>
 	<div id="color">
@@ -50,10 +50,9 @@
 									@endif
 								</td>
 								<td><a href="{{url('/getDetail/'.$e->kodeSS)}}" class="btn btn-view">View</td>
-								@if ($e->status == 0)
-									<td><a href="{{url('/update/'.$e->kodeSS)}}" class="btn btn-view">Update</td>
-									<td><a href="{{url('/delete/'.$e->kodeSS)}}" class="btn btn-view" onclick="return confirm('Are you sure?')">Delete</td>
-								@endif
+							
+								<td>@if ($e->status == 0)<a href="{{url('/update/'.$e->kodeSS)}}" class="btn btn-view">Update </a> @endif</td>
+								<td>@if ($e->status == 0)<a href="{{url('/delete/'.$e->kodeSS)}}" class="btn btn-view" onclick="return confirm('Are you sure?')">Delete</a> @endif</td>
 							</tr>
 							@endforeach
 						</tbody>

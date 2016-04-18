@@ -255,7 +255,7 @@ class SelfServiceController extends Controller
 
         if($ss == "") return "not found";
 
-        if($ss->employee_id == \Auth::user()->id_employee) {
+        if($ss->employee_id == \Auth::user()->id_employee || \Auth::user()->supervisor == \Auth::user()->employee_id) {
             return \View::make('selfservice/getDetail')->with(compact('ss'))->with(compact('rm'))->with(compact('ot'))->with(compact('pl'));
         }
         else {
@@ -363,7 +363,9 @@ class SelfServiceController extends Controller
         $position = \Auth::user()->position;
         $id_employee = \Auth::user()->id_employee;
 
+        
         if($position == 'Supervisor') {
+            //return "approval supervisor";
             $ss = DB::table('selfservice')
             ->join('employee','employee.id_employee','=','selfservice.employee_id')
             ->where('supervisor',$id_employee)
@@ -396,12 +398,13 @@ class SelfServiceController extends Controller
             return \View::make('selfservice/myApproval')->with(compact('ss'))->with(compact('position'));
         }
 
-        else if($position == 'Business Unit') {
+        else if($position == 'Business Unit') {                             //BELOMAN
             $ss = DB::table('selfservice')
             ->join('employee','employee.id_employee','=','selfservice.employee_id')
-            ->where('supervisor',$id_employee)
             ->where('status','1')
             ->get();
+
+            //return "approval business unit";
 
             if($ss == "") return "not found";
 
@@ -409,8 +412,12 @@ class SelfServiceController extends Controller
                 $kodeSS = $e->kodeSS;
                 $rm = \App\Reimbursement::where("selfservice_id", "=", $kodeSS)->count();
                 $ot = \App\Overtime::where("selfservice_id", "=", $kodeSS)->count();
+                $pl = \App\PaidLeave::where("selfservice_id", "=", $kodeSS)->count();
                 if ($rm > 0) {
                     $e->tipe = "Reimbursement";
+                }
+                else if ($pl > 0) {
+                    $e->tipe = "PaidLeave";
                 }
                 else if ($ot > 0) {
                     $e->tipe = "Overtime";
@@ -428,10 +435,11 @@ class SelfServiceController extends Controller
         else if($position == 'Human Resource') {
             $ss = DB::table('selfservice')
             ->join('employee','employee.id_employee','=','selfservice.employee_id')
-            ->where('supervisor',$id_employee)
-            ->where('status','1')
+            ->join('paidLeave','paidLeave.selfservice_id','=','selfservice.kodeSS')
+            ->where('selfservice.status','1')
             ->get();
 
+            //return "approval human resource";
             if($ss == "") return "not found";
 
             foreach ($ss as $e) {
@@ -656,7 +664,8 @@ class SelfServiceController extends Controller
             if($ss->save()) {
                 //$rm->selfservice_id = $kodeSS;
                 if ($rm->save()) {
-                    return \View::make('user/getMyReimbursement');
+                    //return \View::make('user/getMyReimbursement');
+                    return \Redirect::to('/getMyReimbursement');
                 }
             }
         }
@@ -669,7 +678,8 @@ class SelfServiceController extends Controller
             if($ss->save()) {
                 //$pl->selfservice_id = $kodeSS;
                 if ($pl->save()) {
-                    return \View::make('user/getMyPaidLeave');
+                    //return \View::make('user/getMyPaidLeave');
+                    return \Redirect::to('/getMyPaidLeave');
                 }
             }
         
@@ -683,7 +693,8 @@ class SelfServiceController extends Controller
             if($ss->save()) {
                 //$ot->selfservice_id = $kodeSS;
                 if ($ot->save()) {
-                    return \View::make('user/getMyOvertime');
+                    //return \View::make('user/getMyOvertime');
+                    return \Redirect::to('/getMyOvertime');
                 }
             }
         }

@@ -9,7 +9,7 @@
 							<li><a href="#">Dashboard Admin</a></li>
 							<li><a href="#" class="active">Paid Leave</a></li>
 						</ul>
-					<button type="button" class="btn btn-secondary2">Back to Home</button>
+					<a href="{{url('/homepageGAIS')}}" class="btn btn-secondary2">Back to Home</a>
 				</ul>
 			</div>
 	<div id="color">
