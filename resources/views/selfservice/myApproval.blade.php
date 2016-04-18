@@ -11,7 +11,7 @@
 							<li><a href="#">Dashboard Non Admin</a></li>
 							<li><a href="#" class="active">My Approval</a></li>
 						</ul>
-					<button type="button" class="btn btn-secondary2">Back to Home</button>
+					<a href="{{url('/homepageGAIS')}}" class="btn btn-secondary2">Back to Home</a>
 				</ul>
 			</div>
 	<div id="color">
@@ -89,24 +89,26 @@
 				</thead>
 			  	<tbody>
 				  	@foreach($ss as $e)
-				  	<tr>
-						<td>{{$e->kodeSS}}</td>
-						<td>{{$e->request_date}}</td>
-						<td>{{$e->tipe}}</td>
-						<td>{{$e->name}}</td>
-						<td>
-							@if ($e->status = 0)
-								Not approved yet by Supervisor
-							@elseif ($e->status = 1)
-								Approved by Supervisor  
-							@elseif ($e->status = 2)
-								Approved by Business Unit
-							@elseif ($e->status = -1)
-								Canceled by Employee
-							@endif
-						</td>
-						<td><a href="{{url('/getDetail/'.$e->kodeSS)}}" class="btn btn-view">View</td>
-					</tr>
+				  		@if($e->tipe != 'PaidLeave')
+					  	<tr>
+							<td>{{$e->kodeSS}}</td>
+							<td>{{$e->request_date}}</td>
+							<td>{{$e->tipe}}</td>
+							<td>{{$e->name}}</td>
+							<td>
+								@if ($e->status = 0)
+									Not approved yet by Supervisor
+								@elseif ($e->status = 1)
+									Approved by Supervisor  
+								@elseif ($e->status = 2)
+									Approved by Business Unit
+								@elseif ($e->status = -1)
+									Canceled by Employee
+								@endif
+							</td>
+							<td><a href="{{url('/getDetail/'.$e->kodeSS)}}" class="btn btn-view">View</td>
+						</tr>
+						@endif
 					@endforeach
 				</tbody>
 			</table>		

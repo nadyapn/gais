@@ -10,7 +10,7 @@
 							<li><a href="#">Employee Self Service</a></li>
 							<li><a href="#" class="active">Create Reimburse</a></li>
 						</ul>
-					<button type="button" class="btn btn-secondary2">Back to Home</button>
+					<a href="{{url('/homepageGAIS')}}" class="btn btn-secondary2">Back to Home</a>
 				</ul>
 			</div>
 			<div id="color">

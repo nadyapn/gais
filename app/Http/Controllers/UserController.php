@@ -59,8 +59,6 @@ class UserController extends Controller
         if (\Auth::user()->role == 'Admin') {
             return \View::make('user/dashboardAdmin');
         }
-
-        
     }
 
 
@@ -125,7 +123,6 @@ class UserController extends Controller
         else if(\Auth::user()->position == 'Business Unit') {
             $ss = DB::table('selfservice')
             ->join('employee','employee.id_employee','=','selfservice.employee_id')
-            ->where('supervisor','=',\Auth::user()->id_employee)
             ->where('status','1')
             ->get();
 
@@ -182,7 +179,6 @@ class UserController extends Controller
         else if(\Auth::user()->position == 'Human Resource') {
             $ss = DB::table('selfservice')
             ->join('employee','employee.id_employee','=','selfservice.employee_id')
-            ->where('supervisor','=',\Auth::user()->id_employee)
             ->where('status','1')
             ->get();
 

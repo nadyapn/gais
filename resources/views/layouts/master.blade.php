@@ -85,7 +85,7 @@
               </a>
               <ul class="dropdown-menu" id="menu" role="menu">
                 @if (\Auth::user()->role == 'Admin')
-                <li><a href="#">Administrator</a></li> <!-- ganti jadi dashboard admin -->
+                <li><a href="{{url('/dashboardAdmin')}}">Administrator</a></li> <!-- ganti jadi dashboard admin -->
                 <li class="divider"></li>
                 @endif
                 <li><a href="{{url('/logout')}}">Logout</a></li>
@@ -136,7 +136,7 @@
   <script type="text/javascript" src="{{asset('/js/toggleButton.js')}}"></script>
    <!-- jQuery -->
 
-    <script src="{{asset('/js/jquery.js')}}"></script>
+    <!--script src="{{asset('/js/jquery.js')}}"></script-->
     
     <!-- Bootstrap Core JavaScript -->
     <script src="{{asset('/js/bootstrap.min.js')}}"></script>
