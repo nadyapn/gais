@@ -53,8 +53,8 @@
 											Canceled by Employee
 									@endif
 								</td>
+								<td><a href="{{url('/getDetailAdmin/'.$e->kodeSS)}}" class="btn btn-view">View</td>
 							</tr>
-							<td><a href="{{url('/getDetailAdmin/'.$e->kodeSS)}}" class="btn btn-view">View</td>
 							@endforeach
 						</tbody>
 					</table>

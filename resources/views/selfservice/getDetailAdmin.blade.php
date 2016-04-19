@@ -22,64 +22,171 @@
 				  
 				  	@if ($rm != "")
 						@if($rm->photo != "")  @endif
-						KodeSS : {{$ss->kodeSS}}<br/>
-						Business Purpose : {{$rm->business_purpose}}<br/>
-						Category : {{$rm->category}}<br/>
-						Event Date : {{$rm->date}}<br/>
-						Detail of Spending : {{$ss->description}}<br/>
-						Total Cost : {{$rm->cost}}<br/>
-						Photo : <img src="{{url('./foto/'.$rm->photo)}}" style="width:500px;"/><br/>
-						
-						@if ($rm->status == 0)
-							Not approved yet by Supervisor
-						@elseif ($rm->status == 1)
-							Approved by Supervisor 
-						@elseif ($rm->status == 2)
-							Approved by Business Unit
-						@elseif ($rm->status == -1)
-							Canceled by Employee
-						@endif<br/>
+						<div class="table-responsive">
+							<table class="table">
+								<tr>
+									<td>Kode</td>
+									<td> {{$ss->kodeSS}}</td>
+								</tr>
+								<tr>
+									<td>Employee's Name</td>
+									<td> </td>
+								</tr>
+								<tr>
+									<td>Business Purpose</td>
+									<td> {{$rm->business_purpose}}</td>
+								</tr>
+								<tr>
+									<td>Category</td>
+									<td> {{$rm->category}}</td>
+								</tr>
+								<tr>
+									<td>Date of Event</td>
+									<td> {{$rm->date}}</td>
+								</tr>
+								<tr>
+									<td>Detail of Spending</td>
+									<td> {{$ss->description}}</td>
+								</tr>
+								<tr>
+									<td>Total Cost</td>
+									<td> {{$rm->cost}}</td>
+								</tr>
+								<tr>
+									<td>Total Cost</td>
+									<td> <img src="{{url('./foto/'.$rm->photo)}}" style="width:500px;"/></td>
+								</tr>
+								<tr>
+									<td>Status</td>
+									<td>
+										@if ($ss->status == 0)
+											Not approved yet by Supervisor
+										@elseif ($ss->status == 1)
+											Approved by Supervisor 
+										@elseif ($ss->status == 2)
+											Approved by Business Unit
+										@elseif ($ss->status == -1)
+											Canceled by Employee
+										@elseif ($ss->status == 3)
+											Rejected by Supervisor
+										@elseif ($ss->status == 4)
+											Rejected by Business Unit
+										@endif
+									</td>
+								</tr>
+								<tr>
+									<td>Request Date</td>
+									<td> {{$ss->request_date}}</td>
+								</tr>
+							</table>
+						</div>
 
-						Request Date : {{$ss->request_date}}<br/>
-
-						<br/>
 					@elseif ($pl != "")
-						KodeSS : {{$ss->kodeSS}}<br/>
-						Date Hired : {{$pl->date_hired}}<br/>
-						Period of Leave : {{$pl->period_of_leave}}<br/>
-						Total Leave : {{$pl->total_leave}}<br/>
-						Reason of Leave : {{$ss->description}}<br/>
-						Category : {{$pl->category}}<br/>
-
-						@if ($pl->status == 0)
-							Not approved yet by Supervisor
-						@elseif ($pl->status == 1)
-							Approved by Supervisor 
-						@elseif ($pl->status == 2)
-							Approved by HR
-						@elseif ($pl->status == -1)
-							Canceled by Employee
-						@endif<br/>
-
-						Request Date : {{$ss->request_date}}<br/>
+						<div class="table-responsive">
+							<table class="table">
+								<tr>
+									<td>Kode</td>
+									<td> {{$ss->kodeSS}}</td>
+								</tr>
+								<tr>
+									<td>Employee's Name</td>
+									<td> </td>
+								</tr>
+								<tr>
+									<td>Date Hired</td>
+									<td> {{$pl->date_hired}}</td>
+								</tr>
+								<tr>
+									<td>Period of Leave</td>
+									<td> {{$pl->period_of_leave}}</td>
+								</tr>
+								<tr>
+									<td>Total Leave</td>
+									<td> {{$pl->total_leave}}</td>
+								</tr>
+								<tr>
+									<td>Reason of Leave</td>
+									<td> {{$ss->description}}</td>
+								</tr>
+								<tr>
+									<td>Category</td>
+									<td> {{$pl->category}}</td>
+								</tr>
+								<tr>
+									<td>Status</td>
+									<td>
+										@if ($ss->status == 0)
+											Not approved yet by Supervisor
+										@elseif ($ss->status == 1)
+											Approved by Supervisor 
+										@elseif ($ss->status == 2)
+											Approved by Business Unit
+										@elseif ($ss->status == -1)
+											Canceled by Employee
+										@elseif ($ss->status == 3)
+											Rejected by Supervisor
+										@elseif ($ss->status == 4)
+											Rejected by Business Unit
+										@endif
+									</td>
+								</tr>
+								<tr>
+									<td>Request Date</td>
+									<td> {{$ss->request_date}}</td>
+								</tr>
+							</table>
+						</div>
 					@elseif ($ot != "")
-						KodeSS : {{$ss->kodeSS}}<br/>
-						Date of Overtime : {{$ot->date}}<br/>
-						Time Starts : {{$ot->time_start}}<br/>
-						Time Ends : {{$ot->time_end}}<br/>
-						Reason of Overtime : {{$ss->description}}<br/>
-
-						@if ($ot->status == 0)
-							Not approved yet by Supervisor
-						@elseif ($ot->status == 1)
-							Approved by Supervisor 
-						@elseif ($ot->status == 2)
-							Approved by Business Unit
-						@elseif ($ot->status == -1)
-							Canceled by Employee
-						@endif<br/>
-
-						Request Date : {{$ss->request_date}}<br/>
+						<div class="table-responsive">
+							<table class="table">
+								<tr>
+									<td>Kode</td>
+									<td> {{$ss->kodeSS}}</td>
+								</tr>
+								<tr>
+									<td>Employee's Name</td>
+									<td> </td>
+								</tr>
+								<tr>
+									<td>Date of Overtime</td>
+									<td>{{$ot->date}}</td>
+								</tr>
+								<tr>
+									<td>Time Starts</td>
+									<td> {{$ot->time_start}}</td>
+								</tr>
+								<tr>
+									<td>Time Ends</td>
+									<td>{{$ot->time_end}}</td>
+								</tr>
+								<tr>
+									<td>Reason of Overtime</td>
+									<td> {{$ss->description}}</td>
+								</tr>
+								<tr>
+									<td>Status</td>
+									<td>
+										@if ($ss->status == 0)
+											Not approved yet by Supervisor
+										@elseif ($ss->status == 1)
+											Approved by Supervisor 
+										@elseif ($ss->status == 2)
+											Approved by Business Unit
+										@elseif ($ss->status == -1)
+											Canceled by Employee
+										@elseif ($ss->status == 3)
+											Rejected by Supervisor
+										@elseif ($ss->status == 4)
+											Rejected by Business Unit
+										@endif
+									</td>
+								</tr>
+								<tr>
+									<td>Request Date</td>
+									<td> {{$ss->request_date}}</td>
+								</tr>
+							</table>
+						</div>
 					@else
 						not found
 					@endif
