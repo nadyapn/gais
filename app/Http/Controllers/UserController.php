@@ -59,6 +59,9 @@ class UserController extends Controller
         if (\Auth::user()->role == 'Admin') {
             return \View::make('user/dashboardAdmin');
         }
+        else {
+            return \View::make('errors/401');   
+        }
     }
 
 

@@ -268,7 +268,8 @@ class SelfServiceController extends Controller
             return \View::make('selfservice/getDetail')->with(compact('ss'))->with(compact('rm'))->with(compact('ot'))->with(compact('pl'));
         }
         else {
-            return \Redirect::to('/dashboardNonAdmin');
+            return \View::make('errors/401');
+            //return \Redirect::to('/dashboardNonAdmin');
         }
         
     }
@@ -281,7 +282,12 @@ class SelfServiceController extends Controller
 
         if($ss == "") return "not found";
 
-        return \View::make('selfservice/getDetailAdmin')->with(compact('ss'))->with(compact('rm'))->with(compact('ot'))->with(compact('pl'));
+        if (\Auth::user()->role == 'Admin') {
+            return \View::make('selfservice/getDetailAdmin')->with(compact('ss'))->with(compact('rm'))->with(compact('ot'))->with(compact('pl'));
+        }
+        else {
+            return \View::make('errors/401');   
+        }
     }
 
     function getLogReimbursement() {
@@ -294,7 +300,8 @@ class SelfServiceController extends Controller
             return \View::make('selfservice/getLogReimbursement')->with(compact('rm'));
         }
         else {
-            return \View::make('user/homepageGAIS');
+            return \View::make('errors/401');   
+            //return \View::make('user/homepageGAIS');
         }
         
     }
@@ -309,7 +316,8 @@ class SelfServiceController extends Controller
             return \View::make('selfservice/getLogPaidLeave')->with(compact('pl'));
         }
         else {
-            return \View::make('user/homepageGAIS');
+            return \View::make('errors/401');   
+            //return \View::make('user/homepageGAIS');
         }
     }
 
@@ -323,7 +331,8 @@ class SelfServiceController extends Controller
             return \View::make('selfservice/getLogOvertime')->with(compact('ot'));
         }
         else {
-            return \View::make('user/homepageGAIS');
+            return \View::make('errors/401');   
+            //return \View::make('user/homepageGAIS');
         }
     }
 
@@ -462,7 +471,8 @@ class SelfServiceController extends Controller
             return \View::make('selfservice/myApproval')->with(compact('ss'))->with(compact('position'));
         }
         else {
-            return \View::make('user/homepageGAIS');
+            return \View::make('errors/401');   
+            //return \View::make('user/homepageGAIS');
         }    
     }
   
@@ -472,11 +482,17 @@ class SelfServiceController extends Controller
         $rm = \App\Reimbursement::where("selfservice_id", "=", $kodeSS)->count();
         $ot = \App\Overtime::where("selfservice_id", "=", $kodeSS)->count();
         $pl = \App\PaidLeave::where("selfservice_id", "=", $kodeSS)->count();
+        $workson = DB::table('works_on')
+                ->join('project','project.id','=','works_on.id_project')
+                ->select('name')
+                ->where('works_on.id',\Auth::user()->id_employee)
+                ->get();
+        if ($ss->employee_id == \Auth::user()->id_employee) {        
             if ($rm > 0) {
                 $rm = \App\Reimbursement::where("selfservice_id", "=", $kodeSS)->first();
                 $id_employee = $ss->employee_id;
                 if($id_employee = \Auth::user()->id_employee) {
-                    return \View::make('selfservice/update')->with(compact('rm'))->with(compact('ss'));
+                    return \View::make('selfservice/update')->with(compact('rm'))->with(compact('ss'))->with(compact('workson'));
                 }
                 else {
                     return \View::make('user/dashboardNonAdmin'); //harusnya dashboard non admin
@@ -504,8 +520,13 @@ class SelfServiceController extends Controller
             } 
             else
             {
-                return \View::make('user/dashboardNonAdmin'); // harusnya dashboard non admin
+                return \View::make('errors/401');   
+                //return \View::make('user/dashboardNonAdmin'); // harusnya dashboard non admin
             }
+        }
+        else {
+            return \View::make('errors/401');
+        }
     }
 
     function updatePost($kodeSS, Request $request) {
@@ -561,13 +582,13 @@ class SelfServiceController extends Controller
                     \Request::file('foto')->move('./foto', $foto);
                     //\Request::file('logo')->move(base_path().'/logo', $logo);
 
-                    $reimbursement->photo = $foto;
+                    $rm->photo = $foto;
                 }
             }
             
             if($ss->save()) {
                 if ($rm->save()) {
-                    return "berhasil";
+                    return \Redirect::to('/dashboardNonAdmin');
                 }
             }
         }
@@ -607,7 +628,7 @@ class SelfServiceController extends Controller
             
             if($ss->save()) {
                 if ($pl->save()) {
-                    return "berhasil";
+                    return \Redirect::to('/dashboardNonAdmin');
                 }
             }
         
@@ -647,7 +668,7 @@ class SelfServiceController extends Controller
             $kodeSS = DB::table('selfservice')->where('request_date', $mydate)->value('kodeSS');
             if($ss->save()) {
                 if ($ot->save()) {
-                    return "berhasil";
+                    return \Redirect::to('/dashboardNonAdmin');
                 }
             }
         }
