@@ -55,6 +55,16 @@
 					          <option>Other</option>
 					        </select>
 					      </div>
+					      <div class="form-group">
+							
+							  	@if(isset($temp->project[0])){{$temp->project[0]}}@endif<br/>
+						        <select name="project" >
+						          <option disabled selected>Choose Your Project</option>
+						          @foreach ($workson as $f)
+						          	<option>{{$f->name}}</option>
+						           @endforeach
+						        </select>
+					      </div>
 						  <div class="form-group">
 						  	@if(isset($temp->descriptionRem[0])){{$temp->descriptionRem[0]}}@endif<br/>
 							<input type="text" class="form-control" placeholder="Explain Detail of Spending" name="descriptionRem">

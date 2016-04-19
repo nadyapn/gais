@@ -59,6 +59,9 @@ class UserController extends Controller
         if (\Auth::user()->role == 'Admin') {
             return \View::make('user/dashboardAdmin');
         }
+        else {
+            return \View::make('errors/401');   
+        }
     }
 
 
@@ -231,7 +234,7 @@ class UserController extends Controller
 
             return \View::make('user/dashboardNonAdmin')->with(compact('ss'))->with(compact('all'));
         }
-        else{
+        else {
             $all = DB::table('selfservice')
             ->join('employee','employee.id_employee','=','selfservice.employee_id')
             ->where('employee_id','=',\Auth::user()->id_employee)

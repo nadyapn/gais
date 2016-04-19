@@ -49,11 +49,21 @@
 						  </div>
 						  <div class="form-group">
 					        @if(isset($temp->category[0])){{$temp->category[0]}}@endif<br/>
-					        <select name="category" class="selectpicker form-control">
+					        <select name="category" >
 					          <option disabled selected>Choose Your Reimburse Category</option>
 					          <option>Project</option>
 					          <option>Other</option>
 					        </select>
+					      </div>
+					      <div class="form-group">
+							
+							  	@if(isset($temp->project[0])){{$temp->project[0]}}@endif<br/>
+						        <select name="project" >
+						          <option disabled selected>Choose Your Project</option>
+						          @foreach ($workson as $f)
+						          	<option>{{$f->name}}</option>
+						           @endforeach
+						        </select>
 					      </div>
 						  <div class="form-group">
 							@if(isset($temp->descriptionRem[0])){{$temp->descriptionRem[0]}}@endif<br/>
@@ -114,7 +124,7 @@
 						  </div>
 						   <div class="form-group">
 						   	@if(isset($temp->periodofleave[0])){{$temp->periodofleave[0]}}@endif<br/>
-							<select name="periodofleave" class="selectpicker form-control">
+							<select name="periodofleave" >
 								<option selected disabled>Choose Your Month Of Leave</option>
 								<option value="jan">January</option>
 								<option value="feb">February</option>
@@ -136,7 +146,7 @@
 						  </div>
 						  <div class="form-group">
 							@if(isset($temp->category[0])){{$temp->category[0]}}@endif<br/>
-							<select name="category" class="selectpicker form-control">
+							<select name="category" >
 								<option selected disabled>Choose Your Reason Category</option>
 								<option value="sick">Sick</option>
 								<option value="maternity">Maternity</option>

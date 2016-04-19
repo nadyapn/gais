@@ -11,7 +11,7 @@
 				</ul>
 			</div>
 	<div id="color">
-		<p id="move">Homepage</p>
+		<p id="move">Homepage, <b>{{\Auth::user()->name}}</b></p>
 		<p id="move2">Place for Request Something</p>
 	</div>
 		<section id="content">
