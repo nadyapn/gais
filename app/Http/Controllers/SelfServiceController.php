@@ -15,7 +15,15 @@ class SelfServiceController extends Controller
     // reimbursement
     function formReimbursement() {
     	if (\Auth::user()->position != 'Business Unit') {
-            return \View::make('selfservice/addReimbursement');
+            $workson = DB::table('works_on')
+                ->join('project','project.id','=','works_on.id_project')
+                ->select('name')
+                ->where('works_on.id',\Auth::user()->id_employee)
+                ->get();
+
+            //return ($workson);
+
+            return \View::make('selfservice/addReimbursement')->with(compact('workson'));
         }
         else {
             return \View::make('user/homepageGAIS');
@@ -29,6 +37,7 @@ class SelfServiceController extends Controller
     	$date = \Request::input('dateRem');
     	$description = \Request::input('descriptionRem');
     	$cost = \Request::input('cost'); 
+        $project = \Request::input('project'); 
 
         $validator = \Validator::make($request->all(), [
             'businesspurpose' => 'required',
@@ -74,12 +83,7 @@ class SelfServiceController extends Controller
 
         $selfservice->save();
         $kodeSS = DB::table('selfservice')->where('request_date', $mydate)->value('kodeSS');
-        $workson = DB::table('works_on')
-                ->join('project','project.id','=','works_on.id_project')
-                ->select('name')
-                ->where('works_on.id',\Auth::user()->id_employee)
-                ->get();
-
+        
         if (\Request::hasFile('foto')) {
             if (\Request::file('foto')->isValid()) {
                 $extension = \Request::file('foto')->getClientOriginalExtension();
