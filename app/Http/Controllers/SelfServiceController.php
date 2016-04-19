@@ -74,6 +74,11 @@ class SelfServiceController extends Controller
 
         $selfservice->save();
         $kodeSS = DB::table('selfservice')->where('request_date', $mydate)->value('kodeSS');
+        $workson = DB::table('works_on')
+                ->join('project','project.id','=','works_on.id_project')
+                ->select('name')
+                ->where('works_on.id',\Auth::user()->id_employee)
+                ->get();
 
         if (\Request::hasFile('foto')) {
             if (\Request::file('foto')->isValid()) {
@@ -272,12 +277,7 @@ class SelfServiceController extends Controller
 
         if($ss == "") return "not found";
 
-        if($ss->employee_id == \Auth::user()->id_employee) {
-            return \View::make('selfservice/getDetailAdmin')->with(compact('ss'))->with(compact('rm'))->with(compact('ot'))->with(compact('pl'));
-        }
-        else {
-            return \Redirect::to('/dashboardAdmin');
-        }
+        return \View::make('selfservice/getDetailAdmin')->with(compact('ss'))->with(compact('rm'))->with(compact('ot'))->with(compact('pl'));
     }
 
     function getLogReimbursement() {
@@ -712,8 +712,11 @@ class SelfServiceController extends Controller
         }
         else if(\Auth::user()->position == 'Business Unit' || \Auth::user()->position == 'Human Resource') {
             $ss = \App\SelfService::where("kodeSS","=", $kodeSS)->first();
+            $pl = \App\PaidLeave::where("selfservice_id", "=", $kodeSS)->first();
             $ss->status = 2;
+            $pl->total_leave = $pl->total_leave - 1;
             $ss->save();
+            $pl->save;
             if($ss->save()) {
                 $ss = \App\SelfService::where("kodeSS","=", $kodeSS)->first();
                 return \Redirect::to('/myApproval');
