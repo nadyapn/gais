@@ -11,7 +11,7 @@
 							<li><a href="#">Dashboard Non Admin</a></li>
 							<li><a href="#" class="active">My Approval</a></li>
 						</ul>
-					<button type="button" class="btn btn-secondary2">Back to Home</button>
+					<a href="{{url('/homepageGAIS')}}" class="btn btn-secondary2">Back to Home</a>
 				</ul>
 			</div>
 	<div id="color">
@@ -76,7 +76,7 @@
 	</div>			
 		<!-- /#table-->
 		<div class="table-responsive">
-			<table class="table">
+			<table class="table" id="dataTable">
 				<thead>
 					<tr>
 					  <th>Kode</th>
@@ -89,50 +89,29 @@
 				</thead>
 			  	<tbody>
 				  	@foreach($ss as $e)
-				  	<tr>
-						<td>{{$e->kodeSS}}</td>
-						<td>{{$e->request_date}}</td>
-						<td>{{$e->tipe}}</td>
-						<td>{{$e->name}}</td>
-						<td>
-							@if ($e->status == 0)
-								Not approved yet by Supervisor
-							@elseif ($e->status == 1)
-								Approved by Supervisor  
-							@elseif ($e->status == 2)
-								Approved by Business Unit
-							@elseif ($e->status == -1)
-								Canceled by Employee
-							@endif
-						</td>
-						<td><a href="{{url('/getDetail/'.$e->kodeSS)}}" class="btn btn-view">View</td>
-					</tr>
+				  		@if($e->tipe != 'PaidLeave')
+					  	<tr>
+							<td>{{$e->kodeSS}}</td>
+							<td>{{$e->request_date}}</td>
+							<td>{{$e->tipe}}</td>
+							<td>{{$e->name}}</td>
+							<td>
+								@if ($e->status = 0)
+									Not approved yet by Supervisor
+								@elseif ($e->status = 1)
+									Approved by Supervisor  
+								@elseif ($e->status = 2)
+									Approved by Business Unit
+								@elseif ($e->status = -1)
+									Canceled by Employee
+								@endif
+							</td>
+							<td><a href="{{url('/getDetail/'.$e->kodeSS)}}" class="btn btn-view">View</td>
+						</tr>
+						@endif
 					@endforeach
 				</tbody>
 			</table>		
-		</div>
-		<div class="paginationNumber">
-			<ul class="pagination">
-			  <li>
-				<a href="#" aria-label="Previous">
-				<span aria-hidden="true">
-					<i class="fa fa-caret-left"></i>
-				</span>
-				</a>
-			  </li>
-			  <li class="active"><a href="#">1</a></li>
-			  <li><a href="#">2</a></li>
-			  <li><a href="#">3</a></li>
-			  <li><a href="#">4</a></li>
-			  <li><a href="#">5</a></li>
-			  <li>
-				<a href="#" aria-label="Next">
-			    <span aria-hidden="true">
-					<i class="fa fa-caret-right"></i>
-			    </span>
-				</a>
-			  </li>
-			</ul>
 		</div>
 </section>	
 @elseif(\Auth::user()->position === 'Human Resource')
@@ -154,7 +133,7 @@
 	</div>				
 		<!-- /#table-->
 		<div class="table-responsive">
-			<table class="table">
+			<table class="table" id="dataTable">
 				<thead>
 					<tr>
 					  <th>Kode</th>
@@ -171,13 +150,13 @@
 						<td>{{$e->request_date}}</td>
 						<td>{{$e->name}}</td>
 						<td>
-							@if ($e->status == 0)
+							@if ($e->status = 0)
 								Not approved yet by Supervisor
-							@elseif ($e->status == 1)
+							@elseif ($e->status = 1)
 								Approved by Supervisor  
-							@elseif ($e->status == 2)
+							@elseif ($e->status = 2)
 								Approved by Business Unit
-							@elseif ($e->status == -1)
+							@elseif ($e->status = -1)
 								Canceled by Employee
 							@endif
 						</td>
@@ -186,29 +165,6 @@
 					@endforeach
 				</tbody>
 			</table>		
-		</div>
-		<div class="paginationNumber">
-			<ul class="pagination">
-			  <li>
-				<a href="#" aria-label="Previous">
-				<span aria-hidden="true">
-					<i class="fa fa-caret-left"></i>
-				</span>
-				</a>
-			  </li>
-			  <li class="active"><a href="#">1</a></li>
-			  <li><a href="#">2</a></li>
-			  <li><a href="#">3</a></li>
-			  <li><a href="#">4</a></li>
-			  <li><a href="#">5</a></li>
-			  <li>
-				<a href="#" aria-label="Next">
-			    <span aria-hidden="true">
-					<i class="fa fa-caret-right"></i>
-			    </span>
-				</a>
-			  </li>
-			</ul>
 		</div>
 </section>
 @endif

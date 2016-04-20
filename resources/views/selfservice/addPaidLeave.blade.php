@@ -9,7 +9,7 @@
 							<li><a href="#">Employee Self Service</a></li>
 							<li><a href="#" class="active">Create Paid Leave</a></li>
 						</ul>
-					<button type="button" class="btn btn-secondary2">Back to Home</button>
+					<a href="{{url('/homepageGAIS')}}" class="btn btn-secondary2">Back to Home</a>
 				</ul>
 			</div>
 	<div id="color">
@@ -20,9 +20,6 @@
 			<div class="container">
 			  <div class="row">
 				<div class="col-md-8">
-				  <br>
-				  <br>
-				  <br>
 				  @if(isset($messages))
 				  <?php
 				  	$temp = JSON_decode($messages);
@@ -37,7 +34,7 @@
 						  </div>
 						   <div class="form-group">
 						   	@if(isset($temp->periodofleave[0])){{$temp->periodofleave[0]}}@endif<br/>
-							<select name="periodofleave" class="selectpicker form-control">
+							<select name="periodofleave" >
 								<option selected disabled>Choose Your Month Of Leave</option>
 								<option value="jan">January</option>
 								<option value="feb">February</option>
@@ -59,7 +56,7 @@
 						  </div>
 						  <div class="form-group">
 						  	@if(isset($temp->category[0])){{$temp->category[0]}}@endif<br/>
-							<select name="category" class="selectpicker form-control">
+							<select name="category" >
 								<option selected disabled>Choose Your Reason Category</option>
 								<option value="sick">Sick</option>
 								<option value="maternity">Maternity</option>

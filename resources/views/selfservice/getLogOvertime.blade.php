@@ -9,7 +9,7 @@
 									<li><a href="#">Dashboard Admin</a></li>
 									<li><a href="#" class="active">Overtime</a></li>
 								</ul>
-							<button type="button" class="btn btn-secondary2">Back to Home</button>
+							<a href="{{url('/homepageGAIS')}}" class="btn btn-secondary2">Back to Home</a>
 						</ul>
 					</div>
 			<div id="color">
@@ -47,8 +47,8 @@
 											Canceled by Employee
 									@endif
 								</td>
+								<td><a href="{{url('/getDetailAdmin/'.$e->kodeSS)}}" class="btn btn-view">View</td>
 							</tr>
-							<td><a href="{{url('/getDetail/'.$e->kodeSS)}}" class="btn btn-view">View</td>
 							@endforeach
 						</tbody>
 					</table>

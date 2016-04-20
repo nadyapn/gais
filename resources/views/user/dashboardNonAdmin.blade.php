@@ -1,123 +1,120 @@
-@extends('layouts.master')
-
-
-@section('content')
-<html>
-	<head>
-		<!-- Custom CSS -->
-		<link href="css/simple-sidebar.css" rel="stylesheet">
-	</head>
-	<body>
-
-       <!-- Sidebar -->
-        <div class="nav-side-menu">
-			<div class="brand"><a href="{{url('/homepageGAIS')}}">GAIS</a></div>
-			<i class="fa fa-bars fa-2x toggle-btn" data-toggle="collapse" data-target="#menu-content"></i>
-				<div class="menu-list">
-					<ul id="menu-content" class="menu-content collapse out">
-						<li class="active">
-						  <a href="#">
-						  <img style="margin-left:10px;margin-right:5px"src="img/dashboard.png"> Dashboard <b> Supervisor </b>
-						  </a>
-						</li>
-
-						<li  data-toggle="collapse" data-target="#Employee-Self-Service" class="collapsed">
-						  <a href="#"><img style="margin-left:10px;margin-right:5px"src="img/approval.png"> My Approval <span class="arrow"></span></a>
-						</li>
-
-						<ul class="sub-menu collapse" id="Employee-Self-Service">
-							<li><a href="#">Employee Self Service</li>
-						</ul>
-						<li  data-toggle="collapse" data-target="#myHistory" class="collapsed">
-						  <a href="#"><img style="margin-left:10px;margin-right:5px"src="img/history.png"> My History<span class="arrow"></span></a>
-						</li>
-						<ul class="sub-menu collapse" id="myHistory">
-							<li data-toggle="collapse" data-target="#Employee-Self-Service2"><a href="#">Employee Self-Service
-								<ul class="sub-menu collapse" id="Employee-Self-Service2">
-									<li><a href="{{url('/getMyReimbursement')}}">Reimburse</a></li>		
-									<li><a href="{{url('/getMyPaidLeave')}}">Paid Leave</a></li>
-									<li><a href="{{url('/getMyOvertime')}}">Overtime</a></li>
-								</ul>
-							</li>
-							<li><a href="#">Shared Facilities Scheduler</li>
-							<li><a href="#">Office Boy Service<i> Beta</i></li>
-						</ul>
-			 </div>
-		</div>    
-        <!-- /#sidebar-wrapper -->
-		
+@extends('user.sidebarNonAdmin')
+@section('contentNonAdmin')
+	<div class="breadcrumb">
+		<ul class="isiBreadcrumb">
+			<input type="image" class="btnDashboard" src="{{asset('img/symbol.png')}}">
+				<ul class="isiBreadcrumb2">
+				<li><a href="{{url('/homepageGAIS')}}">Homepage</a></li>
+				<li><a href="#" class="active">Dashboard Non Admin</a></li>
+			</ul>
+			<button type="button" class="btn btn-secondary2">Back to Home</button>
+		</ul>
+	</div>
+	<div id="color">
+		<p id="move">Dashboard</p>
+		<p id="move2">Quick Overview of Your Activities</p>
+	</div>
 		<section id="content">
 			<div class="container">
 				<div class="titleContent">
-				  <h2>Employee Self Service History</h2>
-				  <h4>List of your Employee Self Service History</h4>
 				</div>
 			</div>			
 			<!-- /#table-->
-			<div class="table-responsive">
-					<table class="table">
-					  <thead>
-						<tr>
-						  <th>ID</th>
-						  <th>Type</th>
-						  <th>Date Requested</th>
-						  <th>View Details</th>
-						  <th>Update</th>
-						  <th>Delete</th>
-						</tr>
-					  </thead>
-					  <tbody>
-						@foreach($ss as $e)
-						<tr>
-						  <th scope="row">{{$e->kodeSS}}</th>
-						  <td>{{$e->tipe}}</td>
-						  <td>{{$e->request_date}}</td>
-						  <td><a href="{{url('/getDetail/'.$e->kodeSS)}}" class="btn btn-view">View</a></td>
-						  <td><a href="{{url('/updateReimbursement/'.$e->kodeSS)}}" class="btn btn-view">Update</a></td>
-						  <td><button class="btn btn-delete">Delete</button></td>
-						</tr>
-						@endforeach
-					  </tbody>
-					</table>
-			</div>
-			<div class="paginationNumber">
-					<ul class="pagination">
-					  <li>
-						<a href="#" aria-label="Previous">
-						  <span aria-hidden="true">
-							<i class="fa fa-caret-left"></i>
-						  </span>
-						</a>
-					  </li>
-					  <li class="active"><a href="#">1</a></li>
-					  <li><a href="#">2</a></li>
-					  <li><a href="#">3</a></li>
-					  <li><a href="#">4</a></li>
-					  <li><a href="#">5</a></li>
-					  <li>
-						<a href="#" aria-label="Next">
-						  <span aria-hidden="true">
-							<i class="fa fa-caret-right"></i>
-						  </span>
-						</a>
-					  </li>
-					</ul>
+			@if (\Auth::user()->position != 'Member')
+				<div class="table-responsive">
+					<h4>Your Request</h4>
+						<table class="table" id="dataTable">
+						  <thead>
+							<tr>
+							  <th>ID</th>
+							  <th>Type</th>
+							  <th>Date Requested</th>
+							  <th>View Details</th>
+							  <th>Update</th>
+							  <th>Delete</th>
+							</tr>
+						  </thead>
+						  <tbody>
+							@foreach($all as $f)
+							<tr>
+							  <th scope="row">{{$f->kodeSS}}</th>
+							  <td>{{$f->tipe}}</td>
+							  <td>{{$f->request_date}}</td>
+							  <td><a href="{{url('/getDetail/'.$f->kodeSS)}}" class="btn btn-view">View</a></td>
+							  	@if (\Auth::user()->position === 'Supervisor')
+							  		<td>@if ($f->status == 1)<a href="{{url('/update/'.$f->kodeSS)}}" class="btn btn-view">Update </a> @endif</td>
+									<td>@if ($f->status == 1)<a href="{{url('/delete/'.$f->kodeSS)}}" class="btn btn-view" onclick="return confirm('Are you sure?')">Delete</a> @endif</td>
+								@elseif (\Auth::user()->posisition === 'Business Unit' || \Auth::user()->position === 'Human Resource')
+								  	<td>@if ($f->status == 2)<a href="{{url('/update/'.$f->kodeSS)}}" class="btn btn-view">Update </a> @endif</td>
+									<td>@if ($f->status == 2)<a href="{{url('/delete/'.$f->kodeSS)}}" class="btn btn-view" onclick="return confirm('Are you sure?')">Delete</a> @endif</td>
+								@else 
+									<td>@if ($f->status == 0)<a href="{{url('/update/'.$f->kodeSS)}}" class="btn btn-view">Update </a> @endif</td>
+									<td>@if ($f->status == 0)<a href="{{url('/delete/'.$f->kodeSS)}}" class="btn btn-view" onclick="return confirm('Are you sure?')">Delete</a> @endif</td>
+								@endif
+							</tr>
+							@endforeach
+						  </tbody>
+						</table><br/>
 				</div>
+				<div class="table-responsive">
+					<h4>Employees' Request</h4>
+						<table class="table" id="dataTable">
+						  <thead>
+							<tr>
+							  <th>ID</th>
+							  <th>Type</th>
+							  <th>Date Requested</th>
+							  <th>View Details</th>
+							</tr>
+						  </thead>
+						  <tbody>
+							@foreach($ss as $e)
+							<tr>
+							  <th scope="row">{{$e->kodeSS}}</th>
+							  <td>{{$e->tipe}}</td>
+							  <td>{{$e->request_date}}</td>
+							  <td><a href="{{url('/getDetail/'.$e->kodeSS)}}" class="btn btn-view">View</a></td>
+							</tr>
+							@endforeach
+						  </tbody>
+						</table>
+				</div>
+			@else
+				<div class="table-responsive">
+					<h4>Your Request</h4>
+						<table class="table" id="dataTable">
+						  <thead>
+							<tr>
+							  <th>ID</th>
+							  <th>Type</th>
+							  <th>Date Requested</th>
+							  <th>View Details</th>
+							  <th>Update</th>
+							  <th>Delete</th>
+							</tr>
+						  </thead>
+						  <tbody>
+							@foreach($all as $g)
+							<tr>
+							  <th scope="row">{{$g->kodeSS}}</th>
+							  <td>{{$g->tipe}}</td>
+							  <td>{{$g->request_date}}</td>
+							  <td><a href="{{url('/getDetail/'.$g->kodeSS)}}" class="btn btn-view">View</a></td>
+							  	@if (\Auth::user()->position === 'Supervisor')
+							  		<td>@if ($g->status == 1)<a href="{{url('/update/'.$g->kodeSS)}}" class="btn btn-view">Update </a> @endif</td>
+									<td>@if ($g->status == 1)<a href="{{url('/delete/'.$g->kodeSS)}}" class="btn btn-view" onclick="return confirm('Are you sure?')">Delete</a> @endif</td>
+								@elseif (\Auth::user()->posisition === 'Business Unit' || \Auth::user()->position === 'Human Resource')
+								  	<td>@if ($g->status == 2)<a href="{{url('/update/'.$g->kodeSS)}}" class="btn btn-view">Update </a> @endif</td>
+									<td>@if ($g->status == 2)<a href="{{url('/delete/'.$g->kodeSS)}}" class="btn btn-view" onclick="return confirm('Are you sure?')">Delete</a> @endif</td>
+								@else 
+									<td>@if ($g->status == 0)<a href="{{url('/update/'.$g->kodeSS)}}" class="btn btn-view">Update </a> @endif</td>
+									<td>@if ($g->status == 0)<a href="{{url('/delete/'.$g->kodeSS)}}" class="btn btn-view" onclick="return confirm('Are you sure?')">Delete</a> @endif</td>
+								@endif
+							</tr>
+							@endforeach
+						  </tbody>
+						</table><br/>
+				</div>
+			@endif
 		</section>
-	
-	    <!-- jQuery -->
-    <script src="js/jquery.js"></script>
-
-    <!-- Bootstrap Core JavaScript -->
-    <script src="js/bootstrap.min.js"></script>
-
-    <!-- Menu Toggle Script -->
-    <script>
-    $("#menu-toggle").click(function(e) {
-        e.preventDefault();
-        $("#wrapper").toggleClass("toggled");
-    });
-    </script>
-	</body>
-</html>
 @endsection

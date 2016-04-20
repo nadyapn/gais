@@ -9,7 +9,7 @@
 							<li><a href="#">Dashboard Admin</a></li>
 							<li><a href="#" class="active">Paid Leave</a></li>
 						</ul>
-					<button type="button" class="btn btn-secondary2">Back to Home</button>
+					<a href="{{url('/homepageGAIS')}}" class="btn btn-secondary2">Back to Home</a>
 				</ul>
 			</div>
 	<div id="color">
@@ -53,34 +53,11 @@
 											Canceled by Employee
 									@endif
 								</td>
+								<td><a href="{{url('/getDetailAdmin/'.$e->kodeSS)}}" class="btn btn-view">View</td>
 							</tr>
-							<td><a href="{{url('/getDetail/'.$e->kodeSS)}}" class="btn btn-view">View</td>
 							@endforeach
 						</tbody>
 					</table>
 			</div>
-			<div class="paginationNumber">
-					<ul class="pagination">
-					  <li>
-						<a href="#" aria-label="Previous">
-						  <span aria-hidden="true">
-							<i class="fa fa-caret-left"></i>
-						  </span>
-						</a>
-					  </li>
-					  <li class="active"><a href="#">1</a></li>
-					  <li><a href="#">2</a></li>
-					  <li><a href="#">3</a></li>
-					  <li><a href="#">4</a></li>
-					  <li><a href="#">5</a></li>
-					  <li>
-						<a href="#" aria-label="Next">
-						  <span aria-hidden="true">
-							<i class="fa fa-caret-right"></i>
-						  </span>
-						</a>
-					  </li>
-					</ul>
-				</div>
 		</section>
 @endsection

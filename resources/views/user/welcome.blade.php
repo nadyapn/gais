@@ -17,8 +17,10 @@
 				  	<h6>Wrong email or password</h6>
 				  @endif
 				  <form action="{{url('/login')}}" method="post">
-				  	<input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
-					<div class="form-inline">
+				  <div class="form-inline2">
+						<div class="form-group">	
+					  	<input type="hidden" class="form-control" name="_token" value="<?php echo csrf_token(); ?>">
+					  </div>
 					  <div class="form-group">
 						<input type="email" class="form-control" id="exampleInputEmail3" placeholder="Enter email" name="email">
 					  </div>
@@ -36,6 +38,7 @@
 					  <button type="submit" class="btn btn-danger">Login via Google Account</button>
 					</div>
 				  </form>
+				  </div>
 				</div>
 			  </div>
 			</div>

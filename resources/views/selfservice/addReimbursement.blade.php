@@ -10,7 +10,7 @@
 							<li><a href="#">Employee Self Service</a></li>
 							<li><a href="#" class="active">Create Reimburse</a></li>
 						</ul>
-					<button type="button" class="btn btn-secondary2">Back to Home</button>
+					<a href="{{url('/homepageGAIS')}}" class="btn btn-secondary2">Back to Home</a>
 				</ul>
 			</div>
 			<div id="color">
@@ -31,16 +31,13 @@
 				  	<form action="{{url('/addReimbursement')}}" method="post"  enctype="multipart/form-data">
 						<input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
 						<div class="form-inline">
-						  
 						  <div class="form-group">
 						  	  <div class="form-control">
-					              <div class='input-group date'>
-					                <span class="input-group-addon">
-					                	@if(isset($temp->dateRem[0])){{$temp->dateRem[0]}}@endif<br/>
-					                      <img style="margin-left:10%;" src="img/Icon - Calendar.png"> Date of Event 
-					                       <input style="margin-right:50%;" class="btn btn-default2" type="date" name="dateRem">
-					                </span>
-					              </div>
+					                	<div class="form-group">
+										@if(isset($temp->dateRem[0])){{$temp->dateRem[0]}}@endif<br/>
+										<input type="date" class="form-control" name="dateRem">
+								
+									  </div>
 					          </div>
 				          </div>
 				          <div class="form-group">
@@ -49,11 +46,21 @@
 						  </div>
 						  <div class="form-group">
 						  	@if(isset($temp->category[0])){{$temp->category[0]}}@endif<br/>
-					        <select name="category" class="selectpicker form-control">
+					        <select name="category" >
 					          <option disabled selected>Choose Your Reimburse Category</option>
 					          <option>Project</option>
 					          <option>Other</option>
 					        </select>
+					      </div>
+					      <div class="form-group">
+							
+							  	@if(isset($temp->project[0])){{$temp->project[0]}}@endif<br/>
+						        <select name="project" >
+						          <option disabled selected>Choose Your Project</option>
+						          @foreach ($workson as $f)
+						          	<option>{{$f->name}}</option>
+						           @endforeach
+						        </select>
 					      </div>
 						  <div class="form-group">
 						  	@if(isset($temp->descriptionRem[0])){{$temp->descriptionRem[0]}}@endif<br/>

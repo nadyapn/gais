@@ -1605,6 +1605,7 @@ pre code {
   float:left;
   display:none;
 }
+
 .ulcontainerDashboardl .ulcontainerDashboard2 .ulcontainerDashboard3{
   border: 0.5px solid #ddd;
   display:inline-block;
@@ -2515,12 +2516,11 @@ table th[class*="col-"] {
 }
 .table-responsive {
   margin:0px auto;
-  max-width:70%;
+  max-width:65%;
   min-width:45%;
-  padding-left:200px;
-  margin-left: auto;
-  margin-right: auto;
-  
+  margin-left: 23%;
+  display: block;
+
 }
 @media screen and (max-width: 767px) {
   .table-responsive {
@@ -3118,11 +3118,18 @@ select[multiple].form-group-lg .form-control {
   vertical-align: middle;
   }
   .form-inline{
-    -webkit-box-shadow:1px 3px 3px #dcdcdc;
-    -moz-box-shadow:1px 3px 3px #dcdcdc;
-    box-shadow:0px 3px 3px #dcdcdc;
+    -webkit-box-shadow:0px 5px 5px #dcdcdc;
+    -moz-box-shadow:0px 5px 5px #dcdcdc;
+    box-shadow:0px 5px 5px #dcdcdc;
     display: block;
+    padding-bottom:0.73%;
     margin-left: 20%;
+  }
+  .form-inline2{
+    -webkit-box-shadow:0px 5px 5px #dcdcdc;
+    -moz-box-shadow:0px 5px 5px #dcdcdc;
+    box-shadow:0px 5px 5px #dcdcdc;
+    display: block;
     padding-bottom:0.73%;
   }
   .form-inline .form-control {
@@ -3205,24 +3212,15 @@ select[multiple].form-group-lg .form-control {
     padding-top: 6px;
   }
 }
-.buttonHomepage{
-  padding: 5px 30px;
-  background-color: #215181;
+.buttonHomepage, .buttonHomepage2, .buttonHomepage3, .buttonHomepage4, .buttonHomepage5, .buttonHomepage6{
   color: white;
-  border-color:#215181;
+  font-size: 16px;
 }
-.buttonHomepage2{
-  padding: 5px 30px;
-  background-color: #215181;
+
+.aPaidLeave, .aReimbursement, .aOvertime{
   color: white;
-  border-color:#215181;
 }
-.buttonHomepage3{
-  padding: 5px 30px;
-  background-color: #215181;
-  color: white;
-  border-color:#215181;
-}
+
 .buttonHomepage:focus, .buttonHomepage:hover .buttonHomepage:visited{
   background-color:#2980b9 !important ;
   border-color:#2980b9;
@@ -6036,15 +6034,15 @@ li{
 	list-style-type: none;
 }
 .col-homepage-left{
-	margin: 10px;
+	margin: 15px;
 	display:inline-block;
 }
 .col-homepage-right{
-	margin: 10px;
+	margin: 15px;
 	display:inline-block;
 }
 .col-homepage-center{
-	margin: 10px;
+	margin: 15px;
 	display:inline-block;
 }
 .createOvertime:after .createPaidLeave:after .createReimburse:after{
@@ -6053,10 +6051,13 @@ li{
   content: "";
   height: 100%;
 }
-.createReimburse{
-  padding: 10px;
+.createDashboard{
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-top:20px;
+  padding-bottom:45px;
   border:1px solid;
-  border-color: #dcdcdc
+  border-color: #dcdcdc;
 }
 .well {
   float:left;
