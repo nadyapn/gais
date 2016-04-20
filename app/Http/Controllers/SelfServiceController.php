@@ -166,6 +166,7 @@ class SelfServiceController extends Controller
         $paidLeave->date_hired = $datehired;
         $paidLeave->category = $category;
         $paidLeave->period_of_leave = $periodofleave;
+        $paidLeave->total_leave = 12;
 
         $selfservice->save();
         $kodeSS = DB::table('selfservice')->where('request_date', $mydate)->value('kodeSS');
@@ -735,15 +736,27 @@ class SelfServiceController extends Controller
                 return \Redirect::to('/myApproval');
             }
         }
-        else if(\Auth::user()->position == 'Business Unit' || \Auth::user()->position == 'Human Resource') {
+        else if(\Auth::user()->position == 'Business Unit') {
+            $ss = \App\SelfService::where("kodeSS","=", $kodeSS)->first();
+            //$pl = \App\PaidLeave::where("selfservice_id", "=", $kodeSS)->first();
+            $ss->status = 2;
+            //$pl->total_leave = $pl->total_leave - 1;
+            //return($pl->total_leave);
+            $ss->save();
+            //$pl->save();
+            if($ss->save()) {
+                $ss = \App\SelfService::where("kodeSS","=", $kodeSS)->first();
+                return \Redirect::to('/myApproval');
+            }
+        }
+        else if (\Auth::user()->position == 'Human Resource') {
             $ss = \App\SelfService::where("kodeSS","=", $kodeSS)->first();
             $pl = \App\PaidLeave::where("selfservice_id", "=", $kodeSS)->first();
             $ss->status = 2;
             $pl->total_leave = $pl->total_leave - 1;
             $ss->save();
-            $pl->save;
+            $pl->save();
             if($ss->save()) {
-                $ss = \App\SelfService::where("kodeSS","=", $kodeSS)->first();
                 return \Redirect::to('/myApproval');
             }
         }
