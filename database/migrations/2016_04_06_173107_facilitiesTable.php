@@ -1,0 +1,37 @@
+<?php
+
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Migrations\Migration;
+
+class FacilitiesTable extends Migration
+{
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        //
+        Schema::create('facilities', function (Blueprint $table) {
+            $table->string('kode', 255);
+            $table->string('name', 255);
+            $table->string('category',255);
+            $table->text('description');
+            $table->string('updated_at', 255);
+            $table->string('created_at', 255);
+            $table->primary('kode');
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        //
+        Schema::drop('facilities');
+    }
+}
