@@ -13,7 +13,7 @@
 						  </a>
 						</li>
 
-						@if(\Auth::user()->position === 'Supervisor' || \Auth::user()->position === 'Business Unit' || \Auth::user()->position === 'Human Resource')
+						@if(\Auth::user()->position === 'Team Leader' || \Auth::user()->position === 'Head of Business Unit' || \Auth::user()->position === 'Head of HR')
 						<li  data-toggle="collapse" data-target="#Employee-Self-Service" class="collapsed">
 						  <a href="#"><img style="margin-left:10px;margin-right:5px"src="{{asset('/img/approval-white.png')}}"> My Approval <span class="arrow"></span></a>
 						</li>

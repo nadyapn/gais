@@ -44,7 +44,7 @@
 					</div>
 					<br>
 					<div id="conDashboard2" class="containerDashboard2">
-						@if (\Auth::user()->position != 'Business Unit')
+						@if (\Auth::user()->position != 'Head of Business Unit')
 						<div class="col-homepage-left">
 									<div class="createDashboard">
 										<img src="{{asset('img/reimburse.png')}}" style=" width:60% vertical-align:middle"><br><br>
@@ -52,7 +52,7 @@
 									</div>
 						</div>
 						@endif
-						@if (\Auth::user()->position != 'Human Resource')
+						@if (\Auth::user()->position != 'Head of HR')
 						<div class="col-homepage-center">
 									<div class="createDashboard">
 										<img src="{{asset('img/paidleave.png')}}" style=" width:60% vertical-align:middle"><br><br>
@@ -60,7 +60,7 @@
 									</div>
 						</div>
 						@endif
-						@if (\Auth::user()->position != 'Business Unit')
+						@if (\Auth::user()->position != 'Head of Business Unit')
 						<div class="col-homepage-right">
 									<div class="createDashboard">
 										<img src="{{asset('img/overtime.png')}}" style=" width:60% vertical-align:middle"><br><br>

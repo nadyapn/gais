@@ -72,7 +72,10 @@ Route::group(['middleware' => 'auth'], function(){
 	// approval
 	Route::get('/myApproval', 'SelfServiceController@myApproval');
 	Route::get('/approval/{kodeSS}', 'SelfServiceController@approval');
+	
+	// rejection
 	Route::get('/rejection/{kodeSS}', 'SelfServiceController@rejection');
+	Route::post('/rejection/{kodeSS}', 'SelfServiceController@rejectionPost');
 });	
 
 Route::get('/generate/{isi}', function($isi) {return \Hash::make($isi);});

@@ -17,13 +17,13 @@
 						  <a href="#"><img style="margin-left:10px;margin-right:5px"src={{asset('img/selfservice-white.png')}}> Employee Self Service <span class="arrow"></span></a>
 						</li>
 						<ul class="sub-menu collapse" id="Employee-Self-Service">
-							@if (\Auth::user()->position != 'Business Unit')
+							@if (\Auth::user()->position != 'Head of Business Unit')
 							<li><a href="{{url('/createReimbursement')}}">Reimburse</a></li>
 							@endif
-							@if (\Auth::user()->position != 'Human Resource')		
+							@if (\Auth::user()->position != 'Head of HR')		
 							<li><a href="{{url('/createPaidLeave')}}">Paid Leave</a></li>
 							@endif
-							@if (\Auth::user()->position != 'Business Unit')
+							@if (\Auth::user()->position != 'Head of Business Unit')
 							<li><a href="{{url('/createOvertime')}}">Overtime</a></li>
 							@endif
 						</ul>

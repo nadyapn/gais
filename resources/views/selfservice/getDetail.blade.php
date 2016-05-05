@@ -28,12 +28,16 @@
 						<div class="table-responsive">
 							<table class="table">
 								<tr>
-									<td>Kode</td>
+									<td>Request ID</td>
 									<td> {{$ss->kodeSS}}</td>
 								</tr>
 								<tr>
+									<td>Type</td>
+									<td>Reimbursement </td>
+								</tr>
+								<tr>
 									<td>Employee's Name</td>
-									<td> </td>
+									<td>{{$ss->name}} </td>
 								</tr>
 								<tr>
 									<td>Business Purpose</td>
@@ -56,7 +60,7 @@
 									<td> {{$rm->cost}}</td>
 								</tr>
 								<tr>
-									<td>Total Cost</td>
+									<td>Photo</td>
 									<td> <img src="{{url('./foto/'.$rm->photo)}}" style="width:500px;"/></td>
 								</tr>
 								<tr>
@@ -81,6 +85,12 @@
 									<td>Request Date</td>
 									<td> {{$ss->request_date}}</td>
 								</tr>
+								@if ($ss->status == 3 || $ss->status == 4)
+								<tr>
+									<td>Rejected because</td>
+									<td> {{$ss->message}}</td>
+								</tr>
+								@endif
 							</table>
 						</div>
 
@@ -88,12 +98,16 @@
 						<div class="table-responsive">
 							<table class="table">
 								<tr>
-									<td>Kode</td>
+									<td>Request ID</td>
 									<td> {{$ss->kodeSS}}</td>
 								</tr>
 								<tr>
+									<td>Type</td>
+									<td>Paid Leave</td>
+								</tr>
+								<tr>
 									<td>Employee's Name</td>
-									<td> </td>
+									<td>{{$ss->name}} </td>
 								</tr>
 								<tr>
 									<td>Date Hired</td>
@@ -137,18 +151,28 @@
 									<td>Request Date</td>
 									<td> {{$ss->request_date}}</td>
 								</tr>
+								@if ($ss->status == 3 || $ss->status == 4)
+								<tr>
+									<td>Rejected because</td>
+									<td> {{$ss->message}}</td>
+								</tr>
+								@endif
 							</table>
 						</div>
 					@elseif ($ot != "")
 						<div class="table-responsive">
 							<table class="table">
 								<tr>
-									<td>Kode</td>
+									<td>Request ID</td>
 									<td> {{$ss->kodeSS}}</td>
 								</tr>
 								<tr>
+									<td>Type</td>
+									<td>Overtime </td>
+								</tr>
+								<tr>
 									<td>Employee's Name</td>
-									<td> </td>
+									<td>{{$ss->name}} </td>
 								</tr>
 								<tr>
 									<td>Date of Overtime</td>
@@ -188,6 +212,12 @@
 									<td>Request Date</td>
 									<td> {{$ss->request_date}}</td>
 								</tr>
+								@if ($ss->status == 3 || $ss->status == 4)
+								<tr>
+									<td>Rejected because</td>
+									<td> {{$ss->message}}</td>
+								</tr>
+								@endif
 							</table>
 						</div>
 					@else
@@ -195,12 +225,12 @@
 					@endif
 				  <br/>
 
-				  	@if (\Auth::user()->position === 'Supervisor' && $ss->status == 0)
+				  	@if (\Auth::user()->position === 'Team Leader' && $ss->status == 0)
 					  <a href="{{url('/approval/'.$ss->kodeSS)}}" class="btn btn-view" onclick="return confirm('Are you sure?')">Approve</a>
-					  <a href="{{url('/rejection')}}" class="btn btn-view" onclick="return confirm('Are you sure?')">Reject</a>
-					@elseif ((\Auth::user()->position === 'Business Unit' || \Auth::user()->position === 'Human Resource') && $ss->status == 1)
+					  <a href="{{url('/rejection/'.$ss->kodeSS)}}" class="btn btn-view" onclick="return confirm('Are you sure?')">Reject</a>
+					@elseif ((\Auth::user()->position === 'Head of Business Unit' || \Auth::user()->position === 'Head of HR') && $ss->status == 1)
 					  <a href="{{url('/approval/'.$ss->kodeSS)}}" class="btn btn-view" onclick="return confirm('Are you sure?')">Approve</a>
-					  <a href="{{url('/rejection')}}" class="btn btn-view" onclick="return confirm('Are you sure?')">Reject</a>
+					  <a href="{{url('/rejection/'.$ss->kodeSS)}}" class="btn btn-view" onclick="return confirm('Are you sure?')">Reject</a>
 					@endif
 				  <!-- Button trigger modal -->
 				</div>

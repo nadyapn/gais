@@ -1,7 +1,7 @@
 @extends('user.sidebarNonAdmin')
 @section('contentNonAdmin')
 
-@if(\Auth::user()->position === 'Supervisor')
+@if(\Auth::user()->position === 'Team Leader')
 <section id="content">
 	<div class="breadcrumb">
 				<ul class="isiBreadcrumb">
@@ -57,7 +57,7 @@
 		</div>
 </section>
 
-@elseif(\Auth::user()->position === 'Business Unit')
+@elseif(\Auth::user()->position === 'Head of Business Unit')
 <section id="content">
 	<div class="breadcrumb">
 				<ul class="isiBreadcrumb">
@@ -114,7 +114,7 @@
 			</table>		
 		</div>
 </section>	
-@elseif(\Auth::user()->position === 'Human Resource')
+@elseif(\Auth::user()->position === 'Head of HR')
 <section id="content">
 	<div class="breadcrumb">
 				<ul class="isiBreadcrumb">

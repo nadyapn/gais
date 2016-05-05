@@ -14,11 +14,14 @@ class PaidLeaveTable extends Migration
     {
         //
         Schema::create('paidleave', function (Blueprint $table) {
-            $table->increments('selfservice_id');
+            $table->string('selfservice_id',255);
             $table->date('date_hired');
-            $table->integer('period_of_leave');
-            $table->string('category',30);
+            $table->string('period_of_leave',255);
+            $table->string('category',255);
             $table->integer('total_leave');
+            $table->string('updated_at', 255);
+            $table->string('created_at', 255);
+            $table->primary('selfservice_id');
             $table->foreign('selfservice_id')->references('kodeSS')->on('selfservice')->onDelete('cascade')->onUpdate('cascade');
         });
     }

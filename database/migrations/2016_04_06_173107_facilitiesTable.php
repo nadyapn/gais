@@ -14,10 +14,12 @@ class FacilitiesTable extends Migration
     {
         //
         Schema::create('facilities', function (Blueprint $table) {
-            $table->string('kode', 30);
-            $table->string('name', 30);
-            $table->string('category',30);
+            $table->string('kode', 255);
+            $table->string('name', 255);
+            $table->string('category',255);
             $table->text('description');
+            $table->string('updated_at', 255);
+            $table->string('created_at', 255);
             $table->primary('kode');
         });
     }

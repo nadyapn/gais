@@ -14,12 +14,14 @@ class ObServiceTable extends Migration
     {
         //
         Schema::create('obService', function (Blueprint $table) {
-            $table->increments('kodeOBS');
+            $table->string('kodeOBS',255);
             $table->date('date');
             $table->time('batch');
             $table->text('detail');
-            $table->string('employee_id',30);
-            $table->string('ob_id',30);
+            $table->string('employee_id',255);
+            $table->string('ob_id',255);
+            $table->string('updated_at', 255);
+            $table->string('created_at', 255);
             $table->foreign('employee_id')->references('id_employee')->on('employee')->onDelete('cascade')->onUpdate('cascade');
             $table->foreign('ob_id')->references('id_employee')->on('employee')->onDelete('cascade')->onUpdate('cascade');
         });
