@@ -14,81 +14,87 @@
 /**Route::get('/', function () {
     return view('welcome');
 }); */
+Route::get('/', function() {return \Redirect::to('homepageGAIS');});
 
-// log in 
-Route::get('/', 'UserController@login');
-Route::get('/login', 'UserController@login');
-Route::post('/login', 'UserController@isLogin');
+// Shared Facilities
+	Route::get('/deleteFacilities', 'sharedFacilitiesController@deleteFacilities');
+	Route::get('/createFacilities', 'sharedFacilitiesController@createFacilities');
+	Route::get('/sFSpecialMenu', 'sharedFacilitiesController@sFSpecialMenu');
+	Route::get('/addSharedFacilities', 'sharedFacilitiesController@addSharedFacilities');
+	Route::get('/getLogSharedFacilities', 'sharedFacilitiesController@getLogSharedFacilities');
+	Route::get('/getMySharedFacilities', 'sharedFacilitiesController@getMySharedFacilities');
 
-Route::get('/homepageGAIS','UserController@homepageGAIS');
-
-// log out
-Route::get('/logout', 'UserController@logout');
-
-// dashboard
-Route::get('/dashboardNonAdmin','UserController@dashboardNonAdmin');
-Route::get('/dashboardAdmin','UserController@dashboardAdmin');
-
-// dashboard
-Route::get('/sidebarNonAdmin','UserController@sidebarNonAdmin');
-Route::get('/sidebarAdmin','UserController@sidebarAdmin');
-Route::get('/sidebarHomepage','UserController@sidebarHomepage');
+	// Office Boy Service
+	Route::get('/addOBServices', 'obServicesController@addOBServices');
+	Route::get('/updateOBServices', 'obServicesController@updateOBServices');
+	Route::get('/getLogAdminOBServices', 'obServicesController@getLogAdminOBServices');
+	Route::get('/getLogOBServices', 'obServicesController@getLogOBServices');
+	Route::get('/getTaskOBServices', 'obServicesController@getTaskOBServices');
+	Route::get('/getMyOBServices', 'obServicesController@getMyOBServices');
 
 
+Route::group(['middleware' => 'guest'], function(){
+	// log in log out
+	Route::get('/login','UserController@index');
+	Route::post('/login','UserController@login');
+});
 
-// Create Reimbursement
-Route::get('/createReimbursement', 'SelfServiceController@formReimbursement');
-Route::post('/addReimbursement', 'SelfServiceController@addReimbursement');
-Route::get('/addReimbursement', 'SelfServiceController@addReimbursementFbd');
-
-// Create Paid Leave
-Route::get('/createPaidLeave', 'SelfServiceController@formPaidLeave');
-Route::post('/addPaidLeave', 'SelfServiceController@addPaidLeave');
-Route::get('/addPaidLeave', 'SelfServiceController@addPaidLeaveFbd');
-
-// Create Overtime
-Route::get('/createOvertime', 'SelfServiceController@formOvertime');
-Route::post('/addOvertime', 'SelfServiceController@addOvertime');
-Route::get('/addOvertime', 'SelfServiceController@addOvertimeFbd');
-
-// Read Detail
-Route::get('/getDetail/{selfservice_id}', 'SelfServiceController@getDetail');
-Route::get('/getDetailTemplate', 'SelfServiceController@getDetailTemplate');
-Route::get('/getReqForSupervisor', 'SelfServiceController@getReqForSupervisor');
-Route::get('/getReqForHR', 'SelfServiceController@getReqForHR');
-Route::get('/getReqForBU', 'SelfServiceController@getReqForBU');
-Route::get('/getLogReimbursement', 'SelfServiceController@getLogReimbursement');
-Route::get('/getLogPaidLeave', 'SelfServiceController@getLogPaidLeave');
-Route::get('/getLogOvertime', 'SelfServiceController@getLogOvertime');
-Route::get('/getMyReimbursement', 'SelfServiceController@getMyReimbursement');
-Route::get('/getMyPaidLeave', 'SelfServiceController@getMyPaidLeave');
-Route::get('/getMyOvertime', 'SelfServiceController@getMyOvertime');
+Route::group(['middleware' => 'auth'], function(){
+	Route::get('/homepageGAIS','UserController@homepageGAIS');
+	Route::get('/logout', 'UserController@logout');
 
 
+	// dashboard
+	Route::get('/dashboardNonAdmin','UserController@dashboardNonAdmin');
+	Route::get('/dashboardAdmin','UserController@dashboardAdmin');
+	Route::get('/sidebarNonAdmin','UserController@sidebarNonAdmin');
+	Route::get('/sidebarAdmin','UserController@sidebarAdmin');
+	Route::get('/sidebarHomepage','UserController@sidebarHomepage');
+	Route::get('/sidebarOB','UserController@sidebarOB');
 
-//punya ariq
+	// Create Reimbursement
+	Route::get('/createReimbursement', 'SelfServiceController@formReimbursement');
+	Route::post('/addReimbursement', 'SelfServiceController@addReimbursement');
+	Route::get('/addReimbursement', 'SelfServiceController@addReimbursementFbd');
 
-Route::get('/viewReimburse','Homepage@viewReimburse');
+	// Create Paid Leave
+	Route::get('/createPaidLeave', 'SelfServiceController@formPaidLeave');
+	Route::post('/addPaidLeave', 'SelfServiceController@addPaidLeave');
+	Route::get('/addPaidLeave', 'SelfServiceController@addPaidLeaveFbd');
 
-Route::get('/viewPaidLeave','Homepage@viewPaidLeave');
+	// Create Overtime
+	Route::get('/createOvertime', 'SelfServiceController@formOvertime');
+	Route::post('/addOvertime', 'SelfServiceController@addOvertime');
+	Route::get('/addOvertime', 'SelfServiceController@addOvertimeFbd');
 
-Route::get('/viewOvertime','Homepage@viewOvertime');
+	// Read Detail
+	Route::get('/getDetail/{kodeSS}', 'SelfServiceController@getDetail');
+	Route::get('/getDetailAdmin/{kodeSS}', 'SelfServiceController@getDetailAdmin');
+	Route::get('/getReqForSupervisor', 'SelfServiceController@getReqForSupervisor');
+	Route::get('/getReqForHR', 'SelfServiceController@getReqForHR');
+	Route::get('/getReqForBU', 'SelfServiceController@getReqForBU');
+	Route::get('/getLogReimbursement', 'SelfServiceController@getLogReimbursement');
+	Route::get('/getLogPaidLeave', 'SelfServiceController@getLogPaidLeave');
+	Route::get('/getLogOvertime', 'SelfServiceController@getLogOvertime');
+	Route::get('/getMyReimbursement', 'SelfServiceController@getMyReimbursement');
+	Route::get('/getMyPaidLeave', 'SelfServiceController@getMyPaidLeave');
+	Route::get('/getMyOvertime', 'SelfServiceController@getMyOvertime');
 
-//Route::get('/viewDetailsReimburse','Homepage@viewDetailsReimburse');
+	// update
+	Route::get('/update/{kodeSS}', 'SelfServiceController@update');
+	Route::post('/update/{kodeSS}', 'SelfServiceController@updatePost');
 
-//Route::get('/viewDetailsPaidLeave','Homepage@viewDetailsPaidLeave');
+	// delete
+	Route::get('/delete/{kodeSS}', 'SelfServiceController@delete');
 
-//Route::get('/viewDetailsOvertime','Homepage@viewDetailsOvertime');
-
-//Route::get('/createReimburse','Homepage@createReimburse');
-
-//Route::get('/createPaidLeave','Homepage@createPaidLeave');
-
-//Route::get('/createOvertime','Homepage@createOvertime');
+	// approval
+	Route::get('/myApproval', 'SelfServiceController@myApproval');
+	Route::get('/approval/{kodeSS}', 'SelfServiceController@approval');
+	Route::get('/rejection/{kodeSS}', 'SelfServiceController@rejection');
 
 
-//Route::get('/adminViewReimburse','Homepage@adminViewReimburse');
 
-//Route::get('/adminViewPaidLeave','Homepage@adminViewPaidLeave');
 
-//Route::get('/adminViewOvertime','Homepage@adminViewOvertime');
+});
+
+Route::get('/generate/{isi}', function($isi) {return \Hash::make($isi);});

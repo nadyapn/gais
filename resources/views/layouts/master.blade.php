@@ -27,7 +27,7 @@
   <meta name="msapplication-TileImage" content="{{asset('/img/favicon/ms-icon-144x144.png')}}">
   <meta name="theme-color" content="#ffffff">
 
-  
+
   <!-- Font Awesome -->
   <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css" />
 
@@ -41,14 +41,19 @@
   <link rel="stylesheet" type="text/css" href="{{asset('css/bootstrap-slider.css')}}">
   <link rel="stylesheet" type="text/css" href="{{asset('css/bootstrap-theme.css')}}">
   <link rel="stylesheet" type="text/css" href="{{asset('css/bootstrap-datetimepicker.css')}}">
- 
+
   <!-- CSS Component -->
   <link rel="stylesheet" href="{{asset('/css/component.css')}}">
 
   <!-- CSS Sidebar -->
   <link rel="stylesheet" href="{{asset('/css/simple-sidebar.css')}}">
+
+
+  <!-- CSS Pagination and confirmation -->
+  <link rel="stylesheet" href="{{asset('/css/datatable.css')}}">
+  <link rel="stylesheet" href="{{asset('/css/modal.css')}}">
   @yield('styles')
-  
+
 </head>
 <body>
   <header>
@@ -71,21 +76,22 @@
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
-		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-
+		    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
           <ul class="nav navbar-nav navbar-right">
+            @if (\Auth::user() !== null)
             <li>
               <a href="#" id="togglemenu" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                 <img class="icon-menu" src="{{asset('/img/Icon - User.png')}}">
               </a>
               <ul class="dropdown-menu" id="menu" role="menu">
-                <li><a href="/laravel33/public/dashboardNonAdmin">Supervisor</a></li>
-                <li><a href="/laravel33/public/dashboardAdmin">Administrator</a></li>
-                <li><a href="#">HR Unit</a></li>
+                @if (\Auth::user()->role == 'Admin')
+                <li><a href="{{url('/dashboardAdmin')}}">Administrator</a></li> <!-- ganti jadi dashboard admin -->
                 <li class="divider"></li>
-                <li><a href="#">Logout</a></li>
+                @endif
+                <li><a href="{{url('/logout')}}">Logout</a></li>
               </ul>
             </li>
+            @endif
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="" aria-expanded="false">
 
@@ -104,7 +110,7 @@
       </div><!-- /.container-fluid -->
     </nav>
   </header>
-			
+
    @yield('content')
 
   <footer>
@@ -127,11 +133,36 @@
   <script type="text/javascript" src="{{asset('/js/moment-with-locales.js')}}"></script>
   <script type="text/javascript" src="{{asset('/js/bootstrap-datetimepicker.min.js')}}"></script>
   <script type="text/javascript" src="{{asset('/js/main.js')}}"></script>
- 
+  <script type="text/javascript" src="{{asset('/js/toggleButton.js')}}"></script>
    <!-- jQuery -->
-    <script src="{{asset('/js/jquery.js')}}"></script>
 
-   <script>
+    <!--script src="{{asset('/js/jquery.js')}}"></script-->
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="{{asset('/js/bootstrap.min.js')}}"></script>
+    <script src="{{asset('/js/datatable.js')}}"></script>
+    <script type="text/javascript">
+      var elems = document.getElementsByClassName('confirmation');
+      var confirmIt = function (e) {
+        if (!confirm('Are you sure?')) e.preventDefault();
+      };
+        for (var i = 0, l = elems.length; i < l; i++) {
+           elems[i].addEventListener('click', confirmIt, false);
+      }
+    </script>
+
+    <!-- Menu Toggle Script -->
+    <script>
+    $(document).ready(function(){
+        $('#dataTable').DataTable({bFilter: false});
+
+        $("#notif").click(function() {
+          alert();
+        });
+    });
+    </script>
+
+    <script>
     $(document).ready(function(){
         $("#togglemenu").click(function(){
             $("#menu").toggle();
@@ -146,7 +177,8 @@
           });
       });
     </script>
-
+    <script>
+				document.getElementById("dateForPage").innerHTML = Date();
+		</script>
 </body>
 </html>
-			

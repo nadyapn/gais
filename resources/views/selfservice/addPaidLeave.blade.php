@@ -9,7 +9,7 @@
 							<li><a href="#">Employee Self Service</a></li>
 							<li><a href="#" class="active">Create Paid Leave</a></li>
 						</ul>
-					<button type="button" class="btn btn-secondary2">Back to Home</button>
+					<a href="{{url('/homepageGAIS')}}" class="btn btn-secondary2">Back to Home</a>
 				</ul>
 			</div>
 	<div id="color">
@@ -20,17 +20,39 @@
 			<div class="container">
 			  <div class="row">
 				<div class="col-md-8">
-				  <br>
-				  <br>
+				  @if(isset($messages))
+				  <?php
+				  	$temp = JSON_decode($messages);
+				  ?>
+				  @endif
 				  <form action="{{url('/addPaidLeave')}}" method="post">
 						<input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
 						<div class="form-inline">
 						  <div class="form-group">
+						  	@if(isset($temp->datehired[0])){{$temp->datehired[0]}}@endif<br/>
 							<input type="date" class="form-control" placeholder="Enter Date Hired" name="datehired">
 						  </div>
 						   <div class="form-group">
-							<select name="periodofleave" class="selectpicker form-control">
-								<option selected disabled>Choose Your Month Of Leave</option>
+								<select class="form-control" name="periodofleave" >
+									<option selected disabled>Start Month</option>
+									<option value="jan">January</option>
+									<option value="feb">February</option>
+									<option value="mar">March</option>
+									<option value="apr">April</option>
+									<option value="may">May</option>
+									<option value="jun">June</option>
+									<option value="jul">July</option>
+									<option value="aug">August</option>
+									<option value="sept">September</option>
+									<option value="oct">October</option>
+									<option value="nov">November</option>
+									<option value="dec">December</option>
+								</select>
+						  </div>
+						  <div class="form-group">
+						   	@if(isset($temp->periodofleave[0])){{$temp->periodofleave[0]}}@endif<br/>
+							<select class="form-control" name="periodofleave" >
+								<option selected disabled>End Month</option>
 								<option value="jan">January</option>
 								<option value="feb">February</option>
 								<option value="mar">March</option>
@@ -46,10 +68,12 @@
 							</select>
 						  </div>
 						  <div class="form-group">
+						  	@if(isset($temp->rsnofleave[0])){{$temp->rsnofleave[0]}}@endif<br/>
 							<input type="text" class="form-control" placeholder="Explain Your Reason" name="rsnofleave">
 						  </div>
 						  <div class="form-group">
-							<select name="category" class="selectpicker form-control">
+						  	@if(isset($temp->category[0])){{$temp->category[0]}}@endif<br/>
+							<select class="form-control" name="category" >
 								<option selected disabled>Choose Your Reason Category</option>
 								<option value="sick">Sick</option>
 								<option value="maternity">Maternity</option>

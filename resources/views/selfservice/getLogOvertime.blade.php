@@ -1,67 +1,58 @@
 @extends('user.sidebarAdmin')
 
 @section('contentAdmin')
-<div class="breadcrumb">
-  	<ul>
-  <li><a href="#">Dashboard Admin</a></li>
-  <li><a href="#">View My Log</a></li>
-  <li><a href="#">Employee Self Service</a></li>
-  <li><a href="#" class="active">Overtime</a></li>
-  <button type="button" class="btn btn-secondary2">Back Home</button>
-	</ul>
-</div>
-<div id="color"><p id="move">Dashboard<br>
-	Description : Melihat Log Overtime</p></div>
-		<section id="content">
-			<div class="container">
-				<div class="titleContent">
-				  <h2>Overtime Data Log</h2>
-				  <h4>List of Overtime Request</h4>
-				</div>
-			</div>			
+	<section id="content">
+			<div class="breadcrumb">
+						<ul class="isiBreadcrumb">
+							<input type="image" class="btnDashboard" src="img/symbol.png">
+								<ul class="isiBreadcrumb2">
+									<li><a href="#">Homepage</a></li>
+									<li><a href="#">Dashboard Admin</a></li>
+									<li><a href="#" class="active">Overtime</a></li>
+								</ul>
+							<a href="{{url('/homepageGAIS')}}" class="btn btn-secondary2">Back to Home</a>
+						</ul>
+					</div>
+			<div id="color">
+				<p id="move">Dashboard Overtime Log</p>
+				<p id="move2">List of Overtime Request</p>
+			</div>
 			<!-- /#table-->
 			<div class="table-responsive">
-					<table class="table">
-					  	@foreach($ot as $e)
-							Kode : {{$e->kodeSS}}<br/>
-							Employee ID: {{$e->employee_id}}<br/>
-							Name : {{$e->name}}<br/>
-							
-							@if ($e->status == 0)
-									Status : Not approved yet by Supervisor <br/>
-							@elseif ($e->status == 1)
-									Status : Approved by Supervisor <br/>
-							@elseif ($e->status == 2)
-									Status : Approved by HR <br/>
-							@elseif ($e->status == 3)
-									Status : Approved by Business Unit <br/>
-							@endif
-					 
-						@endforeach
+					<table class="table" id="dataTable">
+					  	<thead>
+							<tr>
+							  <th>Kode</th>
+							  <th>Date Requested</th>
+							  <th>Employee's ID</th>
+							  <th>Employee's Name</th>
+							  <th>Status</th>
+							  <th>View Details</th>
+							</tr>
+					  	</thead>
+					  	<tbody>
+						  	@foreach($ot as $e)
+						  	<tr>
+								<td>{{$e->kodeSS}}</td>
+								<td>{{$e->request_date}}</td>
+								<td>{{$e->id_employee}}</td>
+								<td>{{$e->name}}</td>
+								<td>
+									@if ($e->status == 0)
+											Not approved yet by Supervisor
+									@elseif ($e->status == 1)
+											Approved by Supervisor
+									@elseif ($e->status == 2)
+											Approved by Business Unit
+									@elseif ($e->status == -1)
+											Canceled by Employee
+									@endif
+								</td>
+								<td><a href="{{url('/getDetailAdmin/'.$e->kodeSS)}}" class="btn btn-view">View</td>
+							</tr>
+							@endforeach
+						</tbody>
 					</table>
 			</div>
-			<div class="paginationNumber">
-					<ul class="pagination">
-					  <li>
-						<a href="#" aria-label="Previous">
-						  <span aria-hidden="true">
-							<i class="fa fa-caret-left"></i>
-						  </span>
-						</a>
-					  </li>
-					  <li class="active"><a href="#">1</a></li>
-					  <li><a href="#">2</a></li>
-					  <li><a href="#">3</a></li>
-					  <li><a href="#">4</a></li>
-					  <li><a href="#">5</a></li>
-					  <li>
-						<a href="#" aria-label="Next">
-						  <span aria-hidden="true">
-							<i class="fa fa-caret-right"></i>
-						  </span>
-						</a>
-					  </li>
-					</ul>
-				</div>
 		</section>
 @endsection
