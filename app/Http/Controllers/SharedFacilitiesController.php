@@ -10,56 +10,30 @@ use Carbon\Carbon;
 
 use DB;
 
-class SelfServiceController extends Controller
-{  
-
-    // form peminjaman shared facilities. return view form
-    function formReimbursement() {
-        return \View::make('sharedfacilities/addPeminjaman');
+class sharedFacilitiesController extends Controller
+{
+    //halaman depan shared facilities special menu (create and delete facility)
+    function sFSpecialMenu() {
+        return \View::make('sharedFacilities/sFSpecialMenu');
+	  }
+    //bikin request shared Facilities
+    function addSharedFacilities() {
+        return \View::make('sharedFacilities/addSharedFacilities');
     }
-
-    // ketika submit form. no return view
-    function addReimbursement(Request $request) {
-        
+    //menambahkan ruangan
+    function createFacilities() {
+        return \View::make('sharedFacilities/createFacilities');
     }
-
-    // ketika ketik url. return view form peminjaman lagi
-    function addReimbursementFbd() {
-        return \View::make('sharedfacilities/addPeminjaman');
+    //admin lihat log
+    function getLogSharedFacilities() {
+        return \View::make('sharedFacilities/getLogSharedFacilities');
     }
-
-    // get detail peminjaman. return view get detail
-    function getDetail($kodePinjam) {
-        return \View::make('sharedfacilities/getDetail');
+    //menghapus ruangan
+    function deleteFacilities() {
+        return \View::make('sharedFacilities/deleteFacilities');
     }
-
-    // get detail peminjaman untuk admin. view get detail untuk admin
-    function getDetailAdmin($kodePinjam) {
-        return \View::make('sharedfacilities/getDetailAdmin');
-    }
-
-    // get log peminjaman. return viw list semua log
-    function getLogPeminjaman() {
-        return \View::make('sharedfacilities/getLogPeminjaman');
-    }
-
-    // get history peminjaman. return view semua history kita
-    function getMyPeminjaman() {
-        return \View::make('sharedfacilities/getMyPeminjaman');
-    }
-
-    // update peminjaman. return view form (mirip kayak create)
-    function update($kodePinjam) {                                                                  
-        return \View::make('sharedfacilities/update');
-    }
-
-    // ketika submit update. no return view
-    function updatePost($kodePinjam, Request $request) {
-        
-    }
-
-    // ketika cancel peminjaman. no return view
-    function delete($kodePinjam) {
-        
+    //melihat request/history shared facilities Non OB
+    function getMySharedFacilities() {
+        return \View::make('sharedFacilities/getMySharedFacilities');
     }
 }

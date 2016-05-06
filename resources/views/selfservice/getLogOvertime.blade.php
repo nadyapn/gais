@@ -1,6 +1,7 @@
 @extends('user.sidebarAdmin')
 
 @section('contentAdmin')
+	<section id="content">
 			<div class="breadcrumb">
 						<ul class="isiBreadcrumb">
 							<input type="image" class="btnDashboard" src="img/symbol.png">
@@ -40,9 +41,9 @@
 									@if ($e->status == 0)
 											Not approved yet by Supervisor
 									@elseif ($e->status == 1)
-											Approved by Supervisor 
+											Approved by Supervisor
 									@elseif ($e->status == 2)
-											Approved by Business Unit 
+											Approved by Business Unit
 									@elseif ($e->status == -1)
 											Canceled by Employee
 									@endif

@@ -1120,7 +1120,7 @@ a {
 }
 a:hover,
 a:focus {
-  
+
 }
 a:focus {
   outline: thin dotted;
@@ -1594,7 +1594,6 @@ pre code {
   text-align: center;
   margin: 0 auto;
   padding:0;
-  float:left;
   display:inline-block;
 }
 .containerDashboard2{
@@ -1988,12 +1987,12 @@ pre code {
   .col-md-8 {
    width: 100%;
    text-align: center;
-	 margin-top:0%; 
+	 margin-top:0%;
   }
   .col-md-82 {
   width: 100%;
   text-align: center;
-	margin-top:20px; 
+	margin-top:20px;
 	margin:0 auto;
   margin-left:12%;
   }
@@ -2597,8 +2596,8 @@ label {
     letter-spacing: 0.1em;
 }
 .desc-group label {
-    font-family: 'DINPro', 'DIN';   
-    color: #F5AE36;   
+    font-family: 'DINPro', 'DIN';
+    color: #F5AE36;
     letter-spacing: 0.1em;
 }
 label ~ label {
@@ -2734,7 +2733,7 @@ output {
 	}
 	100% {
 		@include transform(scaleY(0.98));
-	}				
+	}
 	80% {
 		@include transform(scaleY(1.02));
 	}
@@ -3131,6 +3130,19 @@ select[multiple].form-group-lg .form-control {
     box-shadow:0px 5px 5px #dcdcdc;
     display: block;
     padding-bottom:0.73%;
+  }
+  .form-inline2{
+    -webkit-box-shadow:0px 5px 5px #dcdcdc;
+    -moz-box-shadow:0px 5px 5px #dcdcdc;
+    box-shadow:0px 5px 5px #dcdcdc;
+    display: block;
+    padding-bottom:0.73%;
+  }
+  .form-inline3{
+    -moz-box-shadow:    3px 3px 3px 3px #ccc;
+    -webkit-box-shadow: 3px 3px 3px 3px #ccc;
+    box-shadow:         3px 3px 3px 3px #ccc;
+    box-sizing: border-box;
   }
   .form-inline .form-control {
     display: inline-block;
@@ -3960,7 +3972,7 @@ tbody.collapse.in {
   padding-left: 12px;
 }
 .btn-group.open .dropdown-toggle {
-  
+
 }
 .btn-group.open .dropdown-toggle.btn-link {
   -webkit-box-shadow: none;
@@ -6022,7 +6034,7 @@ a.list-group-item-danger.active:focus {
   padding: -10px 10px 0px 10px;
   display:block;
   position:relative;
-  
+
 }
 .createOvertime .createPaidLeave .createReimburse{
 	position:absolute;
@@ -6982,27 +6994,101 @@ option{
   background-color: #eaeaea;
   color:#424242;
 }
+#color2 {
+  margin-top: 2%;
+  background-color: #dcdcdc;
+}
+#color4 {
+  margin-top: -1%;
+  background-color: #dcdcdc;
+}
+.color3 {
+  margin-top: 2%;
+  background-color: #2980b9;
+  color:#ffffff;
+}
 #move {
   display: block;
   margin-left: 22.4%;
-  font-size: 2.857em;
-  padding-bottom: 1.5%;
+  font-size: 1.7em;
+  padding-top: 0.5%;
+  padding-bottom: 0.5%;
 }
 #move2 {
   display: block;
   margin-left: 22.5%;
-  font-size: 1.42em;
-  margin-top: -2.196%;
-  padding-bottom: 1.2%;
-
+  font-size: 1.2em;
+  margin-top: -2%;
+  padding-top: 1%;
+  padding-bottom: 1%;
 }
-/* Jika berukuran 980px atau kurang */
-@media screen and (max-width: 980px){
-  header{
-    width:;
+#move3 {
+  display: block;
+  margin-left: 22.4%;
+  font-size: 1.9em;
+  margin-top: -2%;
+  padding-top: 0.5%;
+  padding-bottom: 1.5%;
+}
+#move4 {
+  display: block;
+  margin-left: 22.4%;
+  font-size: 1.7em;
+  color:#27ae60;
+  margin-top: -2%;
+  padding-top: 0.5%;
+  padding-bottom: 1.5%;
+}
+.move5 {
+  display: block;
+  font-size: 1.3em;
+  margin-left: 22.4%;
+  margin-top: -2%;
+  padding-top: 2%;
+  padding-bottom: 2%;
+}
+.move6 {
+  display: inline-block;
+  font-size: 1.1em;
+  color:#fff;
+  margin-top: -4.6%;
+  margin-right: 1.1%;
+  padding: 0.6%;
+  background-color: #2c3e50;
+  float: right;
+}
+#move7{
+  display: block;
+  margin-left: 22.4%;
+  font-size: 1.7em;
+  margin-top: -2%;
+  padding-top: 1%;
+  padding-bottom: 1.5%;
+}
+@media (max-width: 1180px) {
+  .createDashboard {
+    display: block;
   }
-  #sidebarHomepage, #sidebarNonAdmin, #sidebarNonAdmin{
-    
+  .containerDashboard {
+    display: block;
+  }
+  #move {
+    margin-left: 5%;
+  }
+  #move2 {
+    margin-left: 5%;
+  }
+  .isiBreadcrumb {
+    margin-left: -17.8%;
+  }
+  #content {
+    margin-left: -23%;
+  }
+  #sidebarNonAdmin {
+    display: none;
+  }
+  #sidebarHomepage {
+    display: none;
   }
 }
 

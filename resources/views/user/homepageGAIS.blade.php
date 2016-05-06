@@ -16,11 +16,10 @@
 		<p id="move">Welcome to Homepage <b>{{\Auth::user()->name}}</b>!</p>
 		<p id="move2">Place for Request Something</p>
 	</div>
-		<section id="content">
 			<div class="container">
 			  <div class="row">
 				<div class="col-md-8">
-				  
+
 				  <br>
 				  	<div class="containerDashboard">
 						<div class="col-homepage-left">
@@ -32,19 +31,19 @@
 						<div class="col-homepage-center">
 								<div class="createDashboard">
 									<img src="{{asset('img/schedulerblack.png')}}" style=" width:60% vertical-align:middle"><br><br>
-									<a class="btn btn-secondary2">Shared Facilities Scheduler </a>
+									<a href="{{url('/addSharedFacilities')}}" class="btn btn-secondary2">Shared Facilities Scheduler </a>
 								</div>
 						</div>
 						<div class="col-homepage-right">
 								<div class="createDashboard">
 									<img src="{{asset('img/observiceblack.png')}}" style=" width:60% vertical-align:middle"><br><br>
-									<a class="btn btn-secondary2">Office Boy Service</a>
+									<a href="{{url('/addOBServices')}}" class="btn btn-secondary2">Office Boy Service</a>
 								</div>
 						</div>
 					</div>
 					<br>
 					<div id="conDashboard2" class="containerDashboard2">
-						@if (\Auth::user()->position != 'Head of Business Unit')
+						@if (\Auth::user()->position != 'Business Unit')
 						<div class="col-homepage-left">
 									<div class="createDashboard">
 										<img src="{{asset('img/reimburse.png')}}" style=" width:60% vertical-align:middle"><br><br>
@@ -52,7 +51,7 @@
 									</div>
 						</div>
 						@endif
-						@if (\Auth::user()->position != 'Head of HR')
+						@if (\Auth::user()->position != 'Human Resource')
 						<div class="col-homepage-center">
 									<div class="createDashboard">
 										<img src="{{asset('img/paidleave.png')}}" style=" width:60% vertical-align:middle"><br><br>
@@ -60,7 +59,7 @@
 									</div>
 						</div>
 						@endif
-						@if (\Auth::user()->position != 'Head of Business Unit')
+						@if (\Auth::user()->position != 'Business Unit')
 						<div class="col-homepage-right">
 									<div class="createDashboard">
 										<img src="{{asset('img/overtime.png')}}" style=" width:60% vertical-align:middle"><br><br>

@@ -17,24 +17,24 @@
 						<ul class="sub-menu collapse" id="Employee-Self-Service">
 							<li data-toggle="collapse" data-target="#Employee-Self-Service2"><a href="#">Employee Self-Service
 								<ul class="sub-menu collapse" id="Employee-Self-Service2">
-									<li><a href="{{url('/getLogReimbursement')}}">Reimburse</a></li>		
+									<li><a href="{{url('/getLogReimbursement')}}">Reimburse</a></li>
 									<li><a href="{{url('/getLogPaidLeave')}}">Paid Leave</a></li>
 									<li><a href="{{url('/getLogOvertime')}}">Overtime</a></li>
 								</ul>
 							</li>
-							<li><a href="#">Shared Facilities Scheduler</li>
-							<li><a href="#">Office Boy Service<i> Beta</i></li>
+							<li><a href="{{url('/getLogSharedFacilities')}}">Shared Facilities Scheduler</li>
+							<li><a href="{{url('/getLogAdminOBServices')}}">Office Boy Service<i> Beta</i></li>
 						</ul>
-						
+
 						<li data-toggle="collapse" data-target="#service" class="collapsed">
-						  <a href="#"><img style="margin-left:10px;margin-right:5px"src="{{asset('img/calendar-white.png')}}"> Shared Facilities <b>Special Menu</b></a>
-						</li> 
+						  <a href="{{url('/sFSpecialMenu')}}"><img style="margin-left:10px;margin-right:5px"src="{{asset('img/calendar-white.png')}}"> Shared Facilities <b>Special Menu</b></a>
+						</li>
 					</ul>
 			 </div>
-		</div>    
+		</div>
 
         <!-- /#sidebar-wrapper -->
-        
+
         @yield('contentAdmin')
 
 @endsection

@@ -18,7 +18,7 @@
 				  @endif
 				  <form action="{{url('/login')}}" method="post">
 				  <div class="form-inline2">
-						<div class="form-group">	
+						<div class="form-group">
 					  	<input type="hidden" class="form-control" name="_token" value="<?php echo csrf_token(); ?>">
 					  </div>
 					  <div class="form-group">
@@ -56,7 +56,10 @@
         $("#wrapper").toggleClass("toggled");
     });
     </script>
-	
+		<script>
+				document.getElementById("dateForPage").innerHTML = Date();
+		</script>
+
 	</body>
 </html>
 @endsection

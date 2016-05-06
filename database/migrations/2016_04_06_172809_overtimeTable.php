@@ -14,13 +14,10 @@ class OvertimeTable extends Migration
     {
         //
         Schema::create('overtime', function (Blueprint $table) {
-            $table->string('selfservice_id',255);
+            $table->increments('selfservice_id');
             $table->date('date');
             $table->time('time_start');
             $table->time('time_end');
-            $table->string('updated_at', 255);
-            $table->string('created_at', 255);
-            $table->primary('selfservice_id');
             $table->foreign('selfservice_id')->references('kodeSS')->on('selfservice')->onDelete('cascade')->onUpdate('cascade');
         });
     }
