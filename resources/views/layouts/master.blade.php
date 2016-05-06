@@ -27,7 +27,7 @@
   <meta name="msapplication-TileImage" content="{{asset('/img/favicon/ms-icon-144x144.png')}}">
   <meta name="theme-color" content="#ffffff">
 
-  
+
   <!-- Font Awesome -->
   <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css" />
 
@@ -41,19 +41,19 @@
   <link rel="stylesheet" type="text/css" href="{{asset('css/bootstrap-slider.css')}}">
   <link rel="stylesheet" type="text/css" href="{{asset('css/bootstrap-theme.css')}}">
   <link rel="stylesheet" type="text/css" href="{{asset('css/bootstrap-datetimepicker.css')}}">
- 
+
   <!-- CSS Component -->
   <link rel="stylesheet" href="{{asset('/css/component.css')}}">
 
   <!-- CSS Sidebar -->
   <link rel="stylesheet" href="{{asset('/css/simple-sidebar.css')}}">
-  
+
 
   <!-- CSS Pagination and confirmation -->
   <link rel="stylesheet" href="{{asset('/css/datatable.css')}}">
   <link rel="stylesheet" href="{{asset('/css/modal.css')}}">
   @yield('styles')
-  
+
 </head>
 <body>
   <header>
@@ -78,7 +78,7 @@
         <!-- Collect the nav links, forms, and other content for toggling -->
 		    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
           <ul class="nav navbar-nav navbar-right">
-            @if (\Auth::user() !== null) 
+            @if (\Auth::user() !== null)
             <li>
               <a href="#" id="togglemenu" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                 <img class="icon-menu" src="{{asset('/img/Icon - User.png')}}">
@@ -110,7 +110,7 @@
       </div><!-- /.container-fluid -->
     </nav>
   </header>
-			
+
    @yield('content')
 
   <footer>
@@ -137,7 +137,7 @@
    <!-- jQuery -->
 
     <!--script src="{{asset('/js/jquery.js')}}"></script-->
-    
+
     <!-- Bootstrap Core JavaScript -->
     <script src="{{asset('/js/bootstrap.min.js')}}"></script>
     <script src="{{asset('/js/datatable.js')}}"></script>
@@ -150,7 +150,7 @@
            elems[i].addEventListener('click', confirmIt, false);
       }
     </script>
-    
+
     <!-- Menu Toggle Script -->
     <script>
     $(document).ready(function(){
@@ -177,7 +177,8 @@
           });
       });
     </script>
-
+    <script>
+				document.getElementById("dateForPage").innerHTML = Date();
+		</script>
 </body>
 </html>
-			

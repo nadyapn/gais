@@ -14,10 +14,8 @@ class WorksOnTable extends Migration
     {
         //
         Schema::create('works_on', function (Blueprint $table) {
-            $table->string('id_employee', 255);
-            $table->string('id_project', 255);
-            $table->string('updated_at', 255);
-            $table->string('created_at', 255);
+            $table->string('id_employee', 30);
+            $table->string('id_project', 30);
             $table->primary(['id_employee','id_project']);
             $table->foreign('id_employee')->references('id_employee')->on('employee')->onDelete('cascade')->onUpdate('cascade');
             $table->foreign('id_project')->references('id')->on('project')->onDelete('cascade')->onUpdate('cascade');

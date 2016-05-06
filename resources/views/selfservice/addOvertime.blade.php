@@ -1,6 +1,7 @@
 @extends('user.sidebarHomepage')
 
 @section('contentAdd')
+	<section id="content">
  	<div class="breadcrumb">
 				<ul class="isiBreadcrumb">
 					<input type="image" class="btnDashboard" src="img/symbol.png">
@@ -16,7 +17,6 @@
 		<p id="move">Dashboard</p>
 		<p id="move2">Pembuatan pengajuan Overtime</p>
 	</div>
-	<section id="content">
 			<div class="container">
 			  <div class="row">
 				<div class="col-md-8">
@@ -28,36 +28,46 @@
 				  <form action="{{url('/addOvertime')}}" method="post">
 					<input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
 					<div class="form-inline">
-					  <div class="form-group">
-					  	@if(isset($temp->dateot[0])){{$temp->dateot[0]}}@endif<br/>
-						<h4>Enter Date of Overtime</h4>
 						<br>
+						<div class="form-group">
+							<h3>Create Your Overtime Request Here</h3>
+						</div>
+
+						<div class="form-group">
+					  	@if(isset($temp->dateot[0])){{$temp->dateot[0]}}@endif
+
+						<h4 style="text-align:left ; margin-left:32.5%">Enter Date of Overtime</h4>
+
 						<input type="date" class="form-control" placeholder="Enter Date of Overtime" name="dateot">
 					  </div>
+
 					  <div class="form-group">
-					  	@if(isset($temp->timestarts[0])){{$temp->timestarts[0]}}@endif<br/>
-						<h4>Time Start</h4>
-						<br>
+					  	@if(isset($temp->timestarts[0])){{$temp->timestarts[0]}}@endif
+
+						<h4 style="text-align:left ; margin-left:32.5%">Time Start</h4>
 						<input type="time" class="form-control" placeholder="Overtime time start" name="timestarts">
-						
-						
 					  </div>
+
 					  <div class="form-group">
-					  	@if(isset($temp->timeends[0])){{$temp->timeends[0]}}@endif<br/>
-						<h4>Time End</h4>
-						<br>
+					  	@if(isset($temp->timeends[0])){{$temp->timeends[0]}}@endif
+
+						<h4 style="text-align:left ; margin-left:32.5%">Time End</h4>
+
 						<input type="time" class="form-control" placeholder="Overtime time end" name="timeends">
 					  </div>
+
 					  <div class="form-group">
-					  	@if(isset($temp->rsnofot[0])){{$temp->rsnofot[0]}}@endif<br/>
-						<h4>Reason of Overtime</h4>
-						<br>
+					  	@if(isset($temp->rsnofot[0])){{$temp->rsnofot[0]}}@endif
+
+						<h4 style="text-align:left ; margin-left:32.5%">Reason of Overtime</h4>
+
 						<input type="text" class="form-control" placeholder="Reason of Overtime" name="rsnofot">
 					  </div>
+
 					  <div class="form-group">
 					    <input type="submit" value="Submit" class="btn btn-secondary"></input>
 					  </div>
-					</div>					
+					</div>
 				  </form>
 				</div>
 			  </div>

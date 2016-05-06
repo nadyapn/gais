@@ -16,11 +16,28 @@
 }); */
 Route::get('/', function() {return \Redirect::to('homepageGAIS');});
 
+// Shared Facilities
+	Route::get('/deleteFacilities', 'sharedFacilitiesController@deleteFacilities');
+	Route::get('/createFacilities', 'sharedFacilitiesController@createFacilities');
+	Route::get('/sFSpecialMenu', 'sharedFacilitiesController@sFSpecialMenu');
+	Route::get('/addSharedFacilities', 'sharedFacilitiesController@addSharedFacilities');
+	Route::get('/getLogSharedFacilities', 'sharedFacilitiesController@getLogSharedFacilities');
+	Route::get('/getMySharedFacilities', 'sharedFacilitiesController@getMySharedFacilities');
+
+	// Office Boy Service
+	Route::get('/addOBServices', 'obServicesController@addOBServices');
+	Route::get('/updateOBServices', 'obServicesController@updateOBServices');
+	Route::get('/getLogAdminOBServices', 'obServicesController@getLogAdminOBServices');
+	Route::get('/getLogOBServices', 'obServicesController@getLogOBServices');
+	Route::get('/getTaskOBServices', 'obServicesController@getTaskOBServices');
+	Route::get('/getMyOBServices', 'obServicesController@getMyOBServices');
+
+
 Route::group(['middleware' => 'guest'], function(){
 	// log in log out
 	Route::get('/login','UserController@index');
 	Route::post('/login','UserController@login');
-});	
+});
 
 Route::group(['middleware' => 'auth'], function(){
 	Route::get('/homepageGAIS','UserController@homepageGAIS');
@@ -33,7 +50,8 @@ Route::group(['middleware' => 'auth'], function(){
 	Route::get('/sidebarNonAdmin','UserController@sidebarNonAdmin');
 	Route::get('/sidebarAdmin','UserController@sidebarAdmin');
 	Route::get('/sidebarHomepage','UserController@sidebarHomepage');
-	
+	Route::get('/sidebarOB','UserController@sidebarOB');
+
 	// Create Reimbursement
 	Route::get('/createReimbursement', 'SelfServiceController@formReimbursement');
 	Route::post('/addReimbursement', 'SelfServiceController@addReimbursement');
@@ -72,10 +90,11 @@ Route::group(['middleware' => 'auth'], function(){
 	// approval
 	Route::get('/myApproval', 'SelfServiceController@myApproval');
 	Route::get('/approval/{kodeSS}', 'SelfServiceController@approval');
-	
-	// rejection
 	Route::get('/rejection/{kodeSS}', 'SelfServiceController@rejection');
-	Route::post('/rejection/{kodeSS}', 'SelfServiceController@rejectionPost');
-});	
+
+
+
+
+});
 
 Route::get('/generate/{isi}', function($isi) {return \Hash::make($isi);});
