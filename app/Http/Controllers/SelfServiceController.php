@@ -81,7 +81,6 @@ class SelfServiceController extends Controller
         else {
             $selfservice = new \App\SelfService();
             $temp = (string) $rm->kodeSS;
-            //return ($temp);
             $temp2 = substr($temp, 2);
             $temp3 = intval($temp2) + 1;
             $selfservice->kodeSS = "RM" . $temp3;
@@ -450,15 +449,11 @@ class SelfServiceController extends Controller
     }
   
 
-    function update($kodeSS) {                                                                      // BELOMAN
-        //$ss = \App\SelfService::where("kodeSS","=", $kodeSS)->first();
+    function update($kodeSS) {                                                                      
+        $ss = \App\SelfService::getDetail($kodeSS);
         $rm = \App\Reimbursement::where("selfservice_id", "=", $kodeSS)->count();
         $ot = \App\Overtime::where("selfservice_id", "=", $kodeSS)->count();
         $pl = \App\PaidLeave::where("selfservice_id", "=", $kodeSS)->count();
-        $ss = DB::table('selfservice')
-            ->join('employee','employee.id_employee','=','selfservice.employee_id')
-            ->where('kodeSS','=', $kodeSS)
-            ->first();
         $workson = \App\WorksOn::getWorksOn();
 
         if ($ss->employee_id == \Auth::user()->id_employee) {        
@@ -535,17 +530,23 @@ class SelfServiceController extends Controller
                             ->with(compact('in'));
             } 
             
-            $ss->description = $description;
-            $ss->request_date = $mydate;
-            $ss->approval_date = $mydate;
+            $ss->status = -2;
+            if($ss->save) {
+                $selfservice = new \App\SelfService();
+                $selfservice->kodeSS = $kodeSS;
+                $selfservice->description = $description;
+                $selfservice->request_date = $mydate;
+                $selfservice->approval_date = $mydate; 
 
-            $rm->business_purpose = $businesspurpose;
-            $rm->category = $category;
-            $rm->date = $date;
-            $rm->cost = $cost;
-            $rm->payment = 0;
+                $reimbursement = new \App\Reimbursement();
+                $reimbursement->selfservice_id = $kodeSS;
+                $reimbursement->business_purpose = $businesspurpose;
+                $reimbursement->category = $category;
+                $reimbursement->date = $date;
+                $reimbursement->cost = $cost;
+                $reimbursement->payment = 0;
+            }
 
-            $ss->save();
             $kodeSS = DB::table('selfservice')->where('request_date', $mydate)->value('kodeSS');
 
             if (\Request::hasFile('foto')) {
@@ -556,12 +557,12 @@ class SelfServiceController extends Controller
                     \Request::file('foto')->move('./foto', $foto);
                     //\Request::file('logo')->move(base_path().'/logo', $logo);
 
-                    $rm->photo = $foto;
+                    $reimbursement->photo = $foto;
                 }
             }
             
-            if($ss->save()) {
-                if ($rm->save()) {
+            if($selfservice->save()) {
+                if ($reimbursement->save()) {
                     return \Redirect::to('/dashboardNonAdmin');
                 }
             }
