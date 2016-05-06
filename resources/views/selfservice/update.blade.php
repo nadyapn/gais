@@ -124,21 +124,7 @@
 						  </div>
 						   <div class="form-group">
 						   	@if(isset($temp->periodofleave[0])){{$temp->periodofleave[0]}}@endif<br/>
-							<select name="periodofleave" >
-								<option selected disabled>Choose Your Month Of Leave</option>
-								<option value="jan">January</option>
-								<option value="feb">February</option>
-								<option value="mar">March</option>
-								<option value="apr">April</option>
-								<option value="may">May</option>
-								<option value="jun">June</option>
-								<option value="jul">July</option>
-								<option value="aug">August</option>
-								<option value="sept">September</option>
-								<option value="oct">October</option>
-								<option value="nov">November</option>
-								<option value="dec">December</option>
-							</select>
+							<input type="text" class="form-control" placeholder="Periode of Leave" name="periodofleave">
 						  </div>
 						  <div class="form-group">
 						  	@if(isset($temp->rsnofleave[0])){{$temp->rsnofleave[0]}}@endif<br/>
