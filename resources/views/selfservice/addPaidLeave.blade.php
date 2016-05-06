@@ -36,7 +36,15 @@
 						  <div class="form-group">
 								<h4 style="text-align:left ; margin-left:32.5% ; margin-bottom:-1%">Start Date</h4>
 						  	@if(isset($temp->datehired[0])){{$temp->datehired[0]}}@endif<br/>
+<<<<<<< HEAD
 								<input type="date" class="form-control" name="datehired">
+=======
+							<input type="date" class="form-control" placeholder="Enter Date Hired" name="datehired">
+						  </div>
+						   <div class="form-group">
+						   	@if(isset($temp->periodofleave[0])){{$temp->periodofleave[0]}}@endif<br/>
+							<input type="text" class="form-control" placeholder="Periode of Leave" name="periodofleave">
+>>>>>>> 07a265f6269f8fd07b139d4e03dfac95a4379949
 						  </div>
 							<div class="form-group">
 								<h4 style="text-align:left ; margin-left:32.5% ; margin-bottom:-1%; margin-top:-1.2%;">End Date</h4>
