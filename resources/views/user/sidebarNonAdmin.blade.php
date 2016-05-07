@@ -13,7 +13,7 @@
 						  </a>
 						</li>
 
-						@if(\Auth::user()->position === 'Team Leader' || \Auth::user()->position === 'Head of Business Unit' || \Auth::user()->position === 'Head of HR')
+						@if(\Auth::user()->position === 'Supervisor' || \Auth::user()->position === 'Business Unit' || \Auth::user()->position === 'Human Resource')
 						<li  data-toggle="collapse" data-target="#Employee-Self-Service" class="collapsed">
 						  <a href="#"><img style="margin-left:10px;margin-right:5px"src="{{asset('/img/approval-white.png')}}"> My Approval <span class="arrow"></span></a>
 						</li>
@@ -27,19 +27,19 @@
 						<ul class="sub-menu collapse" id="myHistory">
 							<li data-toggle="collapse" data-target="#Employee-Self-Service2"><a href="#">Employee Self-Service
 								<ul class="sub-menu collapse" id="Employee-Self-Service2">
-									<li><a href="{{url('/getMyReimbursement')}}">Reimburse</a></li>		
+									<li><a href="{{url('/getMyReimbursement')}}">Reimburse</a></li>
 									<li><a href="{{url('/getMyPaidLeave')}}">Paid Leave</a></li>
 									<li><a href="{{url('/getMyOvertime')}}">Overtime</a></li>
 								</ul>
 							</li>
-							<li><a href="#">Shared Facilities Scheduler</li>
-							<li><a href="#">Office Boy Service<i> Beta</i></li>
+							<li><a href="{{url('/getMyPeminjaman')}}">Shared Facilities Scheduler</li>
+							<li><a href="{{url('/getMyOBService')}}">Office Boy Service<i> Beta</i></li>
 						</ul>
 					</ul>
 			 </div>
-		</div>    
+		</div>
         <!-- /#sidebar-wrapper -->
-        
+
         @yield('contentNonAdmin')
 
 @endsection

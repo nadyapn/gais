@@ -18,6 +18,7 @@ class FacilitiesTable extends Migration
             $table->string('name', 255);
             $table->string('category',255);
             $table->text('description');
+            $table->tinyInteger('status');
             $table->string('updated_at', 255);
             $table->string('created_at', 255);
             $table->primary('kode');

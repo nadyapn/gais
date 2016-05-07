@@ -49,18 +49,46 @@ Route::group(['middleware' => 'auth'], function(){
 	Route::post('/addOvertime', 'SelfServiceController@addOvertime');
 	Route::get('/addOvertime', 'SelfServiceController@addOvertimeFbd');
 
+	// Create Peminjaman
+	Route::get('/createPeminjaman', 'SharedFacilitiesController@formPeminjaman');
+	Route::post('/addPeminjaman', 'SharedFacilitiesController@addPeminjaman');
+	Route::get('/addPeminjaman', 'SharedFacilitiesController@addPeminjamanFbd');
+
+	Route::get('/facilitiesForm', 'SharedFacilitiesController@facilitiesForm');
+
+	Route::get('/contoh', 'SharedFacilitiesController@contoh');
+
+	Route::get('/contoh/{tanggal}/{waktu}', 'SharedFacilitiesController@contoh2');
+
+	Route::post('/addContoh/{tanggal}/{waktu}', 'SharedFacilitiesController@addContoh');
+
+	// Create Fasilitas
+	Route::get('/createFacility', 'SharedFacilitiesController@formFacility');
+	Route::post('/addFacility', 'SharedFacilitiesController@addFacility');
+	Route::get('/addFacility', 'SharedFacilitiesController@addFacilityFbd');
+
+	// Create OB Service
+	Route::get('/createOBService', 'OBServiceController@formOBService');
+	Route::post('/addOBService', 'OBServiceController@addOBService');
+	Route::get('/addOBService', 'OBServiceController@addOBService');
+
 	// Read Detail
 	Route::get('/getDetail/{kodeSS}', 'SelfServiceController@getDetail');
 	Route::get('/getDetailAdmin/{kodeSS}', 'SelfServiceController@getDetailAdmin');
 	Route::get('/getReqForSupervisor', 'SelfServiceController@getReqForSupervisor');
 	Route::get('/getReqForHR', 'SelfServiceController@getReqForHR');
 	Route::get('/getReqForBU', 'SelfServiceController@getReqForBU');
+	
 	Route::get('/getLogReimbursement', 'SelfServiceController@getLogReimbursement');
 	Route::get('/getLogPaidLeave', 'SelfServiceController@getLogPaidLeave');
 	Route::get('/getLogOvertime', 'SelfServiceController@getLogOvertime');
+	Route::get('/getLogPeminjaman', 'SharedFacilitiesController@getLogPeminjaman');
+	
 	Route::get('/getMyReimbursement', 'SelfServiceController@getMyReimbursement');
 	Route::get('/getMyPaidLeave', 'SelfServiceController@getMyPaidLeave');
 	Route::get('/getMyOvertime', 'SelfServiceController@getMyOvertime');
+	Route::get('/getMyPeminjaman', 'SharedFacilitiesController@getMyPeminjaman');
+
 
 	// update
 	Route::get('/update/{kodeSS}', 'SelfServiceController@update');

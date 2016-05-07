@@ -4,10 +4,13 @@ namespace App;
 
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
+use DB;
+
 class User extends Authenticatable
 {
     protected $table = 'employee';
     public $primaryKey  = 'id_employee';
+    public $incrementing = false;
     /**
      * The attributes that are mass assignable.
      *
@@ -25,4 +28,13 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    public static function getOB() {
+        $query = DB::table('employee')
+            ->where('division','=','Office Boy')
+            ->get();
+
+        return ($query);
+    }
+
 }

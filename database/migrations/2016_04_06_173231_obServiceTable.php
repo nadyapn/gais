@@ -18,6 +18,8 @@ class ObServiceTable extends Migration
             $table->date('date');
             $table->time('batch');
             $table->text('detail');
+            $table->tinyInteger('status');
+            $table->string('category',255);
             $table->string('employee_id',255);
             $table->string('ob_id',255);
             $table->string('updated_at', 255);
