@@ -23,7 +23,6 @@ class SelfServiceController extends Controller
         else {
             return \View::make('user/homepageGAIS');
         }
-        
     }
 
     function addReimbursement(Request $request) {

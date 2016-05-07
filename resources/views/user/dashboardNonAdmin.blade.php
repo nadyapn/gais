@@ -41,10 +41,10 @@
 							  <td>{{$f->tipe}}</td>
 							  <td>{{$f->request_date}}</td>
 							  <td><a href="{{url('/getDetail/'.$f->kodeSS)}}" class="btn btn-view">View</a></td>
-							  	@if (\Auth::user()->position === 'Team Leader')
+							  	@if (\Auth::user()->position === 'Supervisor')
 							  		<td>@if ($f->status == 1)<a href="{{url('/update/'.$f->kodeSS)}}" class="btn btn-view">Update </a> @endif</td>
 									<td>@if ($f->status == 1)<a href="{{url('/delete/'.$f->kodeSS)}}" class="btn btn-view" onclick="return confirm('Are you sure?')">Delete</a> @endif</td>
-								@elseif (\Auth::user()->posisition === 'Head of Business Unit' || \Auth::user()->position === 'Head of HR')
+								@elseif (\Auth::user()->posisition === 'Business Unit' || \Auth::user()->position === 'Human Resource')
 								  	<td>@if ($f->status == 2)<a href="{{url('/update/'.$f->kodeSS)}}" class="btn btn-view">Update </a> @endif</td>
 									<td>@if ($f->status == 2)<a href="{{url('/delete/'.$f->kodeSS)}}" class="btn btn-view" onclick="return confirm('Are you sure?')">Delete</a> @endif</td>
 								@else 
@@ -86,9 +86,7 @@
 						  <thead>
 							<tr>
 							  <th>ID</th>
-							  @if (\Auth::user()->position != 'Head of HR')
-							  	<th>Type</th>
-							  @endif
+							  <th>Type</th>
 							  <th>Date Requested</th>
 							  <th>View Details</th>
 							  <th>Update</th>
@@ -99,15 +97,13 @@
 							@foreach($all as $g)
 							<tr>
 							  <th scope="row">{{$g->kodeSS}}</th>
-							  @if (\Auth::user()->position != 'Head of HR')
-							  	<td>{{$g->tipe}}</td>
-							  @endif
+							  <td>{{$g->tipe}}</td>
 							  <td>{{$g->request_date}}</td>
 							  <td><a href="{{url('/getDetail/'.$g->kodeSS)}}" class="btn btn-view">View</a></td>
-							  	@if (\Auth::user()->position === 'Team Leader')
+							  	@if (\Auth::user()->position === 'Supervisor')
 							  		<td>@if ($g->status == 1)<a href="{{url('/update/'.$g->kodeSS)}}" class="btn btn-view">Update </a> @endif</td>
 									<td>@if ($g->status == 1)<a href="{{url('/delete/'.$g->kodeSS)}}" class="btn btn-view" onclick="return confirm('Are you sure?')">Delete</a> @endif</td>
-								@elseif (\Auth::user()->posisition === 'Head of Business Unit' || \Auth::user()->position === 'Head of HR')
+								@elseif (\Auth::user()->posisition === 'Business Unit' || \Auth::user()->position === 'Human Resource')
 								  	<td>@if ($g->status == 2)<a href="{{url('/update/'.$g->kodeSS)}}" class="btn btn-view">Update </a> @endif</td>
 									<td>@if ($g->status == 2)<a href="{{url('/delete/'.$g->kodeSS)}}" class="btn btn-view" onclick="return confirm('Are you sure?')">Delete</a> @endif</td>
 								@else 
