@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 
 use DB;
-
+// ini comment rahma
 class OBServiceController extends Controller
 {
     // form ob service. return view form
@@ -86,7 +86,7 @@ class OBServiceController extends Controller
         else {
             return \View::make('user/homepageGAIS');
         }
-    }   
+    }
 
     // get detail ob service. return view get detail
     function getDetail($kodeOBS) {
@@ -109,19 +109,19 @@ class OBServiceController extends Controller
     }
 
     // update obs. return view form (mirip kayak create)
-    function update($kodeOBS) {                                                                  
+    function update($kodeOBS) {
         return \View::make('observice/updateOBService');
     }
 
     // ketika submit obs. no return view
     function updatePost($kodeOBS, Request $request) {
-        
+
     }
 
     // ketika cancel obs. no return view
     function delete($kodeOBS) {
-        
+
     }
 
-    
+
 }
