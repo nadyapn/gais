@@ -49,10 +49,8 @@
 									@endif
 								</td>
 								<td><a href="{{url('/getDetail/'.$e->kodeSS)}}" class="btn btn-view">View</td>
-								@if ($e->status == 0)
-									<td><a href="{{url('/update/'.$e->kodeSS)}}" class="btn btn-view">Update</td>
-									<td><a href="{{url('/delete/'.$e->kodeSS)}}" class="btn btn-view" onclick="return confirm('Are you sure?')">Delete</td>
-								@endif
+								<td>@if ($e->status == 0)<a href="{{url('/update/'.$e->kodeSS)}}" class="btn btn-view">Update </a> @endif</td>
+								<td>@if ($e->status == 0)<a href="{{url('/delete/'.$e->kodeSS)}}" class="btn btn-view" onclick="return confirm('Are you sure?')">Delete</a> @endif</td>
 							</tr>
 							@endforeach
 						</tbody>

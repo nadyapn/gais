@@ -27,7 +27,7 @@
 						</ul>
 
 						<li data-toggle="collapse" data-target="#service" class="collapsed">
-						  <a href="{{url('/createFacility')}}"><img style="margin-left:10px;margin-right:5px"src="{{asset('img/calendar-white.png')}}"> Shared Facilities <b>Special Menu</b></a>
+						  <a href="{{url('/sfSpecialMenu')}}"><img style="margin-left:10px;margin-right:5px"src="{{asset('img/calendar-white.png')}}"> Shared Facilities <b>Special Menu</b></a>
 						</li>
 					</ul>
 			 </div>

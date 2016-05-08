@@ -21,19 +21,32 @@
 					<table class="table" id="dataTable">
 					  	<thead>
 							<tr>
-							  <th>Requested ID</th>
-							  <th>Requested Date</th>
-								<!-- Sort  by the newest date-->
-							  <th>Applicant's Name</th>
-							  <th>Time</th>
-								<!-- Contoh: 08.00 - 09.00-->
-							  <th>Room</th>
-							  <th>Description</th>
+								<th>ID</th>
+							  	<th>Employee's Name</th>
+							  	<th>Facility</th>
+							  	<th>Status</th>
+							  	<th>View Detail</th>
 							</tr>
-					  	</thead>
-					  	<tbody>
-								<!-- insert kode here -->
-							</tbody>
+						</thead>
+						<tbody>
+							@foreach($peminjaman as $e)
+							<tr>
+							  	<td>{{$e->kodePinjam}}</td>
+							  	<td>{{$e->name}}</td>
+							  	<td>{{$e->sfname}}</td>
+							  	<td>
+							  		@if($e->status == 0) 	
+							  			Booked
+							  		@elseif($e->status == 1)
+							  			Waiting List
+							  		@elseif($e->status == -1)
+							  			Canceled
+							  		@endif
+							  	</td>
+							  	<td><a href="{{url('/getDetailAdmin/'.$e->kodePinjam)}}" class="btn btn-view">View</td>
+							</tr>
+							@endforeach
+						</tbody>
 					</table>
 			</div>
 		</section>

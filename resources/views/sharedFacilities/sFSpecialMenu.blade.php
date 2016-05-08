@@ -23,13 +23,13 @@
 							<div class="col-homepage-left">
 									<div class="createDashboard">
 										<img src="{{asset('img/create.png')}}" style=" width:60% vertical-align:middle"><br><br>
-										<a href="{{url('/deleteFacilities')}}" class="buttonHomepage btn btn-secondary2">Create New Facility</a>
+										<a href="{{url('/createFacility')}}" class="buttonHomepage btn btn-secondary2">Create New Facility</a>
 									</div>
 							</div>
 							<div class="col-homepage-left">
 									<div class="createDashboard">
 										<img src="{{asset('img/delete.png')}}" style=" width:60% vertical-align:middle"><br><br>
-										<a href="{{url('/createFacilities')}}" class="buttonHomepage btn btn-secondary2">Delete Facility</a>
+										<a href="{{url('/deleteFacility')}}" class="buttonHomepage btn btn-secondary2">Delete Facility</a>
 									</div>
 							</div>
 					</div>
