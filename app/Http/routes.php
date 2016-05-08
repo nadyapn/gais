@@ -50,19 +50,26 @@ Route::group(['middleware' => 'auth'], function(){
 	Route::get('/addOvertime', 'SelfServiceController@addOvertimeFbd');
 
 	// Create Peminjaman
-	Route::get('/createPeminjaman', 'SharedFacilitiesController@formPeminjaman');
-	Route::post('/addPeminjaman', 'SharedFacilitiesController@addPeminjaman');
-	Route::get('/addPeminjaman', 'SharedFacilitiesController@addPeminjamanFbd');
+	Route::get('/createPeminjaman', 'SharedFacilitiesController@formSF');
+	Route::post('/addSF', 'SharedFacilitiesController@addSF');
+	Route::get('/addSF', 'SharedFacilitiesController@addSFFbd');
 
-	Route::get('/facilitiesForm', 'SharedFacilitiesController@facilitiesForm');
+	Route::get('/formPeminjaman/{tanggal}/{waktu}', 'SharedFacilitiesController@formPeminjaman');
+	Route::post('/addPeminjaman/{tanggal}/{waktu}', 'SharedFacilitiesController@addPeminjaman');
 
+	Route::get('/peminjamanScheduler', 'SharedFacilitiesController@peminjamanScheduler');
+
+	Route::get('/formWaitingList/{tanggal}/{waktu}', 'SharedFacilitiesController@formWaitingList');
+	Route::post('/addWaitingList/{tanggal}/{waktu}', 'SharedFacilitiesController@addWaitingList');
+
+	// contoh
 	Route::get('/contoh', 'SharedFacilitiesController@contoh');
-
 	Route::get('/contoh/{tanggal}/{waktu}', 'SharedFacilitiesController@contoh2');
-
 	Route::post('/addContoh/{tanggal}/{waktu}', 'SharedFacilitiesController@addContoh');
+	Route::get('/sfAriq', 'SharedFacilitiesController@sfAriq');
 
 	// Create Fasilitas
+	Route::get('/sfSpecialMenu', 'SharedFacilitiesController@sfSpecialMenu');
 	Route::get('/createFacility', 'SharedFacilitiesController@formFacility');
 	Route::post('/addFacility', 'SharedFacilitiesController@addFacility');
 	Route::get('/addFacility', 'SharedFacilitiesController@addFacilityFbd');
@@ -75,6 +82,9 @@ Route::group(['middleware' => 'auth'], function(){
 	// Read Detail
 	Route::get('/getDetail/{kodeSS}', 'SelfServiceController@getDetail');
 	Route::get('/getDetailAdmin/{kodeSS}', 'SelfServiceController@getDetailAdmin');
+	Route::get('/getDetailPeminjaman/{kodePinjam}', 'SharedFacilitiesController@getDetail');
+	Route::get('/getDetailAdminPeminjaman/{kodePinjam}', 'SharedFacilitiesController@getDetailAdmin');
+
 	Route::get('/getReqForSupervisor', 'SelfServiceController@getReqForSupervisor');
 	Route::get('/getReqForHR', 'SelfServiceController@getReqForHR');
 	Route::get('/getReqForBU', 'SelfServiceController@getReqForBU');

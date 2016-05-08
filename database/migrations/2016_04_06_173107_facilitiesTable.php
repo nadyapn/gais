@@ -15,7 +15,7 @@ class FacilitiesTable extends Migration
         //
         Schema::create('facilities', function (Blueprint $table) {
             $table->string('kode', 255);
-            $table->string('name', 255);
+            $table->string('sfname', 255);
             $table->string('category',255);
             $table->text('description');
             $table->tinyInteger('status');
