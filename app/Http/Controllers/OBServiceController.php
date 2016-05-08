@@ -57,6 +57,7 @@ class OBServiceController extends Controller
             $observice->detail = $detail;
             $observice->batch = $batch;
             $observice->category = $category;
+            //dibawah ini masih error, ngecek nama ob yg dipilih itu ada di database apa enggak
             $observice->ob_id = $ob->id_employee->where('name','=', $namaOB);
             $observice->employee_id = \Auth::user()->id_employee;
         }
@@ -105,7 +106,9 @@ class OBServiceController extends Controller
 
     // get history obs. return view semua history kita
     function getMyOBService() {
-        return \View::make('observice/geMyOBService');
+      $obsr = \App\OBService::getMyObService();
+
+        return \View::make('observice/getMyOBService')->with(compact('obsr'));
     }
 
     // update obs. return view form (mirip kayak create)

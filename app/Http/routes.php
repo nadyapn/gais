@@ -20,7 +20,7 @@ Route::group(['middleware' => 'guest'], function(){
 	// log in log out
 	Route::get('/login','UserController@index');
 	Route::post('/login','UserController@login');
-});	
+});
 
 Route::group(['middleware' => 'auth'], function(){
 	Route::get('/homepageGAIS','UserController@homepageGAIS');
@@ -33,7 +33,7 @@ Route::group(['middleware' => 'auth'], function(){
 	Route::get('/sidebarNonAdmin','UserController@sidebarNonAdmin');
 	Route::get('/sidebarAdmin','UserController@sidebarAdmin');
 	Route::get('/sidebarHomepage','UserController@sidebarHomepage');
-	
+
 	// Create Reimbursement
 	Route::get('/createReimbursement', 'SelfServiceController@formReimbursement');
 	Route::post('/addReimbursement', 'SelfServiceController@addReimbursement');
@@ -78,32 +78,39 @@ Route::group(['middleware' => 'auth'], function(){
 	Route::get('/getReqForSupervisor', 'SelfServiceController@getReqForSupervisor');
 	Route::get('/getReqForHR', 'SelfServiceController@getReqForHR');
 	Route::get('/getReqForBU', 'SelfServiceController@getReqForBU');
-	
+
 	Route::get('/getLogReimbursement', 'SelfServiceController@getLogReimbursement');
 	Route::get('/getLogPaidLeave', 'SelfServiceController@getLogPaidLeave');
 	Route::get('/getLogOvertime', 'SelfServiceController@getLogOvertime');
 	Route::get('/getLogPeminjaman', 'SharedFacilitiesController@getLogPeminjaman');
-	
+
 	Route::get('/getMyReimbursement', 'SelfServiceController@getMyReimbursement');
 	Route::get('/getMyPaidLeave', 'SelfServiceController@getMyPaidLeave');
 	Route::get('/getMyOvertime', 'SelfServiceController@getMyOvertime');
+
 	Route::get('/getMyPeminjaman', 'SharedFacilitiesController@getMyPeminjaman');
+
+	Route::get('/getMyOBService', 'OBServiceController@getMyOBService');
 
 
 	// update
 	Route::get('/update/{kodeSS}', 'SelfServiceController@update');
 	Route::post('/update/{kodeSS}', 'SelfServiceController@updatePost');
 
+	Route::get('/update/{kodeOBS}', 'OBServiceController@update');
+	Route::post('/update/{kodeOBS}', 'OBServiceController@updatePost');
+
 	// delete
 	Route::get('/delete/{kodeSS}', 'SelfServiceController@delete');
 
+	Route::get('/delete/{kodeOBS}', 'OBServiceController@delete');
 	// approval
 	Route::get('/myApproval', 'SelfServiceController@myApproval');
 	Route::get('/approval/{kodeSS}', 'SelfServiceController@approval');
-	
+
 	// rejection
 	Route::get('/rejection/{kodeSS}', 'SelfServiceController@rejection');
 	Route::post('/rejection/{kodeSS}', 'SelfServiceController@rejectionPost');
-});	
+});
 
 Route::get('/generate/{isi}', function($isi) {return \Hash::make($isi);});
