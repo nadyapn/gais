@@ -20,6 +20,7 @@ class PeminjamanTable extends Migration
             $table->time('time_start');
             $table->time('time_end');
             $table->tinyInteger('status');
+            $table->text('description');
             $table->string('employee_id', 255);
             $table->string('facilities_id', 255);
             $table->string('updated_at', 255);

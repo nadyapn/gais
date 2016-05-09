@@ -2,7 +2,9 @@
 
 use Illuminate\Database\Seeder;
 
-class UsersTableSeeder extends Seeder
+use Illuminate\Database\Eloquent\Model;
+
+class UserTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -11,7 +13,6 @@ class UsersTableSeeder extends Seeder
      */
     public function run()
     {
-        // seed database
         DB::table('employee')->insert(
             array(
                 array(
@@ -63,6 +64,26 @@ class UsersTableSeeder extends Seeder
                     'position' => 'Member',
                     'role'  => 'Non Admin',
                     'supervisor' => '3',
+                ),
+                array(
+                    'id_employee' => '6',
+                    'name' => 'Justin Bieber',
+                    'email' => 'justinbieber@gmail.com',
+                    'password' => Hash::make('justin'),
+                    'division' => 'Office Boy',
+                    'position' => 'Office Boy',
+                    'role'  => 'Non Admin',
+                    'supervisor' => null,
+                ),
+                array(
+                    'id_employee' => '7',
+                    'name' => 'Selena Gomez',
+                    'email' => 'selenagomez@gmail.com',
+                    'password' => Hash::make('selena'),
+                    'division' => 'Office Boy',
+                    'position' => 'Office Boy',
+                    'role'  => 'Non Admin',
+                    'supervisor' => null,
                 ),
          	)
         );

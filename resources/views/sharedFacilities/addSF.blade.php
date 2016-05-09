@@ -26,7 +26,7 @@
 				  ?>
 				  @endif
 
-				  <form action="{{url('/addPeminjaman')}}" method="post">
+				  <form action="{{url('/addSF')}}" method="post">
 						<input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
 						<div class="form-inline">
 						   <div class="form-group">
@@ -34,7 +34,7 @@
 									<select class="form-control" name="chooseFacility" >
 										<option selected disabled>Choose Facility</option>
 										@foreach ($sf as $e)
-											<option value="room1">{{$e->name}}</option>
+											<option>{{$e->name}}</option>
 										@endforeach
 									</select>
 						   </div>
