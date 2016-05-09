@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 
 use DB;
-
+// ini comment rahma
 class OBServiceController extends Controller
 {
     // form ob service. return view form
@@ -57,6 +57,7 @@ class OBServiceController extends Controller
             $observice->detail = $detail;
             $observice->batch = $batch;
             $observice->category = $category;
+            //dibawah ini masih error, ngecek nama ob yg dipilih itu ada di database apa enggak
             $observice->ob_id = $ob->id_employee->where('name','=', $namaOB);
             $observice->employee_id = \Auth::user()->id_employee;
         }
@@ -86,7 +87,7 @@ class OBServiceController extends Controller
         else {
             return \View::make('user/homepageGAIS');
         }
-    }   
+    }
 
     // get detail ob service. return view get detail
     function getDetail($kodeOBS) {
@@ -105,23 +106,25 @@ class OBServiceController extends Controller
 
     // get history obs. return view semua history kita
     function getMyOBService() {
-        return \View::make('observice/geMyOBService');
+      $obsr = \App\OBService::getMyObService();
+
+        return \View::make('observice/getMyOBService')->with(compact('obsr'));
     }
 
     // update obs. return view form (mirip kayak create)
-    function update($kodeOBS) {                                                                  
+    function update($kodeOBS) {
         return \View::make('observice/updateOBService');
     }
 
     // ketika submit obs. no return view
     function updatePost($kodeOBS, Request $request) {
-        
+
     }
 
     // ketika cancel obs. no return view
     function delete($kodeOBS) {
-        
+
     }
 
-    
+
 }

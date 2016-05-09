@@ -12,13 +12,13 @@ class SelfService extends Model
 	public $primaryKey  = 'kodeSS';
 	public $incrementing = false;
 
-	
+
 	public static function getMyHistory() {
 		$query = $all = DB::table('selfservice')
             	->join('employee','employee.id_employee','=','selfservice.employee_id')
             	->where('employee_id','=',\Auth::user()->id_employee)
             	->where('status','>=',0)
-            	->get();	
+            	->get();
 
 	    foreach ($query as $f) {
             $kodeSS = $f->kodeSS;
@@ -33,7 +33,7 @@ class SelfService extends Model
             }
             else if ($ot > 0) {
                 $f->tipe = "Overtime";
-            } 
+            }
             else
             {
                 //default case. should never went here
@@ -127,7 +127,7 @@ class SelfService extends Model
                 }
                 else if ($ot > 0) {
                     $e->tipe = "Overtime";
-                } 
+                }
                 else
                 {
                     //default case. should never went here
@@ -159,7 +159,7 @@ class SelfService extends Model
                 }
                 else if ($ot > 0) {
                     $e->tipe = "Overtime";
-                } 
+                }
                 else
                 {
                     //default case. should never went here
@@ -168,7 +168,7 @@ class SelfService extends Model
             }
 
 	    return ($query);
-    }    
+    }
 
     public static function getReqForHR() {
 	    $query = DB::table('selfservice')
@@ -186,7 +186,7 @@ class SelfService extends Model
 	            $pl = \App\PaidLeave::where("selfservice_id", "=", $kodeSS)->count();
 	            if ($pl > 0) {
 	                $e->tipe = "Paid Leave";
-	            } 
+	            }
 	            else
 	            {
 	        	    //default case. should never went here
