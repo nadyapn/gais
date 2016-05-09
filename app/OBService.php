@@ -4,6 +4,8 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
+use DB;
+
 class OBService extends Model
 {
     protected $table = 'observice';
@@ -12,7 +14,7 @@ class OBService extends Model
 
     public static function getMyObService() {
 	    $query = DB::table('observice')
-            ->where('id_employee',\Auth::user()->id_employee)
+            ->where('employee_id',\Auth::user()->id_employee)
             ->where('status','>=','0')
             ->get();
 

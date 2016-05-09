@@ -44,7 +44,28 @@
 					  	</thead>
 					  	<tbody>
 								<!-- insert kode here -->
+
+          		<!-- gimana sih caranya ngeforeach?? -->
+								@foreach($obsr as $o)
+								<tr>
+									<td>{{$o->kodeOBS}}</td>
+									<td>{{$o->date}}</td>
+                	<td>{{$o->batch}}</td>
+									<td>{{$o->category}}</td>
+									<td>{{$o->detail}}</td>
+									<td>
+										@if ($e->status == 0)
+												Disetujui OB
+										@elseif ($e->status == 1)
+												Udah selesai dikerjain sama OB
+										@endif
+									</td>
+									<td><a href="{{url('/update/'.$o->kodeOBS)}}" class="btn btn-view">Update</a></td>
+									<td><a href="{{url('/delete/'.$o->kodeOBS)}}" class="btn btn-view" onclick="return confirm('Are you sure?')">Delete</a></td>
+								</tr>
+								@endforeach
 							</tbody>
+
 					</table>
 			</div>
 		</section>
