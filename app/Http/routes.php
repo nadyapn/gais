@@ -112,8 +112,11 @@ Route::group(['middleware' => 'auth'], function(){
 
 	// delete
 	Route::get('/delete/{kodeSS}', 'SelfServiceController@delete');
-
+	Route::get('/deletePeminjaman/{kodePinjam}', 'SharedFacilitiesController@delete');
+	Route::get('/deleteFacility', 'SharedFacilitiesController@getAllFacilities');
+	Route::get('/deleteFacility/{kode}', 'SharedFacilitiesController@deleteFacility');
 	Route::get('/delete/{kodeOBS}', 'OBServiceController@delete');
+
 	// approval
 	Route::get('/myApproval', 'SelfServiceController@myApproval');
 	Route::get('/approval/{kodeSS}', 'SelfServiceController@approval');
