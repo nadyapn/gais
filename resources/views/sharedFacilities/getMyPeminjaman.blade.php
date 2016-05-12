@@ -15,12 +15,6 @@
 			<div id="color">
 				<p id="move">Your Actual Shared Facilities Request <b> Status </b></p>
 			</div>
-
-			<div class="color3">
-				<!-- Status request Shared Facilities -->
-				<p id="move2">Your Request: <!-- Nama Ruangan - Jam - Status -->  <a style="color:#f1c40f "> <b> Room 2 at 8.00 - 9.00am </b> </a> <b> has entered to waiting list </b> </p>
-			</div>
-
 			<div id="color4">
 				<p id="move">Shared Facilities Request History</p>
 			</div>
@@ -32,15 +26,33 @@
 					  	<thead>
 							<tr>
 								<th>Request ID</th>
-							  <th>Requested Date</th>
-							  <th>Time</th>
-							  <th>Description</th>
+								<th>Facility's Name</th>
+								<th>Date Requested</th>
+								<th>Status</th>
+								<th>View Details</th>
 								<th>Delete</th>
 							</tr>
 					  	</thead>
 					  	<tbody>
-								<!-- insert kode here -->
-							</tbody>
+					  		@foreach($peminjaman as $e)
+					  		<tr>
+								<td>{{$e->kodePinjam}}</td>
+								<td>{{$e->sfname}}</td>
+								<td>{{$e->request_date}}</td>
+								<td>
+									@if($e->status == 0) 	
+							  			Booked
+							  		@elseif($e->status == 1)
+							  			Waiting List
+							  		@elseif($e->status == -1)
+							  			Canceled
+							  		@endif
+								</td>
+								<td><a href="{{url('/getDetailPeminjaman/'.$e->kodePinjam)}}" class="btn btn-view">View</td>
+								<td><a href="{{url('/delete/'.$e->kodePinjam)}}" class="btn btn-view" onclick="return confirm('Are you sure?')">Delete</a></td>
+							</tr>
+							@endforeach
+						</tbody>
 					</table>
 			</div>
 		</section>
