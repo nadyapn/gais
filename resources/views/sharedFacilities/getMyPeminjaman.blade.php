@@ -12,9 +12,6 @@
 							<a href="{{url('/homepageGAIS')}}" class="btn btn-secondary2">Back to Home</a>
 						</ul>
 					</div>
-			<div id="color">
-				<p id="move">Your Actual Shared Facilities Request <b> Status </b></p>
-			</div>
 			<div id="color4">
 				<p id="move">Shared Facilities Request History</p>
 			</div>
@@ -49,7 +46,7 @@
 							  		@endif
 								</td>
 								<td><a href="{{url('/getDetailPeminjaman/'.$e->kodePinjam)}}" class="btn btn-view">View</td>
-								<td><a href="{{url('/delete/'.$e->kodePinjam)}}" class="btn btn-view" onclick="return confirm('Are you sure?')">Delete</a></td>
+								<td><a href="{{url('/deletePeminjaman/'.$e->kodePinjam)}}" class="btn btn-view" onclick="return confirm('Are you sure?')">Delete</a></td>
 							</tr>
 							@endforeach
 						</tbody>

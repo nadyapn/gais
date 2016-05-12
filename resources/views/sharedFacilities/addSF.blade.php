@@ -34,7 +34,7 @@
 									<select class="form-control" name="chooseFacility" >
 										<option selected disabled>Choose Facility</option>
 										@foreach ($sf as $e)
-											<option>{{$e->name}}</option>
+											<option>{{$e->sfname}}</option>
 										@endforeach
 									</select>
 						   </div>
