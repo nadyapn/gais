@@ -7,6 +7,7 @@ use Validator;
 use Session;
 use Auth;
 use DB;
+use Socialite;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
@@ -19,9 +20,53 @@ class UserController extends Controller
         return \View::make('user/welcome');
     }
 
+
+    /**
+     * Redirect the user to the GitHub authentication page.
+     *
+     * @return Response
+     */
+    public function redirectToProvider()
+    {
+        return Socialite::driver('google')->redirect();
+    }
+
+    /**
+     * Obtain the user information from GitHub.
+     *
+     * @return Response
+     */
+    public function handleProviderCallback()
+    {
+        $user = Socialite::driver('google')->user();
+
+       
+        $check = \App\User::where("email", "=", $user->email)->first();
+
+        if($check) {
+            \Auth::login($check);
+            return \Redirect::to('/homepageGAIS');
+        } else {
+            return "FORBIDDEN";
+        }
+    }
+
+    public function lalala()
+    {  
+        $check = \App\User::where("email", "=", "lusianaprima@gmail.com")->first();
+
+        if($check) {
+            \Auth::login($check);
+            return \Redirect::to('/homepageGAIS');
+        } else {
+            return "FORBIDDEN";
+        }
+    }
+
     public function login()
     {   
         $credentials = \Request::only('email', 'password');
+        //dd($credentials);
         $remember = \Request::has('remember');
         if (\Auth::attempt($credentials, $remember)) {
             return \Redirect::to('/homepageGAIS');
