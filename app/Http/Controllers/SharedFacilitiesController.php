@@ -202,7 +202,7 @@ class SharedFacilitiesController extends Controller
         $peminjaman->facilities_id = $facilities_id;
 
         if($peminjaman->save()) {
-            return \Redirect::to('/dashboardNonAdmin');
+            return \Redirect::to('/getMyPeminjaman');
         }
     }
 
@@ -255,13 +255,18 @@ class SharedFacilitiesController extends Controller
 
     // ketika cancel peminjaman. no return view
     function delete($kodePinjam) {
-        
+        $sf = \App\Peminjaman::where("kodePinjam","=", $kodePinjam)->first();
+
+        $sf->status = -1;
+        if($sf->save()) {
+            return \Redirect::to('/getMyPeminjaman');
+        }
     }
 
     // form add shared facilities. return view form
     function formFacility() {
         if (\Auth::user()->role != 'Admin') {
-           return \View::make('user/homepageGAIS');
+           return \View::make('errors/401');
         }
         else {
             return \View::make('sharedfacilities/addFacility');
@@ -318,17 +323,36 @@ class SharedFacilitiesController extends Controller
     // ketika ketik url. return view form facility lagi
     function addFacilityFbd() {
         if (\Auth::user()->role != 'Admin') {
-           return \View::make('user/homepageGAIS');
+           return \View::make('errors/401');
         }
         else {
             return \View::make('sharedfacilities/addFacility');
         }
     }
 
-    // ketika delete facility. no return view
+    // ketika delete facility. return view list all facilities
+    function getAllFacilities() {
+        $sf = \App\Facilities::getFacilities();
+        if (\Auth::user()->role != 'Admin') {
+           return \View::make('errors/401');
+        }
+        else {
+            return \View::make('sharedfacilities/getAllFacilities')->with(compact('sf'));
+        }
+    }
+
+    // ketika delete salah satu fasilitas. no return view
     function deleteFacility($kode) {
         $sf = \App\Facilities::where("kode","=", $kode)->first();
-        $sf->status = -1;
-        $sf->save();
+        if (\Auth::user()->role != 'Admin') {
+           return \View::make('errors/401');
+        }
+        else {
+            $sf->status = -1;
+            $sf->save();
+            if ($sf->save()) {
+                return \Redirect::to('/deleteFacility');
+            }
+        }
     }
 }
