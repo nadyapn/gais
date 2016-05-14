@@ -13,20 +13,6 @@
     });
 </script>
 
-<?php
-   function isi($tanggal, $waktu) {
-        $(document).ready(function() {
-        $(".isi").click(function() {
-            var tanggal = $(this).attr('tanggal');
-            var waktu = $(this).attr('waktu');
-
-            window.location = "{{url('/formPeminjaman/')}}/"+tanggal+"/"+waktu;
-        });
-    });
-   } 
-?>
-
-
 <section id="content">
     <div class="breadcrumb">
                 <ul class="isiBreadcrumb">
@@ -55,7 +41,6 @@
 
                   <div class="table-responsive">
                     <table class="table table-bordered">
-
                         <thead>
                             <tr>
                                 <th>Time</th>
@@ -99,11 +84,28 @@
                                                                 ->where('time_start', '=', '09:00')
                                                                 ->where('status',0)
                                                                 ->first();
-                                        $tanggal = $t1;
-                                        $waktu = "09:00";
                                     ?>
                                     @if($isi!='')
-                                        <?php isi($tanggal, $waktu); ?>
+                                        <style> 
+                                            .isi[tanggal = "<?php echo $t1; ?>" ].isi[waktu = "09:00"]{
+                                                background-color: #084FAD;
+                                            }
+                                            .isi[tanggal = "<?php echo $t1; ?>" ].isi[waktu = "09:00"]:hover{
+                                                background-color: #084FAD;
+                                                opacity: 50%;
+                                            }
+                                        </style>
+                                        <p>BOOKED</p> 
+                                        <script>
+                                            $(document).ready(function() {
+                                                $(".isi[tanggal = "<?php echo $t1; ?>" ].isi[waktu = "09:00"]").click(function() {
+                                                    var tanggal = $(this).attr('tanggal');
+                                                    var waktu = $(this).attr('waktu');
+
+                                                    window.location = "{{url('/formWaitingList/')}}/"+tanggal+"/"+waktu;
+                                                });
+                                            });
+                                        </script>   
                                     @endif
                                 </td>
                                 <td class="isi btn2 btn-secondary3" tanggal="{{$t2}}" waktu="09:00">
