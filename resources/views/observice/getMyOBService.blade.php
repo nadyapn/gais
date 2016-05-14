@@ -54,9 +54,9 @@
 									<td>{{$o->category}}</td>
 									<td>{{$o->detail}}</td>
 									<td>
-										@if ($e->status == 0)
+										@if ($o->status == 0)
 												Disetujui OB
-										@elseif ($e->status == 1)
+										@elseif ($o->status == 1)
 												Udah selesai dikerjain sama OB
 										@endif
 									</td>
