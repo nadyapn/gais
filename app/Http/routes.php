@@ -19,7 +19,12 @@ Route::get('/', function() {return \Redirect::to('homepageGAIS');});
 Route::group(['middleware' => 'guest'], function(){
 	// log in log out
 	Route::get('/login','UserController@index');
-	Route::post('/login','UserController@login');
+	Route::post('/login', 'UserController@login');
+
+	Route::get('/lalala','UserController@lalala');
+
+	Route::get('/dologin','UserController@redirectToProvider');
+	Route::get('/login/callback','UserController@handleProviderCallback');
 });
 
 Route::group(['middleware' => 'auth'], function(){

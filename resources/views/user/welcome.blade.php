@@ -35,7 +35,7 @@
 					  General Affairs Information System
 					</div>
 					<div class="form-group">
-					  <button type="submit" class="btn btn-danger">Login via Google Account</button>
+					  <a href="{{url('/dologin')}}" class="btn btn-danger">Login via Google Account</a>
 					</div>
 				  </form>
 				  </div>
