@@ -35,4 +35,10 @@ return [
         'secret' => env('STRIPE_SECRET'),
     ],
 
+    'google' => [
+        'client_id' => '872928880926-d4tgga13j4t85k00a29njm7vsin8d7n8.apps.googleusercontent.com',
+        'client_secret' => '8a9j-Cx9MN0IB_t1jru8kRre',
+        'redirect' => 'http://localhost/gais/public/login/callback',
+    ],
+
 ];
