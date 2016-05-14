@@ -37,7 +37,7 @@
 						<div class="col-homepage-right">
 								<div class="createDashboard">
 									<img src="{{asset('img/observiceblack.png')}}" style=" width:60% vertical-align:middle"><br><br>
-									<a href="{{url('/addOBServices')}}" class="btn btn-secondary2">Office Boy Service</a>
+									<a href="{{url('/createOBService')}}" class="btn btn-secondary2">Office Boy Service</a>
 								</div>
 						</div>
 					</div>
