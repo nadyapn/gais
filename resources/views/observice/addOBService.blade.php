@@ -105,7 +105,7 @@ function chooseOB(time) {
 	})
 	  .done(function( data ) {
 	  	console.log(data);
-	    $(".obcontainer").append(data); 
+	    $(".obcontainer").html(data); 
 	  });
 }
 </script>

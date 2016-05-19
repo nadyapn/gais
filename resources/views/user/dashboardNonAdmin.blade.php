@@ -1,3 +1,4 @@
+if(\Auth::user()->division != "Office Boy")
 @extends('user.sidebarNonAdmin')
 @section('contentNonAdmin')
 <div id="page-wrapper">
@@ -25,7 +26,13 @@
 		  <ul class="nav nav-tabs">
 		    <li class="active"><a href="#home" data-toggle="tab">Your History</a>
 		    </li>
+		    @if (\Auth::user()->position != 'Member')
 		    <li><a href="#profile" data-toggle="tab">Employee's Request</a>
+		    </li>
+		    @endif
+		    <li><a href="#sftab" data-toggle="tab">Shared Facilities Request</a>
+		    </li>
+		    <li><a href="#obtab" data-toggle="tab">OB Request</a>
 		    </li>
 		  </ul>
 		  <!-- Tab panes -->
@@ -39,6 +46,7 @@
 		              <th>Requested ID</th>
 		              <th>Type</th>
 		              <th>Requested Date</th>
+		              <th>Status</th>
 		              <th>View Details</th>
 		              <th>Update</th>
 		              <th>Delete</th>
@@ -50,13 +58,28 @@
 		              <th scope="row">{{$f->kodeSS}}</th>
 		              <td>{{$f->tipe}}</td>
 		              <td>{{$f->request_date}}</td>
+		              <td>
+		              	@if ($f->status == 0)
+											Not approved yet by Supervisor
+										@elseif ($f->status == 1)
+											Approved by Supervisor
+										@elseif ($f->status == 2)
+											Approved by Business Unit
+										@elseif ($f->status == -1)
+											Canceled by Employee
+										@elseif ($f->status == 3)
+											Rejected by Supervisor
+										@elseif ($f->status == 4)
+											Rejected by Business Unit
+							@endif
+		              </td>
 		              <td><a href="{{url('/getDetail/'.$f->kodeSS)}}" class="btn btn-view">View</a></td>
 		              @if (\Auth::user()->position === 'Team Leader')
 		              <td>@if ($f->status == 1)<a href="{{url('/update/'.$f->kodeSS)}}" class="btn btn-update">Update </a> @endif</td>
 		              <td>@if ($f->status == 1)<a href="{{url('/delete/'.$f->kodeSS)}}" class="btn btn-delete" onclick="return confirm('Are you sure?')">Delete</a> @endif</td>
 		              @elseif (\Auth::user()->id_employee === '1' || \Auth::user()->id_employee === '2')
-		              <td>@if ($f->status == 2)<a href="{{url('/update/'.$f->kodeSS)}}" class="btn btn-update">Update </a> @endif</td>
-		              <td>@if ($f->status == 2)<a href="{{url('/delete/'.$f->kodeSS)}}" class="btn btn-delete" onclick="return confirm('Are you sure?')">Delete</a> @endif</td>
+		              <td>@if ($f->status == 1)<a href="{{url('/update/'.$f->kodeSS)}}" class="btn btn-update">Update </a> @endif</td>
+		              <td>@if ($f->status == 1)<a href="{{url('/delete/'.$f->kodeSS)}}" class="btn btn-delete" onclick="return confirm('Are you sure?')">Delete</a> @endif</td>
 		              @else
 		              <td>@if ($f->status == 0)<a href="{{url('/update/'.$f->kodeSS)}}" class="btn btn-update">Update </a> @endif</td>
 		              <td>@if ($f->status == 0)<a href="{{url('/delete/'.$f->kodeSS)}}" class="btn btn-delete" onclick="return confirm('Are you sure?')">Delete</a> @endif</td>
@@ -67,6 +90,7 @@
 		        </table>
 		      </div>
 		    </div>
+		    @if (\Auth::user()->position != 'Member')
 		    <div class="tab-pane fade" id="profile">
 		      <!-- Table for Employee's Request -->
 		      <div style="margin-top:15px; margin-left:0.5px" class="table-responsive">
@@ -76,9 +100,8 @@
 		              <th>Requested ID</th>
 		              <th>Type</th>
 		              <th>Requested Date</th>
+		              <th>Status</th>
 		              <th>View Details</th>
-						<th>Update</th>
-						<th>Delete</th>
 		            </tr>
 		          </thead>
 		          <tbody>
@@ -87,25 +110,157 @@
 		              <td>{{$g->kodeSS}}</td>
 		              <td>{{$g->tipe}}</td>
 		              <td>{{$g->request_date}}</td>
-									<td><a href="{{url('/getDetail/'.$g->kodeSS)}}" class="btn btn-view">View</a></td>
-							  	@if (\Auth::user()->position === 'Team Leader')
-							  		<td>@if ($g->status == 1)<a href="{{url('/update/'.$g->kodeSS)}}" class="btn btn-update">Update </a> @endif</td>
-										<td>@if ($g->status == 1)<a href="{{url('/delete/'.$g->kodeSS)}}" class="btn btn-delete" onclick="return confirm('Are you sure?')">Delete</a> @endif</td>
-									@elseif (\Auth::user()->posisition === 'Business Unit' || \Auth::user()->position === 'Human Resource')
-									  	<td>@if ($g->status == 2)<a href="{{url('/update/'.$g->kodeSS)}}" class="btn btn-update">Update </a> @endif</td>
-										<td>@if ($g->status == 2)<a href="{{url('/delete/'.$g->kodeSS)}}" class="btn btn-delete" onclick="return confirm('Are you sure?')">Delete</a> @endif</td>
-									@else
-										<td>@if ($g->status == 0)<a href="{{url('/update/'.$g->kodeSS)}}" class="btn btn-update">Update </a> @endif</td>
-										<td>@if ($g->status == 0)<a href="{{url('/delete/'.$g->kodeSS)}}" class="btn btn-delete" onclick="return confirm('Are you sure?')">Delete</a> @endif</td>
-									@endif
+		              <td>
+		              	@if ($g->status == 0)
+											Not approved yet by Supervisor
+										@elseif ($g->status == 1)
+											Approved by Supervisor
+										@elseif ($g->status == 2)
+											Approved by Business Unit
+										@elseif ($g->status == -1)
+											Canceled by Employee
+										@elseif ($g->status == 3)
+											Rejected by Supervisor
+										@elseif ($g->status == 4)
+											Rejected by Business Unit
+							@endif
+		              </td>
+					<td><a href="{{url('/getDetail/'.$g->kodeSS)}}" class="btn btn-view">View</a></td>
+							  	
 		            </tr>
 		            @endforeach
 		          </tbody>
 		        </table>
 		      </div>
 		    </div>
+		   @endif
 		  </div>
+		  <div class="tab-pane fade" id="sftab">
+		      <!-- Table for SF's Request -->
+		      <div style="margin-top:15px; margin-left:0.5px" class="table-responsive">
+		        <table class="table table-striped table-bordered table-hover" id="dataTable">
+		          <thead>
+		            <tr>
+		              <th>Requested ID</th>
+		              <th>Requested Date</th>
+		              <th>Status</th>
+		              <th>View Details</th>
+		              <th>Delete</th>
+		            </tr>
+		          </thead>
+		          <tbody>
+		            @foreach($sf as $h)
+		            <tr>
+		              <td>{{$h->kodePinjam}}</td>
+		              <td>{{$h->request_date}}</td>
+		              <td>@if ($h->status == 0)
+											Booked
+										@elseif ($h->status == 1)
+											Waiting List
+										
+							@endif</td>
+					<td><a href="{{url('/getDetailPeminjaman/'.$h->kodePinjam)}}" class="btn btn-view">View</a></td>
+							  	
+		            </tr>
+		            @endforeach
+		          </tbody>
+		        </table>
+		      </div>
+		    </div>
+		    <div class="tab-pane fade" id="obtab">
+		      <!-- Table for OB's Request -->
+		      <div style="margin-top:15px; margin-left:0.5px" class="table-responsive">
+		        <table class="table table-striped table-bordered table-hover" id="dataTable">
+		          <thead>
+		            <tr>
+		              <th>Requested ID</th>
+		              <th>Requested Date</th>
+		              <th>Batch</th>
+		              <th>Status</th>
+		              <th>View Details</th>
+		              <th>Update</th>
+		              <th>Delete</th>
+		            </tr>
+		          </thead>
+		          <tbody>
+		            @foreach($ob as $i)
+		            <tr>
+		              <td>{{$i->kodeOBS}}</td>
+		              <td>{{$i->date}}</td>
+		              <td>{{$i->batch}}</td>
+		              <td>
+		              	@if ($i->status == 0)
+											Not Approved by OB yet
+										@elseif ($i->status == 1)
+											Approved by OB
+										@elseif ($i->status == 2)
+											Rejected by OB
+										
+							@endif
+		              </td>
+					<td><a href="{{url('/getDetailOBS/'.$i->kodeOBS)}}" class="btn btn-view">View</a></td>
+					<td>@if ($i->status == 0)<a href="{{url('/updateOBS/'.$i->kodeOBS)}}" class="btn btn-update">Update </a> @endif</td>
+		              <td>@if ($i->status == 0)<a href="{{url('/deleteOBS/'.$i->kodeOBS)}}" class="btn btn-delete" onclick="return confirm('Are you sure?')">Delete</a> @endif</td>		  	
+		            </tr>
+		            @endforeach
+		          </tbody>
+		        </table>
+		      </div>
+		    </div>
 		  <!-- /.panel-body -->
 		</div>
 </div>
 @endsection
+
+
+@else
+@extends('user.sidebarOB')
+
+@section('contentOB')
+	<section id="content">
+			<div class="breadcrumb">
+						<ul class="isiBreadcrumb">
+							<input type="image" class="btnDashboard" src="img/symbol.png">
+								<ul class="isiBreadcrumb2">
+									<li><a href="{{url('/homepageGAIS')}}">Homepage</a></li>
+									<li><a href="#" class="active">OB Services Task</a></li>
+								</ul>
+							<a href="{{url('/homepageGAIS')}}" class="btn btn-secondary2">Back to Home</a>
+						</ul>
+					</div>
+			<div id="color">
+				<p id="move">OB Services Task Data</p>
+				<!-- ini contoh alert -->
+				<!-- normalnya, belum muncul saat halaman baru dibuka -->
+				<!-- muncul setelah nyelesain satu request -->
+				<p id="move4">Your selected request has been successfully finished</p>
+			</div>
+			<div id="color2">
+				<p id="move7">Today's date</p>
+				<p class="move6" id="dateForPage"></p>
+			</div>
+			<br>
+			<!-- /#table-->
+			<div class="table-responsive">
+					<table class="table" id="dataTable">
+					  	<thead>
+							<tr>
+							  <th>Requested ID</th>
+							  <th>Applicant's Name</th>
+							  <th>Time</th>
+								<!-- Contoh: 08.00 - 09.00-->
+							  <th>Category</th>
+								<th>Request Description</th>
+								<th>Location</th>
+								<th>Done</th>
+								<th>Undone</th>
+							</tr>
+					  	</thead>
+					  	<tbody>
+								<!-- insert kode here -->
+							</tbody>
+					</table>
+			</div>
+		</section>
+@endsection
+@endif

@@ -43,7 +43,7 @@
 				</div>
 				<div class="form-group">
 					  <!--Choose the leave date -->
-						<label class="col-sm-2 control-label">Requested Date</label>
+						<label class="col-sm-2 control-label">Date Hired</label>
 						<div class="col-sm-10">
 							@if(isset($temp->datehired[0])){{$temp->datehired[0]}}@endif
 							<input type="date" class="form-control" placeholder="Text input" name="datehired">
@@ -78,7 +78,23 @@
 						 <h4 style="font-family:'roboto';font-size:1.1em;font-weight:bold;"> Your Paid Leave Quota </h4>
 					</div>
 					<div class="panel-body" style="">
-							<p style="font-family:'DIN','DINPro';font-size:1em;"> <!-- User's Paid Leave Quota--> </p>
+							<p style="font-family:'DIN','DINPro';font-size:1em;"> 
+
+						 	<?php
+						 		$sisapaidleave = DB::table('paidLeave')
+					                        ->join('selfservice','kodeSS','=','selfservice_id')
+					                        ->join('employee','id_employee','=','employee_id')
+					                        ->where('employee_id','=', \Auth::user()->id_employee)
+					                        ->whereYear('approval_date','=',date('Y'))
+					                        ->count();
+						 	?>
+						 	@if($sisapaidleave != "")
+						 		{{12 - $sisapaidleave}}
+						 	@else
+						 		12
+						 	@endif
+						 
+							</p>
 					</div>
 			</div>
 		</div>

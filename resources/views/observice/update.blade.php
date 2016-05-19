@@ -25,7 +25,16 @@
 			<form action="{{url('/updateOBService')}}" method="post"  enctype="multipart/form-data" class="form-horizontal">
 				<input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
 				<div class="form-group">
+						<label class="col-sm-2 control-label">OB's Name</label>
+						<div class="col-sm-10 obcontainer" >
+							
+						</div>
+				</div>
+
+				<div class="form-group">
+						
 						<label class="col-sm-2 control-label">Category</label>
+						@if(isset($temp->category[0])){{$temp->category[0]}}@endif<br/>
 						<div class="col-sm-10">
 							<!--Select Category of Your Request -->
 							<select name="category" class="form-control">
@@ -37,30 +46,29 @@
 						</div>
 				</div>
 				<div class="form-group">
+					
+					@if(isset($temp->requestedTime[0])){{$temp->requestedTime[0]}}@endif<br/>
+						  		@if(isset($salahjam)) {{$salahjam}}@endif<br/>
 						<label class="col-sm-2 control-label">Time</label>
 						<div class="col-sm-10">
 								<!--Select Time of Your Request -->
-							<select name="category" class="form-control">
-									<option>08.00 - 09.00</option>
-									<option>10.00 - 11.00</option>
-									<option>12.00 - 13.00</option>
-									<option>14.00 - 15.00</option>
-									<option>16.00 - 17.00</option>
+							<select name="requestedTime" class="form-control" onchange="chooseOB(value)">
+									<option value="08:00">08.00 - 09.00</option>
+									<option value="10:00">10.00 - 11.00</option>
+									<option value="12:00">12.00 - 13.00</option>
+									<option value="14:00">14.00 - 15.00</option>
+									<option value="16:00">16.00 - 17.00</option>
+									<option value="23:00">23.00 - 00.00</option>
+									<option value="00:00">00.00 - 01.00</option>
 							</select>
 						</div>
 				</div>
 				<div class="form-group">
-					<label class="col-sm-2 control-label">Location</label>
-						<!--Input the Location-->
-					<div class="col-sm-10">
-						<input class="form-control" name="" placeholder="Enter the location">
-					</div>
-				</div>
-				<div class="form-group">
+					@if(isset($temp->obDescription[0])){{$temp->obDescription[0]}}@endif
 					<label class="col-sm-2 control-label">Description</label>
 					<!--Input the Description-->
 					<div class="col-sm-10">
-						<input class="form-control" name="" placeholder="Enter your request description">
+						<input class="form-control" name="obDescription" placeholder="Enter your request description (location, qty, etc)">
 					</div>
 				</div>
 			  <div class="form-group">
@@ -82,4 +90,17 @@
 		</div>
 	</div>
 </div>
+<script>
+function chooseOB(time) {
+	console.log(time);
+	$.ajax({
+	  url: "http://localhost/gais/public/updateOBService/"+time,
+	  
+	})
+	  .done(function( data ) {
+	  	console.log(data);
+	    $(".obcontainer").html(data); 
+	  });
+}
+</script>
 @endsection

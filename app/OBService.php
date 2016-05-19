@@ -9,7 +9,7 @@ use DB;
 class OBService extends Model
 {
     protected $table = 'observice';
-    //public $primaryKey  = ['kodeOBS','date'];
+    public $primaryKey  = null;
     public $incrementing = false;
 
     public static function getMyOBService() {

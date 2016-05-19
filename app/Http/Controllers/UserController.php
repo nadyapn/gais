@@ -69,6 +69,7 @@ class UserController extends Controller
         //dd($credentials);
         $remember = \Request::has('remember');
         if (\Auth::attempt($credentials, $remember)) {
+            if ()
             return \Redirect::to('/homepageGAIS');
         } else {
             $msg = "asd";
@@ -100,6 +101,11 @@ class UserController extends Controller
         return \View::make('user/sidebarNonAdmin')->with(compact('role'))->with(compact('position'));
     }
 
+    function sidebarOB() {
+        $ob = \Auth::user()->division;
+        return \View::make('user/sidebarOB')->with(compact('ob'));
+    }
+
     function dashboardAdmin() {
         if (\Auth::user()->role == 'Admin') {
             return \View::make('user/dashboardAdmin');
@@ -114,27 +120,35 @@ class UserController extends Controller
         if(\Auth::user()->position == 'Team Leader') {
             $ss = \App\SelfService::getReqForSupervisor();
             $all = \App\SelfService::getMyHistory();
+            $sf = \App\Peminjaman::getMyPeminjaman();
+            $ob = \App\OBService::getMyOBService();
 
-            return \View::make('user/dashboardNonAdmin')->with(compact('ss'))->with(compact('all'));
+            return \View::make('user/dashboardNonAdmin')->with(compact('ss'))->with(compact('all'))->with(compact('sf'))->with(compact('ob'));
         }
 
         else if(\Auth::user()->id_employee == '1') {
             $ss = \App\SelfService::getReqForBU();
             $all = \App\SelfService::getMyHistory();
+            $sf = \App\Peminjaman::getMyPeminjaman();
+            $ob = \App\OBService::getMyOBService();
 
-            return \View::make('user/dashboardNonAdmin')->with(compact('ss'))->with(compact('all'));
+            return \View::make('user/dashboardNonAdmin')->with(compact('ss'))->with(compact('all'))->with(compact('sf'))->with(compact('ob'));
         }
 
         else if(\Auth::user()->id_employee == '2') {
             $ss = \App\SelfService::getReqForHR();
             $all = \App\SelfService::getMyHistory();
+            $sf = \App\Peminjaman::getMyPeminjaman();
+            $ob = \App\OBService::getMyOBService();
 
-            return \View::make('user/dashboardNonAdmin')->with(compact('ss'))->with(compact('all'));
+            return \View::make('user/dashboardNonAdmin')->with(compact('ss'))->with(compact('all'))->with(compact('sf'))->with(compact('ob'));
         }
         else {
             $all = \App\SelfService::getMyHistory();
+            $sf = \App\Peminjaman::getMyPeminjaman();
+            $ob = \App\OBService::getMyOBService();
 
-            return \View::make('user/dashboardNonAdmin')->with(compact('all'));
+            return \View::make('user/dashboardNonAdmin')->with(compact('all'))->with(compact('sf'))->with(compact('ob'));
         }
     }
 }

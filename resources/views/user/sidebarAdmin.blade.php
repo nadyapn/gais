@@ -7,7 +7,7 @@
                             <a style="font-size:2em; text-align:center" href="{{url('/homepageGAIS')}}"><i></i> GAIS</a>
                         </li>
                         <li>
-                            <a href="#"><i class="fa fa-dashboard fa-fw"></i> Dashboard <b> Admin </b></a>
+                            <a href="{{url('/dashboardAdmin')}}"><i class="fa fa-dashboard fa-fw"></i> Dashboard <b> Admin </b></a>
                         </li>
                         <li>
                             <a href="#"><i class="fa fa-copy fa-fw"></i> View My Log<span class="fa arrow"></span></a>

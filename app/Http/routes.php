@@ -37,6 +37,7 @@ Route::group(['middleware' => 'auth'], function(){
 	Route::get('/dashboardAdmin','UserController@dashboardAdmin');
 	Route::get('/sidebarNonAdmin','UserController@sidebarNonAdmin');
 	Route::get('/sidebarAdmin','UserController@sidebarAdmin');
+	Route::get('/sidebarOB','UserController@sidebarOB')
 	Route::get('/sidebarHomepage','UserController@sidebarHomepage');
 
 	// Create Reimbursement
@@ -66,12 +67,6 @@ Route::group(['middleware' => 'auth'], function(){
 
 	Route::get('/formWaitingList/{tanggal}/{waktu}', 'SharedFacilitiesController@formWaitingList');
 	Route::post('/addWaitingList/{tanggal}/{waktu}', 'SharedFacilitiesController@addWaitingList');
-
-	// contoh
-	Route::get('/contoh', 'SharedFacilitiesController@contoh');
-	Route::get('/contoh/{tanggal}/{waktu}', 'SharedFacilitiesController@contoh2');
-	Route::post('/addContoh/{tanggal}/{waktu}', 'SharedFacilitiesController@addContoh');
-	Route::get('/sfAriq', 'SharedFacilitiesController@sfAriq');
 
 	// Create Fasilitas
 	Route::get('/sfSpecialMenu', 'SharedFacilitiesController@sfSpecialMenu');
@@ -105,9 +100,7 @@ Route::group(['middleware' => 'auth'], function(){
 	Route::get('/getMyReimbursement', 'SelfServiceController@getMyReimbursement');
 	Route::get('/getMyPaidLeave', 'SelfServiceController@getMyPaidLeave');
 	Route::get('/getMyOvertime', 'SelfServiceController@getMyOvertime');
-
 	Route::get('/getMyPeminjaman', 'SharedFacilitiesController@getMyPeminjaman');
-
 	Route::get('/getMyOBService', 'OBServiceController@getMyOBService');
 
 
@@ -128,6 +121,7 @@ Route::group(['middleware' => 'auth'], function(){
 	// approval
 	Route::get('/myApproval', 'SelfServiceController@myApproval');
 	Route::get('/approval/{kodeSS}', 'SelfServiceController@approval');
+	Route::get('')
 
 	// rejection
 	Route::get('/rejection/{kodeSS}', 'SelfServiceController@rejection');

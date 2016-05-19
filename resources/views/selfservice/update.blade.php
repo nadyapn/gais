@@ -38,10 +38,11 @@
 							<label class="col-sm-2 control-label">Category</label>
 							<div class="col-sm-10">
 									<!--Select The Category of Your Request -->
+									{{$rm->category}}
 								@if(isset($temp->category[0])){{$temp->category[0]}}@endif
 								<select name="category" class="form-control">
-									<option>Project</option>
-									<option>Other</option>
+									<option value="Project" @if($rm->category == 'Project') selected @endif>Project</option>
+									<option value="Other" @if($rm->category == 'Other') selected @endif>Other</option>
 								</select>
 							</div>
 					</div>
@@ -49,6 +50,9 @@
 							<label class="col-sm-2 control-label">Project</label>
 							<div class="col-sm-10">
 									<!--Select The Project of Your Request -->
+									@if($rm->project_id != "")
+										{{$rm->project_id}}
+									@endif
 								@if(isset($temp->project[0])){{$temp->project[0]}}@endif
 								<select name="project" class="form-control">
 									<!-- get Project code (Still has an error if included) -->
@@ -58,40 +62,46 @@
 					<div class="form-group">
 							<label class="col-sm-2 control-label">Requested Date</label>
 							<div class="col-sm-10">
+								
 								@if(isset($temp->dateRem[0])){{$temp->dateRem[0]}}@endif
-								<input type="date" class="form-control" placeholder="Text input" name="dateRem">
+
+								<input type="date" class="form-control" placeholder="Text input" value="{{$ss->request_date}}" name="dateRem">
 							</div>
 					</div>
 					<div class="form-group">
 						<label class="col-sm-2 control-label">Nominal</label>
 							<!--Explain the reason-->
 						<div class="col-sm-10">
+							
 							@if(isset($temp->cost[0])){{$temp->cost[0]}}@endif
-							<input class="form-control" placeholder="Enter Total of Spending (e.g. 99999)" name="cost">
+							<input class="form-control" placeholder="Enter Total of Spending (e.g. 99999)" value="{{$rm->cost}}" name="cost">
 						</div>
 					</div>
 					<div class="form-group">
 						<label class="col-sm-2 control-label">Business Purpose</label>
 							<!--Enter the purpose-->
 						<div class="col-sm-10">
+							
 							@if(isset($temp->businesspurpose[0])){{$temp->businesspurpose[0]}}@endif
-							<input class="form-control" placeholder="Enter Your Business Purpose" name="businesspurpose">
+							<input class="form-control" placeholder="Enter Your Business Purpose" value="{{$rm->business_purpose}}" name="businesspurpose">
 						</div>
 					</div>
 					<div class="form-group">
 						<label class="col-sm-2 control-label">Description</label>
 							<!--Explain the reason -->
 						<div class="col-sm-10">
+							
 							@if(isset($temp->descriptionRem[0])){{$temp->descriptionRem[0]}}@endif
-							<input class="form-control" placeholder="Explain detail of spending" name="descriptionRem">
+							<input class="form-control" placeholder="Explain detail of spending" value="{{$ss->description}}" name="descriptionRem">
 						</div>
 					</div>
 					<div class="form-group">
 						<label class="col-sm-2 control-label">Reimburse File</label>
 							<!--Upload the File-->
 						<div class="col-sm-10">
+							
 							@if(isset($temp->foto[0])){{$temp->foto[0]}}@endif
-							<input type="file" class="form-control" title="Upload Reimburse File" name="foto" accept="image/*">
+							<input type="file" class="form-control" title="Upload Reimburse File" value="{{$rm->photo}}" name="foto" accept="image/*">
 						</div>
 					</div>
 				  <div class="form-group">
@@ -146,9 +156,9 @@
 								<!--Select The category of Your Request -->
 							@if(isset($temp->category[0])){{$temp->category[0]}}@endif
 							<select name="category" class="form-control">
-								<option value="sick">Sick</option>
-								<option value="maternity">Maternity</option>
-								<option value="other">Other</option>
+								<option value="sick" @if($pl->category == 'sick') selected @endif>Sick</option>
+								<option value="maternity" @if($pl->category == 'maternity') selected @endif>Maternity</option>
+								<option value="other" @if($pl->category == 'other') selected @endif>Other</option>
 							</select>
 						</div>
 				</div>
@@ -156,24 +166,27 @@
 					  <!--Choose the leave date -->
 						<label class="col-sm-2 control-label">Requested Date</label>
 						<div class="col-sm-10">
+							
 							@if(isset($temp->datehired[0])){{$temp->datehired[0]}}@endif
-							<input type="date" class="form-control" placeholder="Text input" name="datehired">
+							<input type="date" class="form-control" placeholder="Text input" value="{{$pl->date_hired}}" name="datehired">
 						</div>
 				</div>
 				<div class="form-group">
 					<label class="col-sm-2 control-label">Period</label>
 						<!--Enter the period-->
 					<div class="col-sm-10">
+						
 						@if(isset($temp->periodofleave[0])){{$temp->periodofleave[0]}}@endif
-						<input class="form-control" placeholder="Period of Leave" name="periodofleave">
+						<input class="form-control" placeholder="Period of Leave" value="{{$pl->period_of_leave}}" name="periodofleave">
 					</div>
 				</div>
 				<div class="form-group">
 						<!--Explain the reason-->
 						<label class="col-sm-2 control-label">Reason</label>
 						<div class="col-sm-10">
+							
 							@if(isset($temp->rsnofleave[0])){{$temp->rsnofleave[0]}}@endif
-							<input class="form-control" placeholder="Explain your reason" name="rsnofleave">
+							<input class="form-control" placeholder="Explain your reason" value="{{$ss->description}}" name="rsnofleave">
 						</div>
 				</div>
 			  <div class="form-group">
@@ -235,32 +248,36 @@
 					  <!--Choose the overtime date -->
 						<label class="col-sm-2 control-label">Requested Date</label>
 						<div class="col-sm-10">
+							
 							@if(isset($temp->dateot[0])){{$temp->dateot[0]}}@endif
-							<input type="date" class="form-control" placeholder="Text input" name="dateot">
+							<input type="date" class="form-control" placeholder="Text input" value="{{$ot->date}}" name="dateot">
 						</div>
 				</div>
         <div class="form-group">
 					<label class="col-sm-2 control-label">Start Time</label>
 						<!--Enter the period-->
 					<div class="col-sm-10">
+						
 						@if(isset($temp->timestarts[0])){{$temp->timestarts[0]}}@endif
-						<input type=time class="form-control" placeholder="Overtime time start" name="timestarts">
+						<input type=time class="form-control" placeholder="Overtime time start" value="{{$ot->time_start}}" name="timestarts">
 					</div>
 				</div>
         <div class="form-group">
 					<label class="col-sm-2 control-label">End Time</label>
 						<!--Enter the period-->
 					<div class="col-sm-10">
+						
 						@if(isset($temp->timeends[0])){{$temp->timeends[0]}}@endif
-						<input type=time class="form-control" placeholder="Overtime time end" name="timeends">
+						<input type=time class="form-control" placeholder="Overtime time end" value="{{$ot->time_end}}" name="timeends">
 					</div>
 				</div>
 				<div class="form-group">
 						<!--Explain the reason-->
 						<label class="col-sm-2 control-label">Reason</label>
 						<div class="col-sm-10">
+							
 							@if(isset($temp->rsnofot[0])){{$temp->rsnofot[0]}}@endif
-							<input class="form-control" placeholder="Explain your reason" name="rsnofot">
+							<input type="textarea" class="form-control" placeholder="Explain your reason" value="{{$ss->description}}" name="rsnofot">
 						</div>
 				</div>
 			  <div class="form-group">
@@ -274,7 +291,8 @@
 	</div>
 </div>
 <!-- End of Overtime-->
-
+@else
+	asd
 @endif
 <!-- End of IF-->
 

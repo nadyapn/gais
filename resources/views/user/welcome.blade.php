@@ -18,7 +18,7 @@
 								<a href="#">General Affairs Information System</a>
 								<br>
 								<a href="{{url('/dologin')}}">
-									<input type="submit" name="loginGoogleAccount" class="login loginmodal-submit2" value="Login Via Google Account">
+									<input type="submit" name="loginGoogleAccount" style="padding-left:15px;padding-right:15px" class="login loginmodal-submit2" value="Login Via Google Account">
 								</a>
 							  </div>
 							</div>

@@ -14,15 +14,13 @@
                         <li>
                             <a href="#"><i class="fa fa-users fa-fw"></i> Employee Self-Service<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
-                                @if (\Auth::user()->position != 'Head of Business Unit')
+                                
 								<li><a href="{{url('/createReimbursement')}}">Reimburse</a></li>
-								@endif
-								@if (\Auth::user()->position != 'Head of HR')
+								
 								<li><a href="{{url('/createPaidLeave')}}">Paid Leave</a></li>
-								@endif
-								@if (\Auth::user()->position != 'Head of Business Unit')
+								
 								<li><a href="{{url('/createOvertime')}}">Overtime</a></li>
-								@endif
+								
                             </ul>
                             <!-- /.nav-second-level -->
                         </li>

@@ -183,7 +183,7 @@ class OBServiceController extends Controller
 
         $ob = \App\User::getOB(null);
         $ob_id = \App\User::getOB($obname);
-        $obs = \App\OBService::where("kodeOBS","=", $kodeOBS)->first();
+        $obs = \App\OBService::where("kodeOBS","=", $kodeOBS)->where('status','=',0)->first();
 
         date_default_timezone_set("Asia/Jakarta");
         $mydate = date('Y-m-d H:i:s'); //Returns IST
@@ -267,18 +267,20 @@ class OBServiceController extends Controller
     function cekwaktu($time) {
         $listob = \App\User::where('division','=','Office Boy')->get();
         $obs = \App\OBService::where('batch','!=',$time)->get();
+        $counter = 0;
         // dd($listob);
-        $return = '<select>';
+        $return = '<select name="namaOB" class="form-control">';
         foreach ($listob as $e) {
-            $temp = true;
+            //$temp = true;
             foreach ($obs as $f) {
                 if ($e->id_employee == $f->employee_id) {
                     $temp = false;
+                    $counter++;
                 }        
             }    
 
-            if ($temp) {
-                $option = '<option>' . $e->name . '</option>';
+            if ($counter <5) {
+                $option = '<option value="'. $e->name .'">' . $e->name . '</option>';
             // dd($option);
             $return .= $option;
             }

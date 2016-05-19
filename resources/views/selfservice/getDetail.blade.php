@@ -34,6 +34,10 @@
 					<td> {{$ss->kodeSS}}</td>
 				</tr>
 				<tr>
+					<th>Type</th>
+					<td> Reimbursement</td>
+				</tr>
+				<tr>
 					<th>Employee's Name</th>
 					<td> {{$ss->name}}</td>
 				</tr>
@@ -128,6 +132,10 @@
 					<td> {{$ss->kodeSS}}</td>
 				</tr>
 				<tr>
+					<th>Type</th>
+					<td>Paid Leave</td>
+				</tr>
+				<tr>
 					<th>Employee's Name</th>
 					<td> {{$ss->name}}</td>
 				</tr>
@@ -218,6 +226,10 @@
 					<td> {{$ss->kodeSS}}</td>
 				</tr>
 				<tr>
+					<th>Type</th>
+					<td>Overtime</td>
+				</tr>
+				<tr>
 					<th>Employee's Name</th>
 					<td> {{$ss->name}}</td>
 				</tr>
@@ -284,7 +296,7 @@
 						@if (\Auth::user()->position === 'Team Leader' && $ss->status == 0)
 							<a href="{{url('/approval/'.$ss->kodeSS)}}" class="btn btn-update" onclick="return confirm('Are you sure?')">Approve</a>
 							<a href="{{url('/rejection/'.$ss->kodeSS)}}" class="btn btn-delete" onclick="return confirm('Are you sure?')">Reject</a>
-						@elseif ((\Auth::user()->position === 'Head of Business Unit' || \Auth::user()->position === 'Head of HR') && $ss->status == 1)
+						@elseif ((\Auth::user()->id_employee === '1' || \Auth::user()->id_employee === '2') && $ss->status == 1)
 							<a href="{{url('/approval/'.$ss->kodeSS)}}" class="btn btn-update" onclick="return confirm('Are you sure?')">Approve</a>
 							<a href="{{url('/rejection/'.$ss->kodeSS)}}" class="btn btn-delete" onclick="return confirm('Are you sure?')">Reject</a>
 						@endif

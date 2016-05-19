@@ -31,7 +31,7 @@
 				<input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
 				<div class="form-group">
 					  <!--Choose the overtime date -->
-						<label class="col-sm-2 control-label">Requested Date</label>
+						<label class="col-sm-2 control-label">Date of Overtime</label>
 						<div class="col-sm-10">
 							@if(isset($temp->dateot[0])){{$temp->dateot[0]}}@endif
 							<input type="date" class="form-control" placeholder="Text input" name="dateot">
