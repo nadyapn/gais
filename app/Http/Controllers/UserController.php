@@ -59,7 +59,7 @@ class UserController extends Controller
             \Auth::login($check);
             return \Redirect::to('/homepageGAIS');
         } else {
-            return "FORBIDDEN";
+            return \View::make('errors/401');
         }
     }
 
@@ -69,8 +69,12 @@ class UserController extends Controller
         //dd($credentials);
         $remember = \Request::has('remember');
         if (\Auth::attempt($credentials, $remember)) {
-            if ()
-            return \Redirect::to('/homepageGAIS');
+            if (\Auth::user()->division != 'Office Boy') {
+                return \Redirect::to('/dashboardOB');    
+            }
+            else {
+                return \Redirect::to('/dashboardNonAdmin');
+            }
         } else {
             $msg = "asd";
             return \View::make('user/welcome')->with(compact('msg'));
@@ -149,6 +153,15 @@ class UserController extends Controller
             $ob = \App\OBService::getMyOBService();
 
             return \View::make('user/dashboardNonAdmin')->with(compact('all'))->with(compact('sf'))->with(compact('ob'));
+        }
+    }
+
+    function dashboardOB() {
+        if (\Auth::user()->division == 'Office Boy') {
+            return \View::make('observice/getTaskOBService');
+        }
+        else {
+            return \View::make('errors/401');   
         }
     }
 }

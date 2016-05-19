@@ -37,8 +37,9 @@ Route::group(['middleware' => 'auth'], function(){
 	Route::get('/dashboardAdmin','UserController@dashboardAdmin');
 	Route::get('/sidebarNonAdmin','UserController@sidebarNonAdmin');
 	Route::get('/sidebarAdmin','UserController@sidebarAdmin');
-	Route::get('/sidebarOB','UserController@sidebarOB')
+	Route::get('/sidebarOB','UserController@sidebarOB');
 	Route::get('/sidebarHomepage','UserController@sidebarHomepage');
+	Route::get('/dashboardOB','UserController@dashboardOB');
 
 	// Create Reimbursement
 	Route::get('/createReimbursement', 'SelfServiceController@formReimbursement');
@@ -121,7 +122,7 @@ Route::group(['middleware' => 'auth'], function(){
 	// approval
 	Route::get('/myApproval', 'SelfServiceController@myApproval');
 	Route::get('/approval/{kodeSS}', 'SelfServiceController@approval');
-	Route::get('')
+	
 
 	// rejection
 	Route::get('/rejection/{kodeSS}', 'SelfServiceController@rejection');
