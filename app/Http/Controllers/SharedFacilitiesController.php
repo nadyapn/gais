@@ -227,8 +227,8 @@ class SharedFacilitiesController extends Controller
 
     // get detail peminjaman untuk admin. view get detail untuk admin
     function getDetailAdmin($kodePinjam) {
-        
-        return \View::make('sharedfacilities/getDetailAdmin');
+        $peminjaman = \App\Peminjaman::getDetailPeminjaman($kodePinjam);
+        return \View::make('sharedfacilities/getDetail')->with(compact('peminjaman'));
     }
 
     // get log peminjaman. return viw list semua log

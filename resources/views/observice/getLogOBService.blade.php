@@ -1,41 +1,62 @@
 @extends('user.sidebarAdmin')
-
 @section('contentAdmin')
-	<section id="content">
-			<div class="breadcrumb">
-						<ul class="isiBreadcrumb">
-							<input type="image" class="btnDashboard" src="img/symbol.png">
-								<ul class="isiBreadcrumb2">
-									<li><a href="#">Homepage</a></li>
-									<li><a href="#" class="active"> Office Boy Services Log</a></li>
-								</ul>
-							<a href="{{url('/homepageGAIS')}}" class="btn btn-secondary2">Back to Home</a>
-						</ul>
+<div id="page-wrapper">
+	<div class="row">
+			<!--BREADCRUMB -->
+			<ol class="breadcrumb">
+				<li><a href="{{url('/homepageGAIS')}}">Homepage</a></li>
+				<li><a href="{{url('/dashboardAdmin')}}">Dashboard Admin</a></li>
+				<li class="active">Office Boy Services Log</li>
+			</ol>
+			<!-- /.col-lg-6 -->
+	</div>
+	<div class="row">
+		<div class="col-lg-12">
+					<!--HEADER -->
+					<div class="page-header2">
+						<h2>Log of Office Boy Services</h2>
+						<h4>List of Office Boy Services Request for Admin</h4>
 					</div>
-			<div id="color">
-				<p id="move">Office Boy Services</p>
-				<p id="move2">Log Data</p>
-			</div>
-			<br>
-			<!-- /#table-->
-			<div class="table-responsive">
-					<table class="table" id="dataTable">
-					  	<thead>
+		</div>
+		<!-- /.col-lg-6 -->
+	</div>
+	<!-- /.row -->
+	<div class="row">
+	<!-- Table for Overtime Log -->
+	<div style="margin-top:15px; margin-left:30px" class="table-responsive">
+		<table class="table table-striped table-bordered table-hover">
+			<thead>
 							<tr>
 							  <th>Requested ID</th>
 							  <th>Requested Date</th>
-								<!-- Sort  by the newest date-->
-							  <th>Applicant's Name</th>
-							  <th>Time</th>
-								<!-- Contoh: 08.00 - 09.00-->
-							  <th>Room</th>
-							  <th>Description</th>
+							  <th>Employee's Name</th>
+							  <th>OB's Name</th>
+							  <th>Status</th>
+							  <th>View</th>
 							</tr>
 					  	</thead>
 					  	<tbody>
-								<!-- insert kode here -->
-							</tbody>
-					</table>
-			</div>
-		</section>
+							@foreach($obs as $e)
+								<tr>
+									<th>{{$e->kodeOBS}}</th>
+								  	<th>{{$e->date}}</th>
+								  	<th>{{$e->em_name}}</th>
+								  	<th>{{$e->ob_name}}</th>
+								  	<th>@if ($e->status == 0)
+											Waiting for OB's approval
+										@elseif ($e->status == 1)
+											Approved by OB
+										@elseif ($e->status == 2)
+											Request done
+										@endif
+									</th>
+								  	<td><a href="{{url('/getDetailAdminOBS/'.$e->kodeOBS)}}" class="btn btn-view">View</td>
+								</tr>
+							@endforeach
+						</tbody>
+		</table>
+	</div>
+	</div>
+</div>
 @endsection
+

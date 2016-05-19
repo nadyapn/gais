@@ -118,14 +118,14 @@ class UserController extends Controller
             return \View::make('user/dashboardNonAdmin')->with(compact('ss'))->with(compact('all'));
         }
 
-        else if(\Auth::user()->position == 'Head of Business Unit') {
+        else if(\Auth::user()->id_employee == '1') {
             $ss = \App\SelfService::getReqForBU();
             $all = \App\SelfService::getMyHistory();
 
             return \View::make('user/dashboardNonAdmin')->with(compact('ss'))->with(compact('all'));
         }
 
-        else if(\Auth::user()->position == 'Head of HR') {
+        else if(\Auth::user()->id_employee == '2') {
             $ss = \App\SelfService::getReqForHR();
             $all = \App\SelfService::getMyHistory();
 

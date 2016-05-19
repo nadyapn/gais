@@ -1,75 +1,135 @@
 @extends('user.sidebarHomepage')
-
-@section('contentAdd')
-<section id="content">
-	<div class="breadcrumb">
-				<ul class="isiBreadcrumb">
-					<a  class="btnDashboard"> </a>
-						<ul class="isiBreadcrumb2">
-							<li><a href="#"></a></li>
-							<li><a href="#"></a></li>
-							<li><a href="#" class="active"></a></li>
-						</ul>
-				</ul>
-			</div>
-	<div id="color">
-		<p id="move">Welcome to Homepage <b>{{\Auth::user()->name}}</b>!</p>
-		<p id="move2">Place for Request Something</p>
-	</div>
-			<div class="container">
-			  <div class="row">
-				<div class="col-md-8">
-
-				  <br>
-				  	<div class="containerDashboard">
-						<div class="col-homepage-left">
-								<div class="createDashboard">
-									<img src="{{asset('img/selfserviceblack.png')}}" style=" width:60% vertical-align:middle"><br><br>
-									<a class="buttonHomepage btn btn-secondary2">Employee Self Service</a>
-								</div>
-						</div>
-						<div class="col-homepage-center">
-								<div class="createDashboard">
-									<img src="{{asset('img/schedulerblack.png')}}" style=" width:60% vertical-align:middle"><br><br>
-									<a href="{{url('/createPeminjaman')}}" class="btn btn-secondary2">Shared Facilities Scheduler </a>
-								</div>
-						</div>
-						<div class="col-homepage-right">
-								<div class="createDashboard">
-									<img src="{{asset('img/observiceblack.png')}}" style=" width:60% vertical-align:middle"><br><br>
-									<a href="{{url('/createOBService')}}" class="btn btn-secondary2">Office Boy Service</a>
-								</div>
-						</div>
-					</div>
-					<br>
-					<div id="conDashboard2" class="containerDashboard2">
-						@if (\Auth::user()->position != 'Business Unit')
-						<div class="col-homepage-left">
-									<div class="createDashboard">
-										<img src="{{asset('img/reimburse.png')}}" style=" width:60% vertical-align:middle"><br><br>
-										<a href="{{url('/createReimbursement')}}" class="btn btn-secondary2">Reimbursement</a>
-									</div>
-						</div>
-						@endif
-						@if (\Auth::user()->position != 'Human Resource')
-						<div class="col-homepage-center">
-									<div class="createDashboard">
-										<img src="{{asset('img/paidleave.png')}}" style=" width:60% vertical-align:middle"><br><br>
-										<a href="{{url('/createPaidLeave')}}" class="btn btn-secondary2">Paid Leave</a>
-									</div>
-						</div>
-						@endif
-						@if (\Auth::user()->position != 'Business Unit')
-						<div class="col-homepage-right">
-									<div class="createDashboard">
-										<img src="{{asset('img/overtime.png')}}" style=" width:60% vertical-align:middle"><br><br>
-										<a href="{{url('/createOvertime')}}" class="btn btn-secondary2">Overtime</a>
-									</div>
-						</div>
-						@endif
+@section('contentSidebarHomepage')
+<div id="page-wrapper">
+		<div class="row" style="margin-left:10px;">
+				<div class="col-lg-12">
+					<div class="page-header">
+						<h2>Welcome to Homepage, <b>{{\Auth::user()->name}}</b>!</h2>
+						<h3 style="color:#777">Choose Your Request Here</h3>
 					</div>
 				</div>
-			  </div>
-			</div>
-	</section>
+				<!-- /.col-lg-12 -->
+		</div>
+		<!-- /.row -->
+		<div class="row" style="margin-left:10px;">
+				<div class="col-lg-3 col-md-6">
+						<div class="panel panel-primary">
+								<div class="panel-heading">
+										<div class="row">
+												<div class="col-xs-3">
+														<i class="fa fa-users fa-3x"></i>
+												</div>
+										</div>
+								</div>
+								<a href="#">
+										<div class="panel-footer" id="acticeToggle">
+												<span class="pull-left dropdown-toggle"> Employee Self Service</span>
+												<span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+												<div class="clearfix"></div>
+										</div>
+								</a>
+						</div>
+				</div>
+				<div class="col-lg-3 col-md-6">
+						<div class="panel panel-red">
+								<div class="panel-heading">
+										<div class="row">
+												<div class="col-xs-3">
+														<i class="fa fa-calendar fa-3x"></i>
+												</div>
+										</div>
+								</div>
+								<a href="#">
+										<div class="panel-footer">
+												<span class="pull-left"><a  href="{{url('/createPeminjaman')}}">Shared Facilities Scheduler</a></span>
+												<div class="clearfix"></div>
+										</div>
+								</a>
+						</div>
+				</div>
+				<div class="col-lg-3 col-md-6">
+						<div class="panel panel-green">
+								<div class="panel-heading">
+										<div class="row">
+												<div class="col-xs-3">
+														<i class="fa fa-bell fa-3x"></i>
+												</div>
+										</div>
+								</div>
+								<a href="#">
+										<div class="panel-footer">
+												<span class="pull-left"><a href="{{url('/createOBService')}}">Office Boy Services</a></span>
+												<div class="clearfix"></div>
+										</div>
+								</a>
+						</div>
+				</div>
+		</div>
+		<!-- Ini Toggle Self-service-->
+		<div class="toggle">
+			 <div class="row" id="selfServiceHide" style="margin-left:10px; width:75%; display:none">
+				 <div class="page-header" style="margin-top:-1px;margin-left:15px;">
+				 </div>
+				<div class="col-lg-3 col-md-6">
+						<div class="panel panel-primary">
+								<div class="panel-heading">
+										<div class="row">
+												<div class="col-xs-3">
+														<i class="fa fa-dollar fa-3x"></i>
+												</div>
+										</div>
+								</div>
+								<a href="#">
+										<div class="panel-footer">
+												<span class="pull-left"><a href="{{url('/createReimbursement')}}">Reimbursement</span>
+												<span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span></a>
+												<div class="clearfix"></div>
+										</div>
+								</a>
+						</div>
+				</div>
+				<div class="col-lg-3 col-md-6">
+						<div class="panel panel-primary">
+								<div class="panel-heading">
+										<div class="row">
+												<div class="col-xs-3">
+														<i class="fa fa-plane fa-3x"></i>
+												</div>
+										</div>
+								</div>
+								<a href="#">
+										<div class="panel-footer">
+												<span class="pull-left"><a href="{{url('/createPaidLeave')}}">Paid Leave</span>
+												<span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span><a/>
+												<div class="clearfix"></div>
+										</div>
+								</a>
+						</div>
+				</div>
+				<div class="col-lg-3 col-md-6">
+						<div class="panel panel-primary">
+								<div class="panel-heading">
+										<div class="row">
+												<div class="col-xs-3">
+														<i class="glyphicon glyphicon-time" style="font-size: 2.75em;"></i>
+												</div>
+										</div>
+								</div>
+								<a href="#">
+										<div class="panel-footer">
+												<span class="pull-left"><a href="{{url('/createOvertime')}}">Overtime</span>
+												<span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span></a>
+												<div class="clearfix"></div>
+										</div>
+								</a>
+						</div>
+						<!-- panel panel-red -->
+				</div>
+				<!-- col-lg-3 col-md-6 -->
+		</div>
+		<!-- /.row2-->
+	</div>
+	<!-- /.toggle -->
+</div>
+<!-- /#page-wrapper -->
 @endsection

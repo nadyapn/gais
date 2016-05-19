@@ -9,7 +9,7 @@ use DB;
 class SelfService extends Model
 {
 	protected $table = 'selfservice';
-	public $primaryKey  = 'kodeSS';
+	public $primaryKey  = null;
 	public $incrementing = false;
 
 

@@ -15,7 +15,7 @@ class SelfServiceController extends Controller
 
     // reimbursement
     function formReimbursement() {
-    	if (\Auth::user()->position != 'Head of Business Unit') {
+    	if (\Auth::user()->id_employee != '1') {
             $workson = \App\WorksOn::getWorksOn();
 
             return \View::make('selfservice/addReimbursement')->with(compact('workson'));
@@ -68,7 +68,7 @@ class SelfServiceController extends Controller
             $selfservice->description = $description;
             $selfservice->request_date = $mydate;
             $selfservice->approval_date = $mydate;
-            if (\Auth::user()->position === 'Team Leader' || \Auth::user()->position === 'Head of HR') {
+            if (\Auth::user()->position === 'Team Leader' || \Auth::user()->id_employee === '2') {
                 $selfservice->status = 1;
             }
             else {
@@ -87,7 +87,7 @@ class SelfServiceController extends Controller
             $selfservice->description = $description;
             $selfservice->request_date = $mydate;
             $selfservice->approval_date = $mydate;
-            if (\Auth::user()->position === 'Team Leader' || \Auth::user()->position === 'Head of HR') {
+            if (\Auth::user()->position === 'Team Leader' || \Auth::user()->id_employee === '2') {
                 $selfservice->status = 1;
             }
             else {
@@ -136,7 +136,7 @@ class SelfServiceController extends Controller
 
     // paid leave
     function formPaidLeave() {
-        if (\Auth::user()->position != 'Head of HR') {
+        if (\Auth::user()->id_employee != '2') {
             return \View::make('selfservice/addPaidLeave');
         }
         else {
@@ -180,10 +180,7 @@ class SelfServiceController extends Controller
             $selfservice->description = $description;
             $selfservice->request_date = $mydate;
             $selfservice->approval_date = $mydate;
-            if (\Auth::user()->position === 'Team Leader') {
-                $selfservice->status = 1;
-            }
-            else if (\Auth::user()->position === 'Head of Business Unit') {
+            if (\Auth::user()->position === 'Team Leader' || \Auth::user()->id_employee === '1') {
                 $selfservice->status = 1;
             }
             else {
@@ -201,10 +198,7 @@ class SelfServiceController extends Controller
             $selfservice->description = $description;
             $selfservice->request_date = $mydate;
             $selfservice->approval_date = $mydate;
-            if (\Auth::user()->position === 'Team Leader') {
-                $selfservice->status = 1;
-            }
-            else if (\Auth::user()->position === 'Head of Business Unit') {
+            if (\Auth::user()->position === 'Team Leader' || \Auth::user()->id_employee === '1') {
                 $selfservice->status = 1;
             }
             else {
@@ -238,7 +232,7 @@ class SelfServiceController extends Controller
 
     // overtime
     function formOvertime() {
-        if (\Auth::user()->position != 'Head of Business Unit') {
+        if (\Auth::user()->id_employee != '1') {
             return \View::make('selfservice/addOvertime');
         }
         else {
@@ -283,10 +277,7 @@ class SelfServiceController extends Controller
             $selfservice->request_date = $mydate;
             $selfservice->approval_date = $mydate;
 
-            if (\Auth::user()->position === 'Team Leader') {
-                $selfservice->status = 1;
-            }
-            else if (\Auth::user()->position === 'Head of HR') {
+            if (\Auth::user()->position === 'Team Leader' || \Auth::user()->id_employee === '2') {
                 $selfservice->status = 1;
             }
             else {
@@ -305,10 +296,7 @@ class SelfServiceController extends Controller
             $selfservice->request_date = $mydate;
             $selfservice->approval_date = $mydate;
 
-            if (\Auth::user()->position === 'Team Leader') {
-                $selfservice->status = 1;
-            }
-            else if (\Auth::user()->position === 'Head of HR') {
+            if (\Auth::user()->position === 'Team Leader' || \Auth::user()->id_employee === '2') {
                 $selfservice->status = 1;
             }
             else {
@@ -425,6 +413,7 @@ class SelfServiceController extends Controller
 
     function myApproval() {
         $position = \Auth::user()->position;
+        $id_employee = \Auth::user()->id_employee;
 
         if($position == 'Team Leader') {
             $ss = \App\SelfService::getReqForSupervisor();
@@ -432,13 +421,13 @@ class SelfServiceController extends Controller
             return \View::make('selfservice/myApproval')->with(compact('ss'))->with(compact('position'));
         }
 
-        else if($position == 'Head of Business Unit') {
+        else if($id_employee == '1') {
             $ss = \App\SelfService::getReqForBU();
 
             return \View::make('selfservice/myApproval')->with(compact('ss'))->with(compact('position'));
         }
 
-        else if($position == 'Head of HR') {
+        else if($id_employee == '2') {
             $ss = \App\SelfService::getReqForHR();
 
             return \View::make('selfservice/myApproval')->with(compact('ss'))->with(compact('position'));
@@ -694,7 +683,7 @@ class SelfServiceController extends Controller
                 return \Redirect::to('/myApproval');
             }
         }
-        else if(\Auth::user()->position == 'Head of Business Unit') {
+        else if(\Auth::user()->id_employee == '1') {
             $ss = \App\SelfService::where("kodeSS","=", $kodeSS)->first();
             $ss->status = 2;
             $ss->save();
@@ -703,7 +692,7 @@ class SelfServiceController extends Controller
                 return \Redirect::to('/myApproval');
             }
         }
-        else if (\Auth::user()->position == 'Head of HR') {
+        else if (\Auth::user()->id_employee == '2') {
             $ss = \App\SelfService::where("kodeSS","=", $kodeSS)->first();
             $pl = \App\PaidLeave::where("selfservice_id", "=", $kodeSS)->first();
             $ss->status = 2;
@@ -752,7 +741,7 @@ class SelfServiceController extends Controller
                 return \Redirect::to('/myApproval');
             }
         }
-        else if(\Auth::user()->position == 'Head of Business Unit' || \Auth::user()->position == 'Head of HR') {
+        else if(\Auth::user()->id_employee == '1' || \Auth::user()->id_employee == '2') {
             $ss = \App\SelfService::where("kodeSS","=", $kodeSS)->first();
             $ss->status = 4;
             $ss->message = $message;

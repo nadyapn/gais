@@ -2,64 +2,25 @@
 
 
 @section('content')
-<html>
-	<head>
-		<!-- Custom CSS -->
-		<link href="css/simple-sidebar.css" rel="stylesheet">
-	</head>
-	<body>
-		<section id="content">
-			<div class="container">
-			  <div class="row">
-				<div class="col-md-8">
-				  <h1>Log-in GAIS</h1>
-				  @if(isset($msg))
-				  	<h6>Wrong email or password</h6>
-				  @endif
-				  <form action="{{url('/login')}}" method="post">
-				  <div class="form-inline2">
-						<div class="form-group">
-					  	<input type="hidden" class="form-control" name="_token" value="<?php echo csrf_token(); ?>">
-					  </div>
-					  <div class="form-group">
-						<input type="email" class="form-control" id="exampleInputEmail3" placeholder="Enter email" name="email">
-					  </div>
-					  <div class="form-group">
-						<input type="password" class="form-control" id="exampleInputPassword3" placeholder="Enter Password" name="password">
-					  </div>
-					  <div class="form-group">
-						<input type="submit" value="Login" class="btn btn-secondary"></input>
-					  </div>
-					</div>
-					<div class="form-group">
-					  General Affairs Information System
-					</div>
-					<div class="form-group">
-					  <a href="{{url('/dologin')}}" class="btn btn-danger">Login via Google Account</a>
-					</div>
-				  </form>
-				  </div>
+<div class="modal-dialog">
+							<div class="loginmodal-container">
+								<h1>Login to Your Account</h1><br>
+								@if(isset($msg))
+								<h6>Wrong email or password</h6>
+							  @endif
+							  <form action="{{url('/login')}}" method="post">
+								<input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
+								<input type="text" name="email" placeholder="Email">
+								<input type="password" name="password" placeholder="Password">
+								<input type="submit" name="login" class="login loginmodal-submit" value="Login">
+							  </form>
+							  <div class="login-help" style="text-align:center; margin-top:15px;font-size:1em; font-family:'BrandonText';">
+								<a href="#">General Affairs Information System</a>
+								<br>
+								<a href="{{url('/dologin')}}">
+									<input type="submit" name="loginGoogleAccount" class="login loginmodal-submit2" value="Login Via Google Account">
+								</a>
+							  </div>
+							</div>
 				</div>
-			  </div>
-			</div>
-		</section>
-	    <!-- jQuery -->
-    <script src="js/jquery.js"></script>
-
-    <!-- Bootstrap Core JavaScript -->
-    <script src="js/bootstrap.min.js"></script>
-
-    <!-- Menu Toggle Script -->
-    <script>
-    $("#menu-toggle").click(function(e) {
-        e.preventDefault();
-        $("#wrapper").toggleClass("toggled");
-    });
-    </script>
-		<script>
-				document.getElementById("dateForPage").innerHTML = Date();
-		</script>
-
-	</body>
-</html>
 @endsection

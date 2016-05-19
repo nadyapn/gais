@@ -89,6 +89,8 @@ Route::group(['middleware' => 'auth'], function(){
 	Route::get('/getDetailAdmin/{kodeSS}', 'SelfServiceController@getDetailAdmin');
 	Route::get('/getDetailPeminjaman/{kodePinjam}', 'SharedFacilitiesController@getDetail');
 	Route::get('/getDetailAdminPeminjaman/{kodePinjam}', 'SharedFacilitiesController@getDetailAdmin');
+	Route::get('/getDetailOBS/{kodeOBS}', 'OBServiceController@getDetail');
+	Route::get('/getDetailAdminOBS/{kodeOBS}', 'OBServiceController@getDetailAdmin');
 
 	Route::get('/getReqForSupervisor', 'SelfServiceController@getReqForSupervisor');
 	Route::get('/getReqForHR', 'SelfServiceController@getReqForHR');
@@ -98,6 +100,7 @@ Route::group(['middleware' => 'auth'], function(){
 	Route::get('/getLogPaidLeave', 'SelfServiceController@getLogPaidLeave');
 	Route::get('/getLogOvertime', 'SelfServiceController@getLogOvertime');
 	Route::get('/getLogPeminjaman', 'SharedFacilitiesController@getLogPeminjaman');
+	Route::get('/getLogOBService', 'OBServiceController@getLogOBService');
 
 	Route::get('/getMyReimbursement', 'SelfServiceController@getMyReimbursement');
 	Route::get('/getMyPaidLeave', 'SelfServiceController@getMyPaidLeave');
@@ -112,15 +115,15 @@ Route::group(['middleware' => 'auth'], function(){
 	Route::get('/update/{kodeSS}', 'SelfServiceController@update');
 	Route::post('/update/{kodeSS}', 'SelfServiceController@updatePost');
 
-	Route::get('/update/{kodeOBS}', 'OBServiceController@update');
-	Route::post('/update/{kodeOBS}', 'OBServiceController@updatePost');
+	Route::get('/updateOBS/{kodeOBS}', 'OBServiceController@update');
+	Route::post('/updateOBS/{kodeOBS}', 'OBServiceController@updatePost');
 
 	// delete
 	Route::get('/delete/{kodeSS}', 'SelfServiceController@delete');
 	Route::get('/deletePeminjaman/{kodePinjam}', 'SharedFacilitiesController@delete');
 	Route::get('/deleteFacility', 'SharedFacilitiesController@getAllFacilities');
 	Route::get('/deleteFacility/{kode}', 'SharedFacilitiesController@deleteFacility');
-	Route::get('/delete/{kodeOBS}', 'OBServiceController@delete');
+	Route::get('/deleteOBService/{kodeOBS}', 'OBServiceController@delete');
 
 	// approval
 	Route::get('/myApproval', 'SelfServiceController@myApproval');
@@ -129,6 +132,8 @@ Route::group(['middleware' => 'auth'], function(){
 	// rejection
 	Route::get('/rejection/{kodeSS}', 'SelfServiceController@rejection');
 	Route::post('/rejection/{kodeSS}', 'SelfServiceController@rejectionPost');
+
+	Route::get('/createOBService/{time}', 'OBServiceController@cekwaktu');
 });
 
 Route::get('/generate/{isi}', function($isi) {return \Hash::make($isi);});

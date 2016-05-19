@@ -9,7 +9,7 @@ use DB;
 class Peminjaman extends Model
 {
     protected $table = 'peminjaman';
-    public $primaryKey  = 'kodePinjam';
+    //public $primaryKey  = ['kodePinjam','facilities_id','request_date'];
     public $incrementing = false;
 
     public static function getWaitingList($facilities_id) {

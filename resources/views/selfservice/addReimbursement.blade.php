@@ -1,88 +1,103 @@
 @extends('user.sidebarHomepage')
+@section('contentSidebarHomepage')
+<div id="page-wrapper">
+	<div class="row">
+			<!--BREADCRUMB -->
+			<ol class="breadcrumb">
+				<li><a href="{{url('/homepageGAIS')}}">Homepage</a></li>
+				<li class="active">Create Reimburse</li>
+			</ol>
+			<!-- /.col-lg-6 -->
+	</div>
+	<div class="row">
+		<div class="col-lg-12">
+					<!--HEADER -->
+					<div class="page-header2">
+							<h2>Create Reimburse Request</h2>
 
-@section('contentAdd')
-	<section id="content">
-			<div class="breadcrumb">
-				<ul class="isiBreadcrumb">
-					<input type="image" class="btnDashboard" src="img/symbol.png">
-						<ul class="isiBreadcrumb2">
-							<li><a href="#">Homepage</a></li>
-							<li><a href="#">Employee Self Service</a></li>
-							<li><a href="#" class="active">Create Reimburse</a></li>
-						</ul>
-					<a href="{{url('/homepageGAIS')}}" class="btn btn-secondary2">Back to Home</a>
-				</ul>
-			</div>
-			<div id="color">
-				<p id="move">Dashboard</p>
-				<p id="move2">Pembuatan pengajuan Reimburse</p>
-			</div>
-			<div class="container">
-			  <div class="row">
-				<div class="col-md-8">
-				  <br>
-				  <br>
-				  <br>
-				  @if(isset($messages))
+					</div>
+		</div>
+		<!-- /.col-lg-6 -->
+	</div>
+	<!-- /.row -->
+	<div class="row">
+		<div class="col-lg-12">
+			@if(isset($messages))
 				  <?php
 				  	$temp = JSON_decode($messages);
 				  ?>
-				  @endif
-				  	<form action="{{url('/addReimbursement')}}" method="post"  enctype="multipart/form-data">
-						<input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
-						<div class="form-inline">
-						  <div class="form-group">
-						  	  <div class="form-control">
-					                	<div class="form-group">
-										@if(isset($temp->dateRem[0])){{$temp->dateRem[0]}}@endif<br/>
-										<input type="date" class="form-control" name="dateRem">
-								
-									  </div>
-					          </div>
-				          </div>
-				          <div class="form-group">
-				          	@if(isset($temp->businesspurpose[0])){{$temp->businesspurpose[0]}}@endif<br/>
-							<input value="@if(isset($in)){{$in['businesspurpose']}}@endif" type="text" class="form-control" placeholder="Enter Your Business Purpose (e.g. Shopping)" name="businesspurpose">
-						  </div>
-						  <div class="form-group">
-						  	@if(isset($temp->category[0])){{$temp->category[0]}}@endif<br/>
-					        <select name="category" >
-					          <option disabled selected>Choose Your Reimburse Category</option>
-					          <option>Project</option>
-					          <option>Other</option>
-					        </select>
-					      </div>
-					      <div class="form-group">
-							
-							  	@if(isset($temp->project[0])){{$temp->project[0]}}@endif<br/>
-						        <select name="project" >
-						          <option disabled selected>Choose Your Project</option>
-						          @foreach ($workson as $f)
-						          	<option>{{$f->name}}</option>
-						           @endforeach
-						        </select>
-					      </div>
-						  <div class="form-group">
-						  	@if(isset($temp->descriptionRem[0])){{$temp->descriptionRem[0]}}@endif<br/>
-							<input type="text" class="form-control" placeholder="Explain Detail of Spending" name="descriptionRem">
-						  </div>
-						  <div class="form-group">
-						  	@if(isset($temp->cost[0])){{$temp->cost[0]}}@endif<br/>
-							<input type="text" class="form-control" placeholder="Enter Total of Spending (e.g. 99999)" name="cost">
-						  </div>
-						  	<div class="form-group">
-						  	@if(isset($temp->foto[0])){{$temp->foto[0]}}@endif<br/>
-							<input type="file" class="form-control" title="Upload Reimburse File" name="foto" accept="image/*">
-						  </div>
-						  <div class="form-group">
-							<input type="submit" value="Submit" class="btn btn-secondary"></input>
-						  </div>
+			@endif
+			<form action="{{url('/addReimbursement')}}" method="post"  enctype="multipart/form-data" class="form-horizontal">
+				<input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
+				<div class="form-group">
+						<label class="col-sm-2 control-label">Category</label>
+						<div class="col-sm-10">
+								<!--Select The Category of Your Request -->
+							@if(isset($temp->category[0])){{$temp->category[0]}}@endif
+							<select name="category" class="form-control">
+								<option>Project</option>
+								<option>Other</option>
+							</select>
 						</div>
-					</form> 
 				</div>
+				<div class="form-group">
+						<label class="col-sm-2 control-label">Project</label>
+						<div class="col-sm-10">
+								<!--Select The Project of Your Request -->
+							@if(isset($temp->project[0])){{$temp->project[0]}}@endif
+							<select name="project" class="form-control">
+							<!-- get Project code (Still has an error if included) -->
+							</select>
+						</div>
+				</div>
+				<div class="form-group">
+						<label class="col-sm-2 control-label">Requested Date</label>
+						<div class="col-sm-10">
+							@if(isset($temp->dateRem[0])){{$temp->dateRem[0]}}@endif
+							<input type="date" class="form-control" placeholder="Text input" name="dateRem">
+						</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-2 control-label">Nominal</label>
+						<!--Explain the reason-->
+					<div class="col-sm-10">
+						@if(isset($temp->cost[0])){{$temp->cost[0]}}@endif
+						<input class="form-control" placeholder="Enter Total of Spending (e.g. 99999)" name="cost">
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-2 control-label">Business Purpose</label>
+						<!--Enter the purpose-->
+					<div class="col-sm-10">
+						@if(isset($temp->businesspurpose[0])){{$temp->businesspurpose[0]}}@endif
+						<input class="form-control" placeholder="Enter Your Business Purpose" name="businesspurpose">
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-2 control-label">Description</label>
+						<!--Explain the reason -->
+					<div class="col-sm-10">
+						@if(isset($temp->descriptionRem[0])){{$temp->descriptionRem[0]}}@endif
+						<input class="form-control" placeholder="Explain detail of spending" name="descriptionRem">
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-2 control-label">Reimburse File</label>
+						<!--Upload the File-->
+					<div class="col-sm-10">
+						@if(isset($temp->foto[0])){{$temp->foto[0]}}@endif
+						<input type="file" class="form-control" title="Upload Reimburse File" name="foto" accept="image/*">
+					</div>
+				</div>
+			  <div class="form-group">
+					<!-- Button Submit-->
+			    <div class="col-sm-offset-2 col-sm-10">
+			      <button type="submit" class="btn btn-primary">submit</button>
+			    </div>
 			  </div>
-			</div>
-	</section>
+			</form>
+		</div>
+	</div>
+</div>
+
 @endsection
-
-

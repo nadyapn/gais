@@ -1,40 +1,47 @@
 @extends('layouts.master')
-
-@section('content')
-        <div id="sidebarAdmin" class="nav-side-menu">
-			<div class="brand"><a class="aBrand" href="{{url('/homepageGAIS')}}">GAIS</a></div>
-				<div class="menu-list">
-					<ul id="menu-content" class="menu-content collapse out">
-						<li class="active">
-						  <a href="{{url('/dashboardAdmin')}}">
-						  <img style="margin-left:10px;margin-right:5px"src="{{asset('img/dashboard-white.png')}}"> Dashboard <b> Admin </b>
-						  </a>
-						</li>
-
-						<li  data-toggle="collapse" data-target="#Employee-Self-Service" class="collapsed">
-						  <a href="#"><img style="margin-left:10px;margin-right:5px"src="{{asset('img/sheet.png')}}"> View My Log <span class="arrow"></span></a>
-						</li>
-						<ul class="sub-menu collapse" id="Employee-Self-Service">
-							<li data-toggle="collapse" data-target="#Employee-Self-Service2"><a href="#">Employee Self-Service
-								<ul class="sub-menu collapse" id="Employee-Self-Service2">
-									<li><a href="{{url('/getLogReimbursement')}}">Reimburse</a></li>
-									<li><a href="{{url('/getLogPaidLeave')}}">Paid Leave</a></li>
-									<li><a href="{{url('/getLogOvertime')}}">Overtime</a></li>
-								</ul>
-							</li>
-							<li><a href="{{url('/getLogPeminjaman')}}">Shared Facilities Scheduler</li>
-							<li><a href="{{url('/getLogOBService')}}">Office Boy Service<i> Beta</i></li>
-						</ul>
-
-						<li data-toggle="collapse" data-target="#service" class="collapsed">
-						  <a href="{{url('/sfSpecialMenu')}}"><img style="margin-left:10px;margin-right:5px"src="{{asset('img/calendar-white.png')}}"> Shared Facilities <b>Special Menu</b></a>
-						</li>
-					</ul>
-			 </div>
-		</div>
-
-        <!-- /#sidebar-wrapper -->
-
-        @yield('contentAdmin')
+@section('contentSidebar')
+            <div class="navbar-default sidebar" role="navigation">
+                <div class="sidebar-nav navbar-collapse">
+                    <ul class="nav" id="side-menu">
+						            <li class="gaisBrandDashboard">
+                            <a style="font-size:2em; text-align:center" href="{{url('/homepageGAIS')}}"><i></i> GAIS</a>
+                        </li>
+                        <li>
+                            <a href="#"><i class="fa fa-dashboard fa-fw"></i> Dashboard <b> Admin </b></a>
+                        </li>
+                        <li>
+                            <a href="#"><i class="fa fa-copy fa-fw"></i> View My Log<span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+                                <li>
+                                    <a href="#">Employee Self Service <span class="fa arrow"></span></a></a>
+                                    <ul class="nav nav-third-level collapse">
+                                        <li>
+                                            <a href="{{url('/getLogReimbursement')}}">Reimbursement</a>
+                                        </li>
+                                        <li>
+                                            <a href="{{url('/getLogPaidLeave')}}">Paid Leave</a>
+                                        </li>
+        								                  <li>
+                                            <a href="{{url('/getLogOvertime')}}">Overtime</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="{{url('/getLogPeminjaman')}}">Shared Facilities Scheduler</a>
+                                </li>
+								                  <li>
+                                    <a href="{{url('/getLogOBService')}}">Office Boy Services-beta</a>
+                                </li>
+                            </ul>
+                            <!-- /.nav-second-level -->
+                        </li>
+                        <li>
+                            <a href="{{url('/sfSpecialMenu')}}"><i class="fa fa-star fa-fw"></i>Facilities <b>Special Menu</b></a>
+                        </li>
+                    </ul>
+                </div>
+                <!-- /.sidebar-collapse -->
+            </div>
+					@yield('contentAdmin')
 
 @endsection

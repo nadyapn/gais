@@ -23,8 +23,7 @@ class SelfServiceTable extends Migration
             $table->text('message')->nullable;
             $table->string('updated_at', 255);
             $table->string('created_at', 255);
-            $table->primary('kodeSS');
-            $table->unique('request_date');
+            $table->primary(['kodeSS','request_date']);
             $table->foreign('employee_id')->references('id_employee')->on('employee')->onDelete('cascade')->onUpdate('cascade');
         });
     }

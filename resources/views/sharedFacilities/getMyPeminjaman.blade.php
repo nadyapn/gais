@@ -1,43 +1,47 @@
 @extends('user.sidebarNonAdmin')
-
 @section('contentNonAdmin')
-	<section id="content">
-			<div class="breadcrumb">
-						<ul class="isiBreadcrumb">
-							<input type="image" class="btnDashboard" src="img/symbol.png">
-								<ul class="isiBreadcrumb2">
-									<li><a href="#">Homepage</a></li>
-									<li><a href="#" class="active">Shared Facilities Scheduler History</a></li>
-								</ul>
-							<a href="{{url('/homepageGAIS')}}" class="btn btn-secondary2">Back to Home</a>
-						</ul>
+<div id="page-wrapper">
+	<div class="row">
+			<!--BREADCRUMB -->
+			<ol class="breadcrumb">
+				<li><a href="{{url('/homepageGAIS')}}">Homepage</a></li>
+				<li><a href="{{url('/dashboardNonAdmin')}}">Dashboard Non Admin</a></li>
+				<li class="active"><a>Shared Facilities History</a></li>
+			</ol>
+			<!-- /.col-lg-6 -->
+	</div>
+	<div class="row">
+		<div class="col-lg-12">
+					<!--HEADER -->
+					<div class="page-header2">
+						<h2>Shared Facilities Request History</h2>
 					</div>
-			<div id="color4">
-				<p id="move">Shared Facilities Request History</p>
-			</div>
-
-			<br>
-			<!-- /#table-->
-			<div class="table-responsive">
-					<table class="table" id="dataTable">
-					  	<thead>
-							<tr>
-								<th>Request ID</th>
-								<th>Facility's Name</th>
-								<th>Date Requested</th>
-								<th>Status</th>
-								<th>View Details</th>
-								<th>Delete</th>
-							</tr>
-					  	</thead>
-					  	<tbody>
-					  		@foreach($peminjaman as $e)
+		</div>
+		<!-- /.col-lg-6 -->
+	</div>
+	<!-- /.row -->
+	<!-- Table for History SF -->
+	<div class="row">
+		<div style="margin-top:15px; margin-left:30px" class="table-responsive">
+			<table class="table table-striped table-bordered table-hover" id="dataTable">
+				<thead>
+					<tr>
+						<th>Requested ID</th>
+						<th>Requested Date</th>
+						<th>Facility</th>
+						<th>Status</th>
+						<th>View Detail</th>
+						<th>Update</th>
+					</tr>
+				</thead>
+				<tbody>
+					@foreach($peminjaman as $e)
 					  		<tr>
 								<td>{{$e->kodePinjam}}</td>
 								<td>{{$e->sfname}}</td>
 								<td>{{$e->request_date}}</td>
 								<td>
-									@if($e->status == 0) 	
+									@if($e->status == 0)
 							  			Booked
 							  		@elseif($e->status == 1)
 							  			Waiting List
@@ -48,9 +52,10 @@
 								<td><a href="{{url('/getDetailPeminjaman/'.$e->kodePinjam)}}" class="btn btn-view">View</td>
 								<td><a href="{{url('/deletePeminjaman/'.$e->kodePinjam)}}" class="btn btn-view" onclick="return confirm('Are you sure?')">Delete</a></td>
 							</tr>
-							@endforeach
-						</tbody>
-					</table>
-			</div>
-		</section>
+					@endforeach
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>
 @endsection

@@ -7,12 +7,13 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 
 use DB;
-// ini comment rahma
+
 class OBServiceController extends Controller
 {
     // form ob service. return view form
     function formOBService() {
-        $ob = \App\User::getOB();
+        $ob = \App\User::getOB(null);
+       
         if (\Auth::user()->division != 'Office Boy') {
             return \View::make('observice/addOBService')->with(compact('ob'));
         }
@@ -23,12 +24,23 @@ class OBServiceController extends Controller
 
     // ketika submit form. no return view
     function addOBService(Request $request) {
-        $ob = \App\User::getOB();
-
         $obname = \Request::input('namaOB');
         $category = \Request::input('category');
         $batch = \Request::input('requestedTime');
         $detail = \Request::input('obDescription');
+
+        $ob = \App\User::getOB(null);
+        $ob_id = \App\User::getOB($obname);
+
+        date_default_timezone_set("Asia/Jakarta");
+        $mydate = date('Y-m-d H:i:s'); //Returns IST
+        $time = date('H:i');
+
+        $jamskrg = substr($time, 0, 2);
+        $jambatch = substr($batch, 0, 2);
+
+        $menitskrg = substr($time, 3, 2);
+        $menitbatch = substr($batch, 3, 2);
 
         $validator = \Validator::make($request->all(), [
             'namaOB' => 'required',
@@ -44,42 +56,54 @@ class OBServiceController extends Controller
                         ->with(compact('messages'))
                         ->with(compact('ob'))
                         ->with(compact('in'));
+        } 
+        else if (($jambatch < $jamskrg) || ($jambatch == $jamskrg && $menitbatch < $menitskrg)) {
+            $in = \Request::all();
+            $salahjam = "Choose another batch";
+            $messages = $validator->errors();
+            return \View::make('observice/addOBService')
+                        ->with(compact('messages'))
+                        ->with(compact('salahjam'))
+                        ->with(compact('ob'))
+                        ->with(compact('in'));
+        }
+        else if (\App\OBService::isOBNotAvailabe($batch, $category, $ob_id)) {
+            $in = \Request::all();
+            $gantiob = "Category request for this OB is full. Choose other OB or category";
+            $messages = $validator->errors();
+            return \View::make('observice/addOBService')
+                        ->with(compact('messages'))
+                        ->with(compact('gantiob'))
+                        ->with(compact('ob'))
+                        ->with(compact('in'));
         }
 
         // cek database
         $obs = DB::table('observice')
-            ->orderBy('created_at','detail')
+            ->orderBy('created_at','desc')
             ->first();
-
 
         if ($obs == "") { // ketika form kosong
             $observice = new \App\OBService();
             $observice->kodeOBS = "1";
+            $observice->date = $mydate;
             $observice->detail = $detail;
-            echo $detail;
             $observice->batch = $batch;
-            echo $batch;
             $observice->category = $category;
-            echo $category;
-            //dibawah ini masih error, ngecek nama ob yg dipilih itu ada di database apa enggak
-            $query = DB::table('employee')
-                ->where('division','=','Office Boy')
-                ->where('name', $obname)
-                ->first();
-            $observice->ob_id = $query->id_employee;
+            $observice->ob_id = $ob_id;
             $observice->employee_id = \Auth::user()->id_employee;
 
         }
         else { // ketika form tidak kosong
-          $observice = new \App\OBService();
-            //$facility = new \App\Facilities();
+            $observice = new \App\OBService();
             $temp = $obs->kodeOBS;
             $temp2 = $temp + 1;
             $observice->kodeOBS = $temp2;
+            $observice->date = $mydate;
             $observice->detail = $detail;
             $observice->batch = $batch;
             $observice->category = $category;
-            $observice->ob_id = \App\User::getOB()->where('name','=',$obname)->value('id_employee');
+            $observice->ob_id = $ob_id;
             $observice->employee_id = \Auth::user()->id_employee;
         }
 
@@ -101,120 +125,168 @@ class OBServiceController extends Controller
 
     // get detail ob service. return view get detail
     function getDetail($kodeOBS) {
-        return \View::make('sharedfacilities/getDetail');
+        $obs = \App\OBService::getDetailOBS($kodeOBS);
+        $em_name = DB::table('employee')
+            ->join('observice','id_employee','=','employee_id')
+            ->where('kodeOBS','=',$kodeOBS)
+            ->first();
+        $ob_name = DB::table('employee')
+            ->join('observice','id_employee','=','ob_id')
+            ->where('kodeOBS','=',$kodeOBS)
+            ->first();
+        return \View::make('observice/getDetail')->with(compact('obs'))->with(compact('em_name'))->with(compact('ob_name'));
     }
 
     // get detail ob service untuk admin. return view get detail untuk admin
     function getDetailAdmin($kodeOBS) {
-        return \View::make('sharedfacilities/getDetailAdmin');
+        $obs = \App\OBService::getDetailOBS($kodeOBS);
+        $em_name = DB::table('employee')
+            ->join('observice','id_employee','=','employee_id')
+            ->where('kodeOBS','=',$kodeOBS)
+            ->first();
+        $ob_name = DB::table('employee')
+            ->join('observice','id_employee','=','ob_id')
+            ->where('kodeOBS','=',$kodeOBS)
+            ->first();
+        return \View::make('observice/getDetail')->with(compact('obs'))->with(compact('em_name'))->with(compact('ob_name'));
     }
 
-    // get log ob service. return viw list semua log
+    // get log ob service. return view list semua log
     function getLogOBService() {
-        return \View::make('observice/getLogOBService');
+        $obs = \App\OBService::getLogOBService();
+        return \View::make('observice/getLogOBService')->with(compact('obs'));
     }
 
     // get history obs. return view semua history kita
     function getMyOBService() {
-      $obsr = \App\OBService::getMyObService();
-
-        return \View::make('observice/getMyOBService')->with(compact('obsr'));
+        $obs = \App\OBService::getMyOBService();
+        return \View::make('observice/getMyOBService')->with(compact('obs'));
     }
 
-    // update obs. return view form (mirip kayak create)
-    // function update($kodeOBS) {
-    //     return \View::make('observice/updateOBService');
-    // }
     function update($kodeOBS) {
-        $ob = \App\OBService::where("ob_id", "=", $kodeOBS)->count();
-
-            if ($ob->employee_id == \Auth::user()->id_employee) {
-                if ($ob > 0) {
-                    $ob = \App\Reimbursement::where("ob_id", "=", $kodeOBS)->first();
-                    $id_employee = $ob->employee_id;
-                    if($id_employee = \Auth::user()->id_employee) {
-                        return \View::make('observice/updateOBService');
-                    }
-                    else {
-                        return \View::make('user/dashboardNonAdmin'); //harusnya dashboard non admin
-                    }
-                }
-            }
+        $ob = \App\User::getOB(null);
+        $obs = \App\OBService::getDetailOBS($kodeOBS);
+       
+        if (\Auth::user()->division != 'Office Boy') {
+            return \View::make('observice/update')->with(compact('ob'))->with(compact('obs'));
         }
-    // ketika submit obs. no return view
-    // function updatePost($kodeOBS, Request $request) {
-    //
-    //
-    // }
+        else {
+            return \View::make('user/homepageGAIS');
+        }
+    }
 
     function updatePost($kodeOBS, Request $request) {
-        $ob = \App\OBService::where("kodeOBS","=", $kodeOBS)->first();
+        $obname = \Request::input('namaOB');
+        $category = \Request::input('category');
+        $batch = \Request::input('requestedTime');
+        $detail = \Request::input('obDescription');
+
+        $ob = \App\User::getOB(null);
+        $ob_id = \App\User::getOB($obname);
+        $obs = \App\OBService::where("kodeOBS","=", $kodeOBS)->first();
 
         date_default_timezone_set("Asia/Jakarta");
         $mydate = date('Y-m-d H:i:s'); //Returns IST
+        $time = date('H:i');
 
-        if ($ob != "") {
-            $namaOB = \Request::input('namaOB');
-            $category = \Request::input('category');
-            $requestedTime = \Request::input('requestedTime');
-            $obDescription = \Request::input('obDescription');
+        $jamskrg = substr($time, 0, 2);
+        $jambatch = substr($batch, 0, 2);
 
-            $validator = \Validator::make($request->all(), [
-                'namaOB' => 'required',
-                'category' => 'required',
-                'requestedTime ' => 'required',
-                'obDescription' => 'required',
+        $menitskrg = substr($time, 3, 2);
+        $menitbatch = substr($batch, 3, 2);
 
-            ]);
+        $validator = \Validator::make($request->all(), [
+            'namaOB' => 'required',
+            'category' => 'required',
+            'requestedTime' => 'required',
+            'obDescription' => 'required',
+        ]);
 
-            if ($validator->fails()) {
-                $in = \Request::all();
-                $messages = $validator->errors();
-                return \View::make('observice/addOBService')
-                            ->with(compact('ob'));
-            }
+        if ($validator->fails()) {
+            $in = \Request::all();
+            $messages = $validator->errors();
+            return \View::make('observice/update')
+                        ->with(compact('messages'))
+                        ->with(compact('ob'))
+                        ->with(compact('obs'))
+                        ->with(compact('in'));
+        } 
+        else if (($jambatch < $jamskrg) || ($jambatch == $jamskrg && $menitbatch < $menitskrg)) {
+            $in = \Request::all();
+            $salahjam = "Choose another batch";
+            $messages = $validator->errors();
+            return \View::make('observice/update')
+                        ->with(compact('messages'))
+                        ->with(compact('salahjam'))
+                        ->with(compact('ob'))
+                        ->with(compact('obs'))
+                        ->with(compact('in'));
+        }
+        else if (\App\OBService::isOBNotAvailabe($batch, $category, $ob_id)) {
+            $in = \Request::all();
+            $gantiob = "Category request for this OB is full. Choose other OB or category";
+            $messages = $validator->errors();
+            return \View::make('observice/update')
+                        ->with(compact('messages'))
+                        ->with(compact('gantiob'))
+                        ->with(compact('ob'))
+                        ->with(compact('obs'))
+                        ->with(compact('in'));
+        }
 
-           # $ss->description = $description;
-           # $ss->request_date = $mydate;
-           # $ss->approval_date = $mydate;
+        $obs->status = -2;
+        $obs->save();
 
-           # $rm->business_purpose = $businesspurpose;
-           # $rm->category = $category;
-           # $rm->date = $date;
-           # $rm->cost = $cost;
-           # $rm->payment = 0;
+        $observice = new \App\OBService();
+        $observice->kodeOBS = $kodeOBS;
+        $observice->date = $mydate;
+        $observice->detail = $detail;
+        $observice->batch = $batch;
+        $observice->category = $category;
+        $observice->ob_id = $ob_id;
+        $observice->employee_id = \Auth::user()->id_employee;
 
-
-            $ob->namaOB = $namaOB;
-            $ob->category = $category;
-            $ob->requestedTime = $requestedTime;
-            $ob->obDescription = $obDescription;
-
-            $ob->save();
-
-            //$kodeOBS = DB::table('observice')->where('request_date', $mydate)->value('kodeSS');
-
-
-            if($ob->save()) {
-              return \Redirect::to('/dashboardNonAdmin');
-            }
+        if ($observice->save() && $obs->save()) {
+            return \Redirect::to('/dashboardNonAdmin');
         }
     }
 
     // ketika cancel obs. no return view
     function delete($kodeOBS) {
-      $ob = \App\OBService::where("ob_id", "=", $kodeOBS)->first();
-
-        if ($ob != "") {
-            $ob->status = -1; //status -1 itu belom disetujui
-            $ob->save();
-            if($ob->save()) {
-                if ($ob->save()) {
-                    return \Redirect::to('/getMyOBService');
-                }
+        $obs = \App\OBService::where("kodeOBS","=", $kodeOBS)->first();
+        if ($obs != "") {
+            $obs->status = -1;
+            $obs->save();
+            if($obs->save()) {
+                return \Redirect::to('/getMyOBService');
             }
         }
     }
 
+    // cek ob available apa ngga
+    function cekwaktu($time) {
+        $listob = \App\User::where('division','=','Office Boy')->get();
+        $obs = \App\OBService::where('batch','!=',$time)->get();
+        // dd($listob);
+        $return = '<select>';
+        foreach ($listob as $e) {
+            $temp = true;
+            foreach ($obs as $f) {
+                if ($e->id_employee == $f->employee_id) {
+                    $temp = false;
+                }        
+            }    
+
+            if ($temp) {
+                $option = '<option>' . $e->name . '</option>';
+            // dd($option);
+            $return .= $option;
+            }
+        }
+
+        $return .= '</select>';
+
+        return $return;
+    }
 
 }
