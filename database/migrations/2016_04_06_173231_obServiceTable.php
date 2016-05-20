@@ -24,7 +24,7 @@ class ObServiceTable extends Migration
             $table->string('ob_id',255);
             $table->string('updated_at', 255);
             $table->string('created_at', 255);
-            $table->primary(['kodeOBS','date']);
+            $table->primary('kodeOBS');
             $table->foreign('employee_id')->references('id_employee')->on('employee')->onDelete('cascade')->onUpdate('cascade');
             $table->foreign('ob_id')->references('id_employee')->on('employee')->onDelete('cascade')->onUpdate('cascade');
         });

@@ -37,10 +37,10 @@
 		  </ul>
 		  <!-- Tab panes -->
 		  <div class="tab-content">
-		    <div class="tab-pane fade in active" id="home">
+		    <div class="tab-pane fade active" id="home">
 		      <!-- Table for My History -->
 		      <div style="margin-top:15px; margin-left:0.5px" class="table-responsive">
-		        <table class="table table-striped table-bordered table-hover" id="dataTable">
+		        <table class="display table table-striped table-bordered table-hover" id="dataTable">
 		          <thead>
 		            <tr>
 		              <th>Requested ID</th>
@@ -94,7 +94,7 @@
 		    <div class="tab-pane fade" id="profile">
 		      <!-- Table for Employee's Request -->
 		      <div style="margin-top:15px; margin-left:0.5px" class="table-responsive">
-		        <table class="table table-striped table-bordered table-hover" id="dataTable">
+		        <table class="display table table-striped table-bordered table-hover" id="dataTable2">
 		          <thead>
 		            <tr>
 		              <th>Requested ID</th>
@@ -134,11 +134,11 @@
 		      </div>
 		    </div>
 		   @endif
-		  </div>
+		   
 		  <div class="tab-pane fade" id="sftab">
 		      <!-- Table for SF's Request -->
 		      <div style="margin-top:15px; margin-left:0.5px" class="table-responsive">
-		        <table class="table table-striped table-bordered table-hover" id="dataTable">
+		        <table class="display table table-striped table-bordered table-hover" id="dataTable3">
 		          <thead>
 		            <tr>
 		              <th>Requested ID</th>
@@ -160,9 +160,11 @@
 										
 							@endif</td>
 					<td><a href="{{url('/getDetailPeminjaman/'.$h->kodePinjam)}}" class="btn btn-view">View</a></td>
+					<td>d</td>
 							  	
 		            </tr>
 		            @endforeach
+		            
 		          </tbody>
 		        </table>
 		      </div>
@@ -170,7 +172,7 @@
 		    <div class="tab-pane fade" id="obtab">
 		      <!-- Table for OB's Request -->
 		      <div style="margin-top:15px; margin-left:0.5px" class="table-responsive">
-		        <table class="table table-striped table-bordered table-hover" id="dataTable">
+		        <table class="display table table-striped table-bordered table-hover" id="dataTable4">
 		          <thead>
 		            <tr>
 		              <th>Requested ID</th>

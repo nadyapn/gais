@@ -8,8 +8,8 @@
 			<ol class="breadcrumb">
 				<li><a href="{{url('/homepageGAIS')}}">Homepage</a></li>
 				<li><a href="{{url('/dashboardNonAdmin')}}">Dashboard Non Admin</a></li>
-				<li><a href="{{url('/getMyPeminjaman')}}">Shared Facilities History</a></li>
-				<li class="active">Shared Facilities Detailed Request</li>
+				<li><a href="{{url('/getMyOBService')}}">OB Service History</a></li>
+				<li class="active">OB Request Detailed Request</li>
 			</ol>
 			<!-- /.col-lg-6 -->
 	</div>
@@ -17,8 +17,8 @@
 		<div class="col-lg-12">
 					<!--HEADER -->
 					<div class="page-header2">
-							<h2>Detail of Shared Facilities</h2>
-							<h4>A detailed look of Shared Facilities Request</h4>
+							<h2>Detail of OB Service</h2>
+							<h4>A detailed look of OB Service Request</h4>
 					</div>
 		</div>
 		<!-- /.col-lg-6 -->
@@ -64,7 +64,9 @@
 									@elseif ($obs->status == 1)
 										Approved by OB
 									@elseif ($obs->status == 2)
-										Request done
+										Rejected by OB
+									@elseif ($obs->status == 3)
+										Request is done
 									@endif
 								</td>
 							</tr>

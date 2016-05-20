@@ -38,7 +38,7 @@ class UserTableSeeder extends Seeder
                 array(
                     'id_employee' => '3',
                     'name' => 'Prima Permata',
-                    'email' => 'primapermata@gmail.com',
+                    'email' => 'lusianaprima@gmail.com',
                     'password' => Hash::make('prima'),
                     'division' => 'Web Development',
                     'position' => 'Team Leader',

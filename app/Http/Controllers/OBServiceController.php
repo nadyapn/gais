@@ -157,7 +157,6 @@ class OBServiceController extends Controller
         return \View::make('observice/getLogOBService')->with(compact('obs'));
     }
 
-    // get history obs. return view semua history kita
     function getMyOBService() {
         $obs = \App\OBService::getMyOBService();
         return \View::make('observice/getMyOBService')->with(compact('obs'));
@@ -234,31 +233,28 @@ class OBServiceController extends Controller
                         ->with(compact('in'));
         }
 
-        $obs->status = -2;
-        $obs->save();
+        $obs->date = $mydate;
+        $obs->detail = $detail;
+        $obs->batch = $batch;
+        $obs->category = $category;
+        $obs->ob_id = $ob_id;
 
-        $observice = new \App\OBService();
-        $observice->kodeOBS = $kodeOBS;
-        $observice->date = $mydate;
-        $observice->detail = $detail;
-        $observice->batch = $batch;
-        $observice->category = $category;
-        $observice->ob_id = $ob_id;
-        $observice->employee_id = \Auth::user()->id_employee;
-
-        if ($observice->save() && $obs->save()) {
+        if ($obs->save()) {
             return \Redirect::to('/dashboardNonAdmin');
         }
     }
 
     // ketika cancel obs. no return view
     function delete($kodeOBS) {
-        $obs = \App\OBService::where("kodeOBS","=", $kodeOBS)->first();
+        $obs = \App\OBService::where("kodeOBS","=", $kodeOBS)->where('status','=',0)->first();
+        if (\Auth::user()->id_employee != $obs->employee_id) {
+            return \View::make('errors/401');
+        }
         if ($obs != "") {
             $obs->status = -1;
             $obs->save();
             if($obs->save()) {
-                return \Redirect::to('/getMyOBService');
+                return \Redirect::to('/dashboardNonAdmin');
             }
         }
     }
@@ -289,6 +285,106 @@ class OBServiceController extends Controller
         $return .= '</select>';
 
         return $return;
+    }
+
+    // cek ob available apa ngga
+    function updateOBService($time) {
+        $listob = \App\User::where('division','=','Office Boy')->get();
+        $obs = \App\OBService::where('batch','!=',$time)->get();
+        $counter = 0;
+        // dd($listob);
+        $return = '<select name="namaOB" class="form-control">';
+        foreach ($listob as $e) {
+            //$temp = true;
+            foreach ($obs as $f) {
+                if ($e->id_employee == $f->employee_id) {
+                    $temp = false;
+                    $counter++;
+                }        
+            }    
+
+            if ($counter <5) {
+                $option = '<option value="'. $e->name .'">' . $e->name . '</option>';
+            // dd($option);
+            $return .= $option;
+            }
+        }
+
+        $return .= '</select>';
+
+        return $return;
+    }
+
+    function getTaskOBServices() {
+        if (\Auth::user()->division != 'Office Boy') {
+            return \View::make('errors/401');
+        }
+
+        $task = DB::table('observice')
+                ->join('employee','id_employee','=','employee_id')
+                ->where('ob_id','=',\Auth::user()->id_employee)
+                ->where('status','=',0)
+                ->get();
+        return \View::make('observice/getTaskOBServices')->with(compact('task'));
+    }
+
+    function getAllTask() {
+        if (\Auth::user()->division != 'Office Boy') {
+            return \View::make('errors/401');
+        }
+
+        $task = DB::table('observice')
+                ->join('employee','id_employee','=','employee_id')
+                ->where('ob_id','=',\Auth::user()->id_employee)
+                ->where('status','=',1)
+                ->get();
+        return \View::make('observice/getAllTask')->with(compact('task'));
+    }
+
+    function approvalOBS($kodeOBS) {
+        $obs =\App\OBService::where("kodeOBS", "=", $kodeOBS)->where('status','>=','0')->first();
+        
+        if (\Auth::user()->id_employee != $obs->ob_id) {
+            return \View::make('errors/401');
+        }
+
+        if ($obs != "") {
+            $obs->status = 1;
+            //$obs->save();
+            if ($obs->save()) {
+                return \Redirect::to('/getTaskOBServices');
+            }
+        } 
+    }
+
+    function rejectionOBS($kodeOBS) {
+        $obs =\App\OBService::where("kodeOBS", "=", $kodeOBS)->where('status','>=','0')->first();
+        if (\Auth::user()->id_employee != $obs->ob_id) {
+            return \View::make('errors/401');
+        }
+
+         if ($obs != "") {
+            $obs->status = 2;
+            $obs->save();
+            if ($obs->save()) {
+                return \Redirect::to('/getTaskOBServices');
+            }
+        } 
+    }
+
+    function finishOBS($kodeOBS) {
+        $obs =\App\OBService::where("kodeOBS", "=", $kodeOBS)->where('status','=','1')->first();
+        if (\Auth::user()->id_employee != $obs->ob_id) {
+            return \View::make('errors/401');
+        }
+        
+        if ($obs != "") {
+            $obs->status = 3;
+            //$obs->save();
+            if ($obs->save()) {
+                return \Redirect::to('/getTaskOBServices');
+            }
+        } 
     }
 
 }

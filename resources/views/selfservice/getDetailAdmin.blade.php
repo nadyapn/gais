@@ -80,7 +80,7 @@
 											Rejected by Supervisor
 										@elseif ($ss->status == 4)
 											Rejected by Business Unit
-						@endif
+							@endif
 					 </td>
 				</tr>
 				<tr>

@@ -22,7 +22,7 @@
 	<!-- /.row -->
 	<div class="row">
 		<div class="col-lg-12">
-			<form action="{{url('/updateOBService')}}" method="post"  enctype="multipart/form-data" class="form-horizontal">
+			<form action="{{url('/updateOBS/'.$obs->kodeOBS)}}" method="post"  enctype="multipart/form-data" class="form-horizontal">
 				<input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
 				<div class="form-group">
 						<label class="col-sm-2 control-label">OB's Name</label>
@@ -53,6 +53,7 @@
 						<div class="col-sm-10">
 								<!--Select Time of Your Request -->
 							<select name="requestedTime" class="form-control" onchange="chooseOB(value)">
+									<option value="" disabled selected>Select time</option>
 									<option value="08:00">08.00 - 09.00</option>
 									<option value="10:00">10.00 - 11.00</option>
 									<option value="12:00">12.00 - 13.00</option>

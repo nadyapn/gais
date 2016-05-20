@@ -69,11 +69,11 @@ class UserController extends Controller
         //dd($credentials);
         $remember = \Request::has('remember');
         if (\Auth::attempt($credentials, $remember)) {
-            if (\Auth::user()->division != 'Office Boy') {
+            if (\Auth::user()->division == 'Office Boy') {
                 return \Redirect::to('/dashboardOB');    
             }
             else {
-                return \Redirect::to('/dashboardNonAdmin');
+                return \Redirect::to('/homepageGAIS');
             }
         } else {
             $msg = "asd";
@@ -157,8 +157,12 @@ class UserController extends Controller
     }
 
     function dashboardOB() {
+        $task = DB::table('observice')
+                ->join('employee','id_employee','=','employee_id')
+                ->where('ob_id','=',\Auth::user()->id_employee)
+                ->get();
         if (\Auth::user()->division == 'Office Boy') {
-            return \View::make('observice/getTaskOBService');
+            return \View::make('observice/getTaskOBServices')->with(compact('task'));
         }
         else {
             return \View::make('errors/401');   

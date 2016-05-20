@@ -45,13 +45,17 @@
 					<td>
 						@if ($e->status == 0)
 						Not approved yet by Supervisor
-						@elseif ($e->status == 1)
-						Approved by Supervisor
-						@elseif ($e->status == 2)
-						Approved by Business Unit
-						@elseif ($e->status == -1)
-						Canceled by Employee
-						@endif
+										@elseif ($e->status == 1)
+											Approved by Supervisor
+										@elseif ($e->status == 2)
+											Approved by Business Unit
+										@elseif ($e->status == -1)
+											Canceled by Employee
+										@elseif ($e->status == 3)
+											Rejected by Supervisor
+										@elseif ($e->status == 4)
+											Rejected by Business Unit
+							@endif
 					</td>
 					<td>
 					  <a href="{{url('/getDetailAdmin/'.$e->kodeSS)}}" class="btn btn-view">

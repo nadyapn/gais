@@ -46,7 +46,9 @@
 								<!--Select The Project of Your Request -->
 							@if(isset($temp->project[0])){{$temp->project[0]}}@endif
 							<select name="project" class="form-control">
-							<!-- get Project code (Still has an error if included) -->
+							@foreach ($workson as $f)
+						          	<option>{{$f->name}}</option>
+						           @endforeach
 							</select>
 						</div>
 				</div>

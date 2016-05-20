@@ -34,8 +34,7 @@
 									<!-- Contoh: 08.00 - 09.00-->
 								  <th>Category</th>
 									<th>Request Description</th>
-									<th>Approve</th>
-									<th>Reject</th>
+									<th>Done</th>
 								</tr>
 						  	</thead>
 						  	<tbody>
@@ -47,8 +46,7 @@
 									<td>{{$e->batch}}</td>
 									<td>{{$e->category}}</td>
 									<td>{{$e->detail}}</td>
-									<td><a href="{{url('/approvalOBS/'.$e->kodeOBS)}}" class="btn btn-update" onclick="return confirm('Are you sure?')">Approve</a></td>
-									<td><a href="{{url('/rejectionOBS/'.$e->kodeOBS)}}" class="btn btn-delete" onclick="return confirm('Are you sure?')">Reject</a></td>
+									<td><a href="{{url('/finishOBS/'.$e->kodeOBS)}}" class="btn btn-update" onclick="return confirm('Are you sure?')">Done</a></td>
 								</tr>
 								@endforeach
 							</tbody>

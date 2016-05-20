@@ -160,7 +160,8 @@
       <!-- Menu Toggle Script -->
       <script>
       $(document).ready(function(){
-          $('#dataTable').DataTable({bFilter: false});
+          $('table.display').DataTable({bFilter: false});
+         
 
           $("#notif").click(function() {
             alert();

@@ -61,7 +61,9 @@
 									@elseif ($obs->status == 1)
 										Approved by OB
 									@elseif ($obs->status == 2)
-										Request done
+										Rejected by OB
+									@elseif ($obs->status == 3)
+										Request is done
 									@endif
 								</td>
 						</table>

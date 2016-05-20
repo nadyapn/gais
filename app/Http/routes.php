@@ -104,10 +104,14 @@ Route::group(['middleware' => 'auth'], function(){
 	Route::get('/getMyPeminjaman', 'SharedFacilitiesController@getMyPeminjaman');
 	Route::get('/getMyOBService', 'OBServiceController@getMyOBService');
 
+	Route::get('/getTaskOBServices', 'OBServiceController@getTaskOBServices');
+	Route::get('/getAllTask', 'OBServiceController@getAllTask');
 
 	// update
 	Route::get('/update/{kodeSS}', 'SelfServiceController@update');
 	Route::post('/update/{kodeSS}', 'SelfServiceController@updatePost');
+
+
 
 	Route::get('/updateOBS/{kodeOBS}', 'OBServiceController@update');
 	Route::post('/updateOBS/{kodeOBS}', 'OBServiceController@updatePost');
@@ -117,18 +121,24 @@ Route::group(['middleware' => 'auth'], function(){
 	Route::get('/deletePeminjaman/{kodePinjam}', 'SharedFacilitiesController@delete');
 	Route::get('/deleteFacility', 'SharedFacilitiesController@getAllFacilities');
 	Route::get('/deleteFacility/{kode}', 'SharedFacilitiesController@deleteFacility');
-	Route::get('/deleteOBService/{kodeOBS}', 'OBServiceController@delete');
+	Route::get('/deleteOBS/{kodeOBS}', 'OBServiceController@delete');
 
 	// approval
 	Route::get('/myApproval', 'SelfServiceController@myApproval');
 	Route::get('/approval/{kodeSS}', 'SelfServiceController@approval');
+
+	Route::get('/approvalOBS/{kodeOBS}', 'OBServiceController@approvalOBS');
+	Route::get('/finishOBS/{kodeOBS}', 'OBServiceController@finishOBS');
 	
 
 	// rejection
 	Route::get('/rejection/{kodeSS}', 'SelfServiceController@rejection');
 	Route::post('/rejection/{kodeSS}', 'SelfServiceController@rejectionPost');
+	Route::get('/rejectionOBS/{kodeOBS}', 'OBServiceController@rejectionOBS');
 
 	Route::get('/createOBService/{time}', 'OBServiceController@cekwaktu');
+
+	Route::get('/updateOBService/{time}', 'OBServiceController@updateOBService');
 });
 
 Route::get('/generate/{isi}', function($isi) {return \Hash::make($isi);});

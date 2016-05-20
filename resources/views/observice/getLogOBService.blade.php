@@ -43,12 +43,14 @@
 								  	<th>{{$e->em_name}}</th>
 								  	<th>{{$e->ob_name}}</th>
 								  	<th>@if ($e->status == 0)
-											Waiting for OB's approval
-										@elseif ($e->status == 1)
-											Approved by OB
-										@elseif ($e->status == 2)
-											Request done
-										@endif
+										Waiting for OB's approval
+									@elseif ($e->status == 1)
+										Approved by OB
+									@elseif ($e->status == 2)
+										Rejected by OB
+									@elseif ($e->status == 3)
+										Request is done
+									@endif
 									</th>
 								  	<td><a href="{{url('/getDetailAdminOBS/'.$e->kodeOBS)}}" class="btn btn-view">View</td>
 								</tr>

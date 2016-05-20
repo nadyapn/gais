@@ -1,4 +1,4 @@
-82/*!
+/*!
  * Bootstrap v3.3.4 (http://getbootstrap.com)
  * Copyright 2011-2015 Twitter, Inc.
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
@@ -7135,6 +7135,11 @@ option{
   margin-top: -2%;
   padding-top: 1%;
   padding-bottom: 1.4%;
+}
+.move7{
+  display: block;
+  margin-left: 22.4%;
+padding-bottom: 3%;
 }
 .move8 {
   display: inline-block;

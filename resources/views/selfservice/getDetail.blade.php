@@ -171,13 +171,13 @@
 										@elseif ($ss->status == 1)
 											Approved by <b>  Supervisor </b>
 										@elseif ($ss->status == 2)
-											Approved by <b> Business Unit </b>
+											Approved by <b> HR </b>
 										@elseif ($ss->status == -1)
 										<b>	Canceled by </b> Employee
 										@elseif ($ss->status == 3)
 											Rejected by <b> Supervisor </b>
 										@elseif ($ss->status == 4)
-											Rejected by <b> Business Unit </b>
+											Rejected by <b> HR </b>
 							@endif
 					 </td>
 				</tr>

@@ -9,7 +9,7 @@ use DB;
 class OBService extends Model
 {
     protected $table = 'observice';
-    public $primaryKey  = null;
+    public $primaryKey  = 'kodeOBS';
     public $incrementing = false;
 
     public static function getMyOBService() {
@@ -20,6 +20,16 @@ class OBService extends Model
             ->get();
         //dd($query);
 	    return ($query);
+    }
+
+    public static function getAllMyTask() {
+        $query = DB::table('observice')
+            ->where('ob_id',\Auth::user()->id_employee)
+            ->where('status','>=','0')
+            ->orderBy('kodeOBS','desc')
+            ->get();
+        //dd($query);
+        return ($query);
     }
 
     public static function getLogOBService() {
@@ -62,6 +72,9 @@ class OBService extends Model
             ->where('kodeOBS','=',$kodeOBS)
             ->where('status','>=','0')
             ->first();
+
+        
+
         //dd($query);
         return ($query);
     }

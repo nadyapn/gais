@@ -27,7 +27,7 @@
 	<div class="row">
 	<!-- Table for My History -->
 	<div style="margin-top:15px; margin-left:30px" class="table-responsive">
-		<table class="table table-striped table-bordered table-hover">
+		<table class="display table">
 			<thead>
 				<tr>
 					<th>Requested ID</th>
@@ -50,9 +50,13 @@
 									<td>{{$o->detail}}</td>
 									<td>
 										@if ($o->status == 0)
-												Disetujui OB
+										Waiting for OB's approval
 										@elseif ($o->status == 1)
-												Udah selesai dikerjain sama OB
+											Approved by OB
+										@elseif ($o->status == 2)
+											Rejected by OB
+										@elseif ($o->status == 3)
+											Request is done
 										@endif
 									</td>
 									<td><a href="{{url('/updateOBS/'.$o->kodeOBS)}}" class="btn btn-update">Update</a></td>
