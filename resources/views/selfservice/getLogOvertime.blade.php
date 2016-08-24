@@ -24,7 +24,7 @@
 	<div class="row">
 	<!-- Table for Overtime Log -->
 	<div style="margin-top:15px; margin-left:30px" class="table-responsive">
-		<table class="table table-striped table-bordered table-hover" id="dataTable">
+		<table class="display table">
 			<thead>
 				<tr>
 					<th>Requested ID</th>

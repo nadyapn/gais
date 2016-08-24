@@ -25,74 +25,74 @@
 		<!-- /.col-lg-6 -->
 	</div>
 	<!-- /.row -->
-	<!-- Table for Paid Leave -->
+	<!-- Table for Reimburse -->
 	<div class="row">
 	<div style="margin-left:30px" class="table-responsive">
 		<table class="table table-striped table-bordered table-hover">
-				<tr>
-					<th>Requested ID</th>
-					<td> {{$ss->kodeSS}}</td>
-				</tr>
-				<tr>
-					<th>Type</th>
-					<td> Reimbursement</td>
-				</tr>
-				<tr>
-					<th>Employee's Name</th>
-					<td> {{$ss->name}}</td>
-				</tr>
-				<tr>
-					<th>Category</th>
-					<td> {{$rm->category}}</td>
-				</tr>
-				<tr>
-					<th>Requested Date</th>
-					<td> {{$ss->request_date}}</td>
-				</tr>
-				<tr>
-					<th>Date of Reimbursement Event</th>
-					<td> {{$rm->date}}</td>
-				</tr>
-				<tr>
-					<th>Total Nominal of Reimbursement</th>
-					<td> {{$rm->cost}}</td>
-				</tr>
-				<tr>
-					<th>Business Purpose</th>
-					<td> {{$rm->business_purpose}}</td>
-				</tr>
-				<tr>
-					<th>Detail of Spending</th>
-					<td> {{$ss->description}}</td>
-				</tr>
-				<tr>
-					<th>Photo</th>
-					<td> <img src="{{url('./foto/'.$rm->photo)}}" style="width:250px;"/></td>
-				</tr>
-				<tr>
-					<th>Status</th>
-					<td>
-						@if ($ss->status == 0)
-											Not approved yet by Supervisor
-										@elseif ($ss->status == 1)
-											Approved by Supervisor
-										@elseif ($ss->status == 2)
-											Approved by Business Unit
-										@elseif ($ss->status == -1)
-											Canceled by Employee
-										@elseif ($ss->status == 3)
-											Rejected by Supervisor
-										@elseif ($ss->status == 4)
-											Rejected by Business Unit
-							@endif
-					 </td>
-				</tr>
-				<tr>
-					@if ($ss->status == 3 || $ss->status == 4)
-						<th>Rejected because</th>
-						<td> {{$ss->message}}</td>
+			<tr>
+				<th>Requested ID</th>
+				<td> {{$ss->kodeSS}}</td>
+			</tr>
+			<tr>
+				<th>Type</th>
+				<td> Reimbursement</td>
+			</tr>
+			<tr>
+				<th>Employee's Name</th>
+				<td> {{$ss->name}}</td>
+			</tr>
+			<tr>
+				<th>Category</th>
+				<td> {{$rm->category}}</td>
+			</tr>
+			<tr>
+				<th>Requested Date</th>
+				<td> {{$ss->request_date}}</td>
+			</tr>
+			<tr>
+				<th>Date of Reimbursement Event</th>
+				<td> {{$rm->date}}</td>
+			</tr>
+			<tr>
+				<th>Total Nominal of Reimbursement</th>
+				<td> {{$rm->cost}}</td>
+			</tr>
+			<tr>
+				<th>Business Purpose</th>
+				<td> {{$rm->business_purpose}}</td>
+			</tr>
+			<tr>
+				<th>Detail of Spending</th>
+				<td> {{$ss->description}}</td>
+			</tr>
+			<tr>
+				<th>Photo</th>
+				<td> <img src="{{url('./foto/'.$rm->photo)}}" style="width:500px;"/></td>
+			</tr>
+			<tr>
+				<th>Status</th>
+				<td>
+					@if ($ss->status == 0)
+						Not approved yet by Supervisor
+					@elseif ($ss->status == 1)
+						Approved by Supervisor
+					@elseif ($ss->status == 2)
+						Approved by Business Unit
+					@elseif ($ss->status == -1)
+						Canceled by Employee
+					@elseif ($ss->status == 3)
+						Rejected by Supervisor
+					@elseif ($ss->status == 4)
+						Rejected by Business Unit
 					@endif
-				</tr>
+				</td>
+			</tr>
+			<tr>
+				@if ($ss->status == 3 || $ss->status == 4)
+				<th>Rejected because</th>
+				<td> {{$ss->message}}</td>
+				@endif
+			</tr>
 		</table>
 	</div>
 </div>
@@ -127,66 +127,66 @@
 	<div class="row">
 	<div style="margin-left:30px" class="table-responsive">
 		<table class="table table-striped table-bordered table-hover">
-				<tr>
-					<th>Requested ID</th>
-					<td> {{$ss->kodeSS}}</td>
-				</tr>
-				<tr>
-					<th>Type</th>
-					<td>Paid Leave</td>
-				</tr>
-				<tr>
-					<th>Employee's Name</th>
-					<td> {{$ss->name}}</td>
-				</tr>
-				<tr>
-					<th>Category</th>
-					<td> {{$pl->category}}</td>
-				</tr>
-				<tr>
-					<th>Requested Date</th>
-					<td> {{$ss->request_date}}</td>
-				</tr>
-				<tr>
-					<th>Paid Leave Start Date</th>
-					<td> {{$pl->date_hired}}</td>
-				</tr>
-				<tr>
-					<th>Period</th>
-					<td> {{$pl->period_of_leave}}</td>
-				</tr>
-				<tr>
-					<th>Total Leave</th>
-					<td> {{$pl->total_leave}}</td>
-				</tr>
-				<tr>
-					<th>Reason of Leave</th>
-					<td> {{$ss->description}}</td>
-				</tr>
-				<tr>
-					<th>Status</th>
-					<td>
-						@if ($ss->status == 0)
-											Not approved yet by Supervisor
-										@elseif ($ss->status == 1)
-											Approved by <b>  Supervisor </b>
-										@elseif ($ss->status == 2)
-											Approved by <b> HR </b>
-										@elseif ($ss->status == -1)
-										<b>	Canceled by </b> Employee
-										@elseif ($ss->status == 3)
-											Rejected by <b> Supervisor </b>
-										@elseif ($ss->status == 4)
-											Rejected by <b> HR </b>
-							@endif
-					 </td>
-				</tr>
-				<tr>
-					@if ($ss->status == 3 || $ss->status == 4)
-						<th>Rejected because</th>
-						<td> {{$ss->message}}</td>
+			<tr>
+				<th>Requested ID</th>
+				<td> {{$ss->kodeSS}}</td>
+			</tr>
+			<tr>
+				<th>Type</th>
+				<td>Paid Leave</td>
+			</tr>
+			<tr>
+				<th>Employee's Name</th>
+				<td> {{$ss->name}}</td>
+			</tr>
+			<tr>
+				<th>Category</th>
+				<td> {{$pl->category}}</td>
+			</tr>
+			<tr>
+				<th>Requested Date</th>
+				<td> {{$ss->request_date}}</td>
+			</tr>
+			<tr>
+				<th>Paid Leave Start Date</th>
+				<td> {{$pl->date_hired}}</td>
+			</tr>
+			<tr>
+				<th>Period</th>
+				<td> {{$pl->period_of_leave}}</td>
+			</tr>
+			<tr>
+				<th>Total Leave</th>
+				<td> {{$pl->total_leave}}</td>
+			</tr>
+			<tr>
+				<th>Reason of Leave</th>
+				<td> {{$ss->description}}</td>
+			</tr>
+			<tr>
+				<th>Status</th>
+				<td>
+					@if ($ss->status == 0)
+						Not approved yet by Supervisor
+					@elseif ($ss->status == 1)
+						Approved by Supervisor 
+					@elseif ($ss->status == 2)
+						Approved by HR 
+					@elseif ($ss->status == -1)
+						Canceled by Employee
+					@elseif ($ss->status == 3)
+						Rejected by Supervisor
+					@elseif ($ss->status == 4)
+						Rejected by HR
 					@endif
-				</tr>
+				</td>
+			</tr>
+			<tr>
+				@if ($ss->status == 3 || $ss->status == 4)
+				<th>Rejected because</th>
+				<td> {{$ss->message}}</td>
+				@endif
+			</tr>
 		</table>
 	</div>
 </div>
@@ -208,11 +208,11 @@
 	</div>
 	<div class="row">
 		<div class="col-lg-12">
-					<!--HEADER -->
-					<div class="page-header2">
-							<h2>Overtime History <b> {{$ss->kodeSS}} </b></h2>
-							<h4>A detailed look of your Overtime history</h4>
-					</div>
+			<!--HEADER -->
+			<div class="page-header2">
+				<h2>Overtime History <b> {{$ss->kodeSS}} </b></h2>
+				<h4>A detailed look of your Overtime history</h4>
+			</div>
 		</div>
 		<!-- /.col-lg-6 -->
 	</div>
@@ -221,88 +221,85 @@
 	<div class="row">
 	<div style="margin-left:30px" class="table-responsive">
 		<table class="table table-striped table-bordered table-hover">
-				<tr>
-					<th>Requested ID</th>
-					<td> {{$ss->kodeSS}}</td>
-				</tr>
-				<tr>
-					<th>Type</th>
-					<td>Overtime</td>
-				</tr>
-				<tr>
-					<th>Employee's Name</th>
-					<td> {{$ss->name}}</td>
-				</tr>
-				<tr>
-					<th>Requested Date</th>
-					<td> {{$ss->request_date}}</td>
-				</tr>
-				<tr>
-					<th>Date of Overtime</th>
-					<td> {{$ot->date}}</td>
-				</tr>
-				<tr>
-					<th>Start Time</th>
-					<td> {{$ot->time_start}}</td>
-				</tr>
-				<tr>
-					<th>End Time</th>
-					<td> {{$ot->time_end}}</td>
-				</tr>
-				<tr>
-					<th>Reason of Overtime</th>
-					<td> {{$ss->description}}</td>
-				</tr>
-				<tr>
-					<th>Status</th>
-					<td>
-						@if ($ss->status == 0)
-											Not approved yet by Supervisor
-										@elseif ($ss->status == 1)
-											Approved by Supervisor
-										@elseif ($ss->status == 2)
-											Approved by Business Unit
-										@elseif ($ss->status == -1)
-											Canceled by Employee
-										@elseif ($ss->status == 3)
-											Rejected by Supervisor
-										@elseif ($ss->status == 4)
-											Rejected by Business Unit
-						@endif
-					</td>
-				</tr>
-				<tr>
-					@if ($ss->status == 3 || $ss->status == 4)
-						<th>Rejected because</th>
-						<td> {{$ss->message}}</td>
+			<tr>
+				<th>Requested ID</th>
+				<td> {{$ss->kodeSS}}</td>
+			</tr>
+			<tr>
+				<th>Type</th>
+				<td>Overtime</td>
+			</tr>
+			<tr>
+				<th>Employee's Name</th>
+				<td> {{$ss->name}}</td>
+			</tr>
+			<tr>
+				<th>Requested Date</th>
+				<td> {{$ss->request_date}}</td>
+			</tr>
+			<tr>
+				<th>Date of Overtime</th>
+				<td> {{$ot->date}}</td>
+			</tr>
+			<tr>
+				<th>Start Time</th>
+				<td> {{$ot->time_start}}</td>
+			</tr>
+			<tr>
+				<th>End Time</th>
+				<td> {{$ot->time_end}}</td>
+			</tr>
+			<tr>
+				<th>Reason of Overtime</th>
+				<td> {{$ss->description}}</td>
+			</tr>
+			<tr>
+				<th>Status</th>
+				<td>
+					@if ($ss->status == 0)
+						Not approved yet by Supervisor
+					@elseif ($ss->status == 1)
+						Approved by Supervisor
+					@elseif ($ss->status == 2)
+						Approved by Business Unit
+					@elseif ($ss->status == -1)
+						Canceled by Employee
+					@elseif ($ss->status == 3)
+						Rejected by Supervisor
+					@elseif ($ss->status == 4)
+						Rejected by Business Unit
 					@endif
-				</tr>
+				</td>
+			</tr>
+			<tr>
+				@if ($ss->status == 3 || $ss->status == 4)
+				<th>Rejected because</th>
+				<td> {{$ss->message}}</td>
+				@endif
+			</tr>
 		</table>
 	</div>
 	@else
-			not found
+		not found
 	@endif
 </div>
 </div>
-	<!-- End of Overtime-->
+<!-- End of Overtime-->
 <!-- End of IF-->
 
 
-<!-- Button Approvall-->
+<!-- Button Approval-->
+@if ((\Auth::user()->position === 'Team Leader' && $ss->status == 0) || ((\Auth::user()->position === 'Head of Business Unit' || \Auth::user()->position === 'Head of HR') && $ss->status == 1)) 
 <div id="page-wrapper">
 	<div class="row">
-			<div class="panel panel-default" style="margin-left:30px;max-width:50%">
-					<div class="panel-body">
-						@if (\Auth::user()->position === 'Team Leader' && $ss->status == 0)
-							<a href="{{url('/approval/'.$ss->kodeSS)}}" class="btn btn-update" onclick="return confirm('Are you sure?')">Approve</a>
-							<a href="{{url('/rejection/'.$ss->kodeSS)}}" class="btn btn-delete" onclick="return confirm('Are you sure?')">Reject</a>
-						@elseif ((\Auth::user()->id_employee === '1' || \Auth::user()->id_employee === '2') && $ss->status == 1)
-							<a href="{{url('/approval/'.$ss->kodeSS)}}" class="btn btn-update" onclick="return confirm('Are you sure?')">Approve</a>
-							<a href="{{url('/rejection/'.$ss->kodeSS)}}" class="btn btn-delete" onclick="return confirm('Are you sure?')">Reject</a>
-						@endif
-					</div>
+		<div class="panel panel-default" style="margin-left:30px;max-width:50%">
+			<div class="panel-body">
+				<a href="{{url('/approval/'.$ss->kodeSS)}}" class="btn btn-update" onclick="return confirm('Are you sure?')">Approve</a>
+				<a href="{{url('/rejection/'.$ss->kodeSS)}}" class="btn btn-delete" onclick="return confirm('Are you sure?')">Reject</a>
 			</div>
+		</div>
 	</div>
 </div>
+@endif
 
 @endsection

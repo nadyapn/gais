@@ -111,8 +111,6 @@ Route::group(['middleware' => 'auth'], function(){
 	Route::get('/update/{kodeSS}', 'SelfServiceController@update');
 	Route::post('/update/{kodeSS}', 'SelfServiceController@updatePost');
 
-
-
 	Route::get('/updateOBS/{kodeOBS}', 'OBServiceController@update');
 	Route::post('/updateOBS/{kodeOBS}', 'OBServiceController@updatePost');
 
@@ -136,9 +134,11 @@ Route::group(['middleware' => 'auth'], function(){
 	Route::post('/rejection/{kodeSS}', 'SelfServiceController@rejectionPost');
 	Route::get('/rejectionOBS/{kodeOBS}', 'OBServiceController@rejectionOBS');
 
+	// lain-lain
 	Route::get('/createOBService/{time}', 'OBServiceController@cekwaktu');
-
 	Route::get('/updateOBService/{time}', 'OBServiceController@updateOBService');
+	Route::get('/createReimbursement/{category}', 'SelfServiceController@cekproject');
+	Route::get('/updateReimbursement/{category}', 'SelfServiceController@updateReimbursement');
 });
 
 Route::get('/generate/{isi}', function($isi) {return \Hash::make($isi);});

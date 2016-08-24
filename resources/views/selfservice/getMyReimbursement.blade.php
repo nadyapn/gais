@@ -24,7 +24,7 @@
 	<!-- Table for My History -->
 	<div class="row">
 	<div style="margin-top:15px; margin-left:30px" class="table-responsive">
-		<table class="table table-striped table-bordered table-hover" id="dataTable">
+		<table class="display table">
 			<thead>
 				<tr>
 					<th>Requested ID</th>
@@ -41,26 +41,26 @@
 					<th scope="row">{{$e->kodeSS}}</th>
 					<td>{{$e->request_date}}</td>
 					<td>
-					  @if ($e->status == 0)
-						Not approved yet by Supervisor
-										@elseif ($e->status == 1)
-											Approved by Supervisor
-										@elseif ($e->status == 2)
-											Approved by Business Unit
-										@elseif ($e->status == -1)
-											Canceled by Employee
-										@elseif ($e->status == 3)
-											Rejected by Supervisor
-										@elseif ($e->status == 4)
-											Rejected by Business Unit
-							@endif
+						@if ($e->status == 0)
+							Not approved yet by Supervisor
+						@elseif ($e->status == 1)
+							Approved by Supervisor
+						@elseif ($e->status == 2)
+							Approved by Business Unit
+						@elseif ($e->status == -1)
+							Canceled by Employee
+						@elseif ($e->status == 3)
+							Rejected by Supervisor
+						@elseif ($e->status == 4)
+							Rejected by Business Unit
+						@endif
 					</td>
 					<td>
 					  <a href="{{url('/getDetail/'.$e->kodeSS)}}" class="btn btn-view">
 					    View
 					</td>
-					<td>@if ($e->status == 0)<a href="{{url('/update/'.$e->kodeSS)}}" class="btn btn-success">Update </a> @endif</td>
-					<td>@if ($e->status == 0)<a href="{{url('/delete/'.$e->kodeSS)}}" class="btn btn-danger" onclick="return confirm('Are you sure?')">Delete</a> @endif</td>
+					<td>@if ($e->status == 0)<a href="{{url('/update/'.$e->kodeSS)}}" class="btn btn-update">Update </a> @endif</td>
+					<td>@if ($e->status == 0)<a href="{{url('/delete/'.$e->kodeSS)}}" class="btn btn-delete" onclick="return confirm('Are you sure?')">Delete</a> @endif</td>
 				</tr>
 				@endforeach
 			</tbody>

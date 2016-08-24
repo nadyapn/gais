@@ -78,23 +78,9 @@
 						 <h4 style="font-family:'roboto';font-size:1.1em;font-weight:bold;"> Your Paid Leave Quota </h4>
 					</div>
 					<div class="panel-body" style="">
-							<p style="font-family:'DIN','DINPro';font-size:1em;"> 
-
-						 	<?php
-						 		$sisapaidleave = DB::table('paidLeave')
-					                        ->join('selfservice','kodeSS','=','selfservice_id')
-					                        ->join('employee','id_employee','=','employee_id')
-					                        ->where('employee_id','=', \Auth::user()->id_employee)
-					                        ->whereYear('approval_date','=',date('Y'))
-					                        ->count();
-						 	?>
-						 	@if($sisapaidleave != "")
-						 		{{12 - $sisapaidleave}}
-						 	@else
-						 		12
-						 	@endif
-						 
-							</p>
+						<p style="font-family:'DIN','DINPro';font-size:1em;"> 
+							{{$total_leave}}
+						</p>
 					</div>
 			</div>
 		</div>

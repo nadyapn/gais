@@ -77,7 +77,7 @@
 		              @if (\Auth::user()->position === 'Team Leader')
 		              <td>@if ($f->status == 1)<a href="{{url('/update/'.$f->kodeSS)}}" class="btn btn-update">Update </a> @endif</td>
 		              <td>@if ($f->status == 1)<a href="{{url('/delete/'.$f->kodeSS)}}" class="btn btn-delete" onclick="return confirm('Are you sure?')">Delete</a> @endif</td>
-		              @elseif (\Auth::user()->id_employee === '1' || \Auth::user()->id_employee === '2')
+		              @elseif (\Auth::user()->position === 'Head of Business Unit' || \Auth::user()->position === 'Head of HR')
 		              <td>@if ($f->status == 1)<a href="{{url('/update/'.$f->kodeSS)}}" class="btn btn-update">Update </a> @endif</td>
 		              <td>@if ($f->status == 1)<a href="{{url('/delete/'.$f->kodeSS)}}" class="btn btn-delete" onclick="return confirm('Are you sure?')">Delete</a> @endif</td>
 		              @else
@@ -160,7 +160,7 @@
 										
 							@endif</td>
 					<td><a href="{{url('/getDetailPeminjaman/'.$h->kodePinjam)}}" class="btn btn-view">View</a></td>
-					<td>d</td>
+					<td>@if ($h->status == 0 || $h->status == 1)<a href="{{url('/deletePeminjaman/'.$h->kodePinjam)}}" class="btn btn-delete" onclick="return confirm('Are you sure?')">Delete</a> @endif</td>
 							  	
 		            </tr>
 		            @endforeach

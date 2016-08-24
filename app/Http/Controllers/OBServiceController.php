@@ -264,7 +264,7 @@ class OBServiceController extends Controller
         $listob = \App\User::where('division','=','Office Boy')->get();
         $obs = \App\OBService::where('batch','!=',$time)->get();
         $counter = 0;
-        // dd($listob);
+        
         $return = '<select name="namaOB" class="form-control">';
         foreach ($listob as $e) {
             //$temp = true;
@@ -277,8 +277,8 @@ class OBServiceController extends Controller
 
             if ($counter <5) {
                 $option = '<option value="'. $e->name .'">' . $e->name . '</option>';
-            // dd($option);
-            $return .= $option;
+            
+                $return .= $option;
             }
         }
 
@@ -386,5 +386,4 @@ class OBServiceController extends Controller
             }
         } 
     }
-
 }

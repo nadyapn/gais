@@ -23,7 +23,7 @@
 	<!-- Table for History SF -->
 	<div class="row">
 		<div style="margin-top:15px; margin-left:30px" class="table-responsive">
-			<table class="table table-striped table-bordered table-hover" id="dataTable">
+			<table class="display table">
 				<thead>
 					<tr>
 						<th>Requested ID</th>
@@ -31,7 +31,7 @@
 						<th>Facility</th>
 						<th>Status</th>
 						<th>View Detail</th>
-						<th>Update</th>
+						<th>Delete</th>
 					</tr>
 				</thead>
 				<tbody>

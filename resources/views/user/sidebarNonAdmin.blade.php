@@ -10,7 +10,7 @@
                         <li>
                             <a href="{{url('/dashboardNonAdmin')}}"><i class="fa fa-dashboard fa-fw"></i> Dashboard <b> {{\Auth::user()->position}} </b></a>
                         </li>
-                        @if(\Auth::user()->position === 'Team Leader' || \Auth::user()->id_employee === '1' || \Auth::user()->id_employee === '2')
+                        @if(\Auth::user()->position === 'Team Leader' || \Auth::user()->position === 'Head of Business Unit' || \Auth::user()->position === 'Head of HR')
                         <li>
                             <a href="#"><i class="fa fa-check fa-fw"></i>My Approval<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">

@@ -274,7 +274,7 @@ class SharedFacilitiesController extends Controller
     // ketika cancel peminjaman. no return view
     function delete($kodePinjam) {
         $sf = \App\Peminjaman::where("kodePinjam","=", $kodePinjam)->first();
-         if($peminjaman->employee_id == \Auth::user()->id_employee) {
+         if($sf->employee_id == \Auth::user()->id_employee) {
             $sf->status = -1;
             if($sf->save()) {
                 return \Redirect::to('/getMyPeminjaman');

@@ -34,22 +34,18 @@
 						<div class="col-sm-10">
 								<!--Select The Category of Your Request -->
 							@if(isset($temp->category[0])){{$temp->category[0]}}@endif
-							<select name="category" class="form-control">
-								<option>Project</option>
-								<option>Other</option>
+							<select name="category" class="form-control" onchange="chooseProject(value)">
+								<option value="" disabled selected>Select category</option>
+								<option value="Project">Project</option>
+								<option value="Other">Other</option>
 							</select>
 						</div>
 				</div>
 				<div class="form-group">
 						<label class="col-sm-2 control-label">Project</label>
-						<div class="col-sm-10">
-								<!--Select The Project of Your Request -->
+						<div class="col-sm-10 projectcontainer">
+							<!--Select The Project of Your Request -->
 							@if(isset($temp->project[0])){{$temp->project[0]}}@endif
-							<select name="project" class="form-control">
-							@foreach ($workson as $f)
-						          	<option>{{$f->name}}</option>
-						           @endforeach
-							</select>
 						</div>
 				</div>
 				<div class="form-group">
@@ -101,5 +97,25 @@
 		</div>
 	</div>
 </div>
+
+
+<script>
+function chooseProject(category) {
+	console.log(category);
+	if (category === 'Project') {
+		$.ajax({
+	  		url: "http://localhost/gais/public/createReimbursement/"+category,
+	  
+		})
+	  	.done(function( data ) {
+	  		console.log(data);
+	    	$(".projectcontainer").html(data); 
+	  	});
+	}
+	else {
+		$(".projectcontainer").empty(); 
+	}
+}
+</script>
 
 @endsection
