@@ -130,6 +130,16 @@ class SharedFacilitiesController extends Controller
 
     // return view form waiting list
     function formWaitingList($tanggal, $waktu) {
+        $isi = \App\Peminjaman::where('used_date', '=', $tanggal)
+                                        ->where('time_start', '<=', $waktu)
+                                        ->where('time_end', '>', $waktu)
+                                        ->where('status',0)
+                                        ->where('employee_id','=',\Auth::user()->id_employee)
+                                        ->count();
+        if($isi > 0) {
+            return ('you have booked this room');
+        }
+
         $value = session()->get('sfname', 'default');
         $facilities_id = $sf = \App\Facilities::where('sfname','=',$value)->value('kode');
         $salahjam = "";
@@ -206,13 +216,14 @@ class SharedFacilitiesController extends Controller
         }
     }
 
-    function sfAriq() {
-        return \View::make('sharedfacilities/sfAriq');
-    }
-
     // mau create atau delete
     function sfSpecialMenu() {
-        return \View::make('sharedfacilities/sfSpecialMenu');
+        if(\Auth::user()->role == 'Admin') {
+            return \View::make('sharedfacilities/sfSpecialMenu');    
+        }
+        else {
+            return \View::make('errors/401');
+        }
     }
 
     function facilitiesForm() {
@@ -222,19 +233,35 @@ class SharedFacilitiesController extends Controller
     // get detail peminjaman. return view get detail
     function getDetail($kodePinjam) {
         $peminjaman = \App\Peminjaman::getDetailPeminjaman($kodePinjam);
-        return \View::make('sharedfacilities/getDetail')->with(compact('peminjaman'));
+        if($peminjaman->employee_id == \Auth::user()->id_employee) {
+            return \View::make('sharedfacilities/getDetail')->with(compact('peminjaman'));
+        }
+        else {
+            return \View::make('errors/401');
+        }
     }
 
     // get detail peminjaman untuk admin. view get detail untuk admin
     function getDetailAdmin($kodePinjam) {
+        if (\Auth::user()->role == 'Admin') {
+            $peminjaman = \App\Peminjaman::getDetailPeminjaman($kodePinjam);
+            return \View::make('sharedfacilities/getDetail')->with(compact('peminjaman'));
+        }
+        else {
+            return \View::make('errors/401');
+        }
         
-        return \View::make('sharedfacilities/getDetailAdmin');
     }
 
     // get log peminjaman. return viw list semua log
     function getLogPeminjaman() {
         $peminjaman = \App\Peminjaman::getLogPeminjaman();
-        return \View::make('sharedfacilities/getLogPeminjaman')->with(compact('peminjaman'));
+        if (\Auth::user()->role == 'Admin') {
+            return \View::make('sharedfacilities/getLogPeminjaman')->with(compact('peminjaman'));
+        }
+        else {
+            return \View::make('errors/401');
+        }
     }
 
     // get history peminjaman. return view semua history kita
@@ -243,23 +270,18 @@ class SharedFacilitiesController extends Controller
         return \View::make('sharedfacilities/getMyPeminjaman')->with(compact('peminjaman'));
     }
 
-    // update peminjaman. return view form (mirip kayak create)
-    function update($kodePinjam) {                                                                  
-        return \View::make('sharedfacilities/update');
-    }
-
-    // ketika submit update. no return view
-    function updatePost($kodePinjam, Request $request) {
-        
-    }
 
     // ketika cancel peminjaman. no return view
     function delete($kodePinjam) {
         $sf = \App\Peminjaman::where("kodePinjam","=", $kodePinjam)->first();
-
-        $sf->status = -1;
-        if($sf->save()) {
-            return \Redirect::to('/getMyPeminjaman');
+         if($sf->employee_id == \Auth::user()->id_employee) {
+            $sf->status = -1;
+            if($sf->save()) {
+                return \Redirect::to('/getMyPeminjaman');
+            }
+        }
+        else {
+            return \View::make('errors/401');
         }
     }
 
@@ -316,7 +338,7 @@ class SharedFacilitiesController extends Controller
         }
 
         if($facility->save()) {
-            return \Redirect::to('/dashboardAdmin');
+            return \Redirect::to('/deleteFacility');
         }
     }
 

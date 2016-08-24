@@ -1,82 +1,115 @@
 @extends('user.sidebarHomepage')
-
-@section('contentAdd')
-<section id="content">
-	<div class="breadcrumb">
-				<ul class="isiBreadcrumb">
-					<input type="image" class="btnDashboard" src="img/symbol.png">
-						<ul class="isiBreadcrumb2">
-							<li><a href="{{url('/homepageGAIS')}}">Homepage</a></li>
-							<li><a href="#" class="active">Create OB Service</a></li>
-						</ul>
-					<a href="{{url('/homepageGAIS')}}" class="btn btn-secondary2">Back to Home</a>
-				</ul>
-			</div>
-	<div id="color">
-		<p id="move">Create OB Service Request</p>
-		<p id="move2">*Your Request will be granted after <b> one hour </b> of your request time</p>
+@section('contentSidebarHomepage')
+<div id="page-wrapper">
+	<div class="row">
+			<!--BREADCRUMB -->
+			<ol class="breadcrumb">
+				<li><a href="{{url('/homepageGAIS')}}">Homepage</a></li>
+				<li class="active">Create OB Service Request</li>
+			</ol>
+			<!-- /.col-lg-6 -->
 	</div>
-	<div id="color2">
-		<p id="move7">Today's date</p>
-		<p class="move6" id="dateForPage"></p>
+	<div class="row">
+		<div class="col-lg-12">
+					<!--HEADER -->
+					<div class="page-header2">
+							<h2>Order Your OB Request</h2>
+							<h4>*Your Request will be granted after one hour of your request time</h4>
+					</div>
+		</div>
+		<!-- /.col-lg-6 -->
 	</div>
-	<br>
-			<div class="container">
-			  <div class="row">
-				<div class="col-md-8">
-				  @if(isset($messages))
+	<!-- /.row -->
+	<div class="row">
+		<div class="col-lg-12">
+			@if(isset($messages))
 				  <?php
 				  	$temp = JSON_decode($messages);
 				  ?>
 				  @endif
+			<form action="{{url('/addOBService')}}" method="post"  enctype="multipart/form-data" class="form-horizontal">
+				<input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
+				<div class="form-group">
+						<label class="col-sm-2 control-label">OB's Name</label>
+						<div class="col-sm-10 obcontainer" >
+							
+						</div>
+				</div>
 
-				  <form action="{{url('/addOBService')}}" method="post">
-						<input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
-						<div class="form-inline">
-							 <div class="form-group">
-								 <h3>Create Your OB Service Request Here</h3>
-							 </div>
-
-							<div class="form-group">
-								@if(isset($temp->namaOB[0])){{$temp->namaOB[0]}}@endif<br/>
-								<select class="form-control" name="namaOB" >
-									<option selected disabled>Choose OB</option>
-									@foreach($ob as $e)
-										<option>{{$e->name}}</option>
-									@endforeach
-								</select>
-						  </div>
-						   <div class="form-group">
-						   		@if(isset($temp->category[0])){{$temp->category[0]}}@endif<br/>
-								<select class="form-control" name="category" >
-									<option selected disabled>Category</option>
-									<option value="food">Food</option>
-									<option value="doc">Document</option>
-									<option value="other">Other</option>
-								</select>
-						  </div>
-						  <div class="form-group">
-						  		@if(isset($temp->requestedTime[0])){{$temp->requestedTime[0]}}@endif<br/>
-								<select class="form-control" name="requestedTime">
-									<option selected disabled>Time</option>
+				<div class="form-group">
+						
+						<label class="col-sm-2 control-label">Category</label>
+						@if(isset($temp->category[0])){{$temp->category[0]}}@endif<br/>
+						<div class="col-sm-10">
+							<!--Select Category of Your Request -->
+							<select name="category" class="form-control">
+									<option>Food</option>
+									<option>Document</option>
+									<option>Send</option>
+									<option>Other</option>
+							</select>
+						</div>
+				</div>
+				<div class="form-group">
+					
+					@if(isset($temp->requestedTime[0])){{$temp->requestedTime[0]}}@endif<br/>
+						  		@if(isset($salahjam)) {{$salahjam}}@endif<br/>
+						<label class="col-sm-2 control-label">Time</label>
+						<div class="col-sm-10">
+								<!--Select Time of Your Request -->
+							<select name="requestedTime" class="form-control" onchange="chooseOB(value)">
+									<option value="" disabled selected>Select time</option>
 									<option value="08:00">08.00 - 09.00</option>
 									<option value="10:00">10.00 - 11.00</option>
 									<option value="12:00">12.00 - 13.00</option>
 									<option value="14:00">14.00 - 15.00</option>
 									<option value="16:00">16.00 - 17.00</option>
-								</select>
-						  </div>
-							<div class="form-group">
-								@if(isset($temp->obDescription[0])){{$temp->obDescription[0]}}@endif<br/>
-								<input type="text" class="form-control" placeholder="Detail" name="obDescription">
-						  </div>
-						  <div class="form-group">
-								<input type="submit" value="Submit" class="btn btn-secondary"></input>
-						  </div>
+									<option value="23:00">23.00 - 00.00</option>
+									<option value="00:00">00.00 - 01.00</option>
+							</select>
 						</div>
-					</form>
 				</div>
+				<div class="form-group">
+					@if(isset($temp->obDescription[0])){{$temp->obDescription[0]}}@endif
+					<label class="col-sm-2 control-label">Description</label>
+					<!--Input the Description-->
+					<div class="col-sm-10">
+						<input class="form-control" name="obDescription" placeholder="Enter your request description (location, qty, etc)">
+					</div>
+				</div>
+			  <div class="form-group">
+					<!-- Button Submit-->
+			    <div class="col-sm-offset-2 col-sm-10">
+			      <button type="submit" class="btn btn-primary">Order</button>
+			    </div>
 			  </div>
+			</form>
+			<!-- Today's Date-->
+			<div class="panel panel-default" style="margin-left:10px;">
+				  <div class="panel-heading">
+						 <h4 style="font-family:'roboto';font-size:1.1em;font-weight:bold;"> Today's Date </h4>
+					</div>
+					<div class="panel-body" style="">
+							<p style="font-family:'DIN','DINPro';font-size:1em;" id="dateForPage"> </p>
+					</div>
 			</div>
-	</section>
+		</div>
+	</div>
+</div>
+
+<script>
+function chooseOB(time) {
+	console.log(time);
+	$.ajax({
+	  url: "http://localhost/gais/public/createOBService/"+time,
+	  
+	})
+	  .done(function( data ) {
+	  	console.log(data);
+	    $(".obcontainer").html(data); 
+	  });
+}
+</script>
 @endsection
+
+

@@ -1,42 +1,39 @@
 @extends('layouts.master')
 
 
-@section('content')
-        <!-- Sidebar -->
-        <div id="sidebarHomepage" class="nav-side-menu">
-			<div class="brand"><a class="aBrand" href="{{url('/homepageGAIS')}}">GAIS</a></div>
-			<i class="fa fa-bars fa-2x toggle-btn" data-toggle="collapse" data-target="#menu-content"></i>
-				<div class="menu-list">
-					<ul id="menu-content" class="menu-content collapse out">
-						<li class="active">
-						  <img style="margin-left:10px;margin-right:5px"src="{{asset('img/dashboard-white.png')}}">
-						  <a href="{{url('/dashboardNonAdmin')}}">Dashboard <b> {{\Auth::user()->position}} </b> </a>
-						</li>
-
-						<li  data-toggle="collapse" data-target="#Employee-Self-Service" class="collapsed">
-						  <a href="#"><img style="margin-left:10px;margin-right:5px"src={{asset('img/selfservice-white.png')}}> Employee Self Service <span class="arrow"></span></a>
-						</li>
-						<ul class="sub-menu collapse" id="Employee-Self-Service">
-							@if (\Auth::user()->position != 'Business Unit')
-							<li><a href="{{url('/createReimbursement')}}">Reimburse</a></li>
-							@endif
-							@if (\Auth::user()->position != 'Human Resource')
-							<li><a href="{{url('/createPaidLeave')}}">Paid Leave</a></li>
-							@endif
-							@if (\Auth::user()->position != 'Business Unit')
-							<li><a href="{{url('/createOvertime')}}">Overtime</a></li>
-							@endif
-						</ul>
-
-						<li class="collapsed">
-						  <a href="{{url('/createPeminjaman')}}"><img style="margin-left:10px;margin-right:5px"src="{{asset('img/calendar-white.png')}}"> Shared Facilities</a>
-						</li>
-						<li class="collapsed">
-						  <a href="{{url('/createOBService')}}"><img style="margin-left:10px;margin-right:5px"src="{{asset('img/observice-white.png')}}"> Office Boy Service</a>
-						</li>
-			 </div>
-		</div>
-        <!-- /#sidebar-wrapper -->
-
-		@yield('contentAdd')
+@section('contentSidebar')
+<div class="navbar-default sidebar" role="navigation">
+                <div class="sidebar-nav navbar-collapse">
+                    <ul class="nav" id="side-menu">
+						            <li class="gaisBrandDashboard">
+                            <a style="font-size:2em; text-align:center" href="{{url('/homepageGAIS')}}"><i></i> GAIS</a>
+                        </li>
+                        <li>
+                            <a href="{{url('/dashboardNonAdmin')}}"><i class="fa fa-dashboard fa-fw"></i> Dashboard <b> {{\Auth::user()->position}} </b></a>
+                        </li>
+                        <li>
+                            <a href="#"><i class="fa fa-users fa-fw"></i> Employee Self-Service<span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+                                
+								<li><a href="{{url('/createReimbursement')}}">Reimburse</a></li>
+								
+								<li><a href="{{url('/createPaidLeave')}}">Paid Leave</a></li>
+								
+								<li><a href="{{url('/createOvertime')}}">Overtime</a></li>
+								
+                            </ul>
+                            <!-- /.nav-second-level -->
+                        </li>
+                        <li>
+                            <a href="{{url('/createPeminjaman')}}"><i class="fa fa-calendar-o fa-fw"></i> Shared Facilities Scheduler</a>
+                        </li>
+                        <li>
+                            <a href="{{url('/createOBService')}}"><i class="fa fa-bell fa-fw"></i> Office Boy Services-beta</a>
+                        </li>
+                    </ul>
+                </div>
+                <!-- /.sidebar-collapse -->
+            </div>
+					@yield('contentSidebarHomepage')
+       
 @endsection

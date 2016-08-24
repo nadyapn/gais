@@ -130,7 +130,7 @@ class SelfService extends Model
                 }
                 else
                 {
-                    //default case. should never went here
+                    //default case. should never go here
                     $e->tipe = "Error : " . $rm . " " . $pl . " " . $ot;
                 }
             }
@@ -139,9 +139,14 @@ class SelfService extends Model
     }
 
     public static function getReqForBU() {
-	    $query = DB::table('selfservice')
+        $query = DB::table('selfservice')
             ->join('employee','employee.id_employee','=','selfservice.employee_id')
             ->where('status','1')
+            ->where(function($like) {
+                $like->where('kodeSS','like','RM%')
+                    ->orWhere('kodeSS','like','OT%');
+
+            })
             ->get();
 
         if($query == "") return "not found";
@@ -150,20 +155,17 @@ class SelfService extends Model
                 $kodeSS = $e->kodeSS;
                 $rm = \App\Reimbursement::where("selfservice_id", "=", $kodeSS)->count();
                 $ot = \App\Overtime::where("selfservice_id", "=", $kodeSS)->count();
-                $pl = \App\PaidLeave::where("selfservice_id", "=", $kodeSS)->count();
+                //$pl = \App\PaidLeave::where("selfservice_id", "=", $kodeSS)->count();
                 if ($rm > 0) {
                     $e->tipe = "Reimbursement";
-                }
-                else if ($pl > 0) {
-                    $e->tipe = "Paid Leave";
                 }
                 else if ($ot > 0) {
                     $e->tipe = "Overtime";
                 }
                 else
                 {
-                    //default case. should never went here
-                    $e->tipe = "Error : " . $rm . " " . $pl . " " . $ot;
+                    //default case. should never go here
+                    $e->tipe = "Error : " . $rm . " " . $ot;
                 }
             }
 
@@ -189,7 +191,7 @@ class SelfService extends Model
 	            }
 	            else
 	            {
-	        	    //default case. should never went here
+	        	    //default case. should never go here
 	            $e->tipe = "Error : " . $rm . " " . $pl . " " . $ot;
 	            }
 	        }
@@ -203,12 +205,15 @@ class SelfService extends Model
             ->where('kodeSS','=', $kodeSS)
             ->first();
 
-        $rm = \App\Reimbursement::where("selfservice_id", "=", $kodeSS)->first();
-        $ot = \App\Overtime::where("selfservice_id", "=", $kodeSS)->first();
-        $pl = \App\PaidLeave::where("selfservice_id", "=", $kodeSS)->first();
-
         if($query == "") return "not found";
 
 	    return ($query);
+    }
+
+    public static function getSS($kodeSS) {
+        $query = \App\SelfService::where("kodeSS","=", $kodeSS)
+            ->where("status",">=",0)
+            ->first();
+        return ($query);
     }
 }

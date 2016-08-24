@@ -1,66 +1,74 @@
 @extends('user.sidebarHomepage')
-
-@section('contentAdd')
- 	<div class="breadcrumb">
-				<ul class="isiBreadcrumb">
-					<input type="image" class="btnDashboard" src="img/symbol.png">
-						<ul class="isiBreadcrumb2">
-							<li><a href="#">Homepage</a></li>
-							<li><a href="#">Employee Self Service</a></li>
-							<li><a href="#" class="active">Create Overtime</a></li>
-						</ul>
-					<a href="{{url('/homepageGAIS')}}" class="btn btn-secondary2">Back to Home</a>
-				</ul>
-			</div>
-	<div id="color">
-		<p id="move">Dashboard</p>
-		<p id="move2">Pembuatan pengajuan Overtime</p>
+@section('contentSidebarHomepage')
+<div id="page-wrapper">
+	<div class="row">
+			<!--BREADCRUMB -->
+			<ol class="breadcrumb">
+				<li><a href="{{url('/homepageGAIS')}}">Homepage</a></li>
+				<li class="active">Create Overtime</li>
+			</ol>
+			<!-- /.col-lg-6 -->
 	</div>
-	<section id="content">
-			<div class="container">
-			  <div class="row">
-				<div class="col-md-8">
-				  @if(isset($messages))
+	<div class="row">
+		<div class="col-lg-12">
+					<!--HEADER -->
+					<div class="page-header2">
+							<h2>Create Overtime Request</h2>
+
+					</div>
+		</div>
+		<!-- /.col-lg-6 -->
+	</div>
+	<!-- /.row -->
+	<div class="row">
+		<div class="col-lg-12">
+			@if(isset($messages))
 				  <?php
 				  	$temp = JSON_decode($messages);
 				  ?>
-				  @endif
-				  <form action="{{url('/addOvertime')}}" method="post">
-					<input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
-					<div class="form-inline">
-					  <div class="form-group">
-					  	@if(isset($temp->dateot[0])){{$temp->dateot[0]}}@endif<br/>
-						<h4>Enter Date of Overtime</h4>
-						<br>
-						<input type="date" class="form-control" placeholder="Enter Date of Overtime" name="dateot">
-					  </div>
-					  <div class="form-group">
-					  	@if(isset($temp->timestarts[0])){{$temp->timestarts[0]}}@endif<br/>
-						<h4>Time Start</h4>
-						<br>
-						<input type="time" class="form-control" placeholder="Overtime time start" name="timestarts">
-						
-						
-					  </div>
-					  <div class="form-group">
-					  	@if(isset($temp->timeends[0])){{$temp->timeends[0]}}@endif<br/>
-						<h4>Time End</h4>
-						<br>
-						<input type="time" class="form-control" placeholder="Overtime time end" name="timeends">
-					  </div>
-					  <div class="form-group">
-					  	@if(isset($temp->rsnofot[0])){{$temp->rsnofot[0]}}@endif<br/>
-						<h4>Reason of Overtime</h4>
-						<br>
-						<input type="text" class="form-control" placeholder="Reason of Overtime" name="rsnofot">
-					  </div>
-					  <div class="form-group">
-					    <input type="submit" value="Submit" class="btn btn-secondary"></input>
-					  </div>
-					</div>					
-				  </form>
+			@endif
+			<form action="{{url('/addOvertime')}}" method="post"  enctype="multipart/form-data" class="form-horizontal">
+				<input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
+				<div class="form-group">
+					  <!--Choose the overtime date -->
+						<label class="col-sm-2 control-label">Date of Overtime</label>
+						<div class="col-sm-10">
+							@if(isset($temp->dateot[0])){{$temp->dateot[0]}}@endif
+							<input type="date" class="form-control" placeholder="Text input" name="dateot">
+						</div>
 				</div>
+        <div class="form-group">
+					<label class="col-sm-2 control-label">Start Time</label>
+						<!--Enter the period-->
+					<div class="col-sm-10">
+						@if(isset($temp->timestarts[0])){{$temp->timestarts[0]}}@endif
+						<input type=time class="form-control" placeholder="Overtime time start" name="timestarts">
+					</div>
+				</div>
+        <div class="form-group">
+					<label class="col-sm-2 control-label">End Time</label>
+						<!--Enter the period-->
+					<div class="col-sm-10">
+						@if(isset($temp->timeends[0])){{$temp->timeends[0]}}@endif
+						<input type=time class="form-control" placeholder="Overtime time end" name="timeends">
+					</div>
+				</div>
+				<div class="form-group">
+						<!--Explain the reason-->
+						<label class="col-sm-2 control-label">Reason</label>
+						<div class="col-sm-10">
+							@if(isset($temp->rsnofot[0])){{$temp->rsnofot[0]}}@endif
+							<input class="form-control" placeholder="Explain your reason" name="rsnofot">
+						</div>
+				</div>
+			  <div class="form-group">
+					<!-- Button Submit-->
+			    <div class="col-sm-offset-2 col-sm-10">
+			      <button type="submit" class="btn btn-primary">submit</button>
+			    </div>
 			  </div>
-			</div>
-	</section>
+			</form>
+		</div>
+	</div>
+</div>
 @endsection

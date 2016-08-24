@@ -15,7 +15,7 @@ class ObServiceTable extends Migration
         //
         Schema::create('obService', function (Blueprint $table) {
             $table->string('kodeOBS',255);
-            $table->date('date');
+            $table->timestamp('date');
             $table->time('batch');
             $table->text('detail');
             $table->tinyInteger('status');
@@ -24,6 +24,7 @@ class ObServiceTable extends Migration
             $table->string('ob_id',255);
             $table->string('updated_at', 255);
             $table->string('created_at', 255);
+            $table->primary('kodeOBS');
             $table->foreign('employee_id')->references('id_employee')->on('employee')->onDelete('cascade')->onUpdate('cascade');
             $table->foreign('ob_id')->references('id_employee')->on('employee')->onDelete('cascade')->onUpdate('cascade');
         });

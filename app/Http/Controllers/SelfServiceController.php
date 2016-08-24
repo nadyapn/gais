@@ -15,24 +15,15 @@ class SelfServiceController extends Controller
 
     // reimbursement
     function formReimbursement() {
-    	if (\Auth::user()->position != 'Head of Business Unit') {
-            $workson = \App\WorksOn::getWorksOn();
-
-            return \View::make('selfservice/addReimbursement')->with(compact('workson'));
-        }
-        else {
-            return \View::make('user/homepageGAIS');
-        }
+        return \View::make('selfservice/addReimbursement');
     }
 
     function addReimbursement(Request $request) {
-        $workson = \App\WorksOn::getWorksOn();
-
         $businesspurpose = \Request::input('businesspurpose');
-    	$category = \Request::input('category');
-    	$date = \Request::input('dateRem');
-    	$description = \Request::input('descriptionRem');
-    	$cost = \Request::input('cost');
+        $category = \Request::input('category');
+        $date = \Request::input('dateRem');
+        $description = \Request::input('descriptionRem');
+        $cost = \Request::input('cost');
         $project = \Request::input('project');
 
         $validator = \Validator::make($request->all(), [
@@ -42,65 +33,54 @@ class SelfServiceController extends Controller
             'descriptionRem' => 'required',
             'cost' => 'required|digits_between:0,100000000',
             'foto' => 'required',
-        ]);
+            ]);
 
         if ($validator->fails()) {
             $in = \Request::all();
             $messages = $validator->errors();
             return \View::make('selfservice/addReimbursement')
-                        ->with(compact('messages'))
-                        ->with(compact('workson'))
-                        ->with(compact('in'));
+            ->with(compact('messages'))
+            ->with(compact('in'))
+            ->with(compact('request'));
         }
 
         date_default_timezone_set("Asia/Jakarta");
         $mydate = date('Y-m-d H:i:s'); //Returns IST
 
         // masukkin dalam database
-        $rm = DB::table('reimbursement')
-            ->join('selfservice','reimbursement.selfservice_id','=','selfservice.kodeSS')
-            ->orderBy('selfservice.created_at','desc')
-            ->first();
+        $rm = \App\Reimbursement::getFirstTuple();
 
         if ($rm == "") {
             $selfservice = new \App\SelfService();
             $selfservice->kodeSS = "RM1";
-            $selfservice->description = $description;
-            $selfservice->request_date = $mydate;
-            $selfservice->approval_date = $mydate;
-            if (\Auth::user()->position === 'Team Leader' || \Auth::user()->position === 'Head of HR') {
-                $selfservice->status = 1;
-            }
-            else {
-                $selfservice->status = 0;
-            }
-
-            $selfservice->employee_id = \Auth::user()->id_employee;
         }
         else {
             $selfservice = new \App\SelfService();
             $temp = (string) $rm->kodeSS;
-            //return ($temp);
             $temp2 = substr($temp, 2);
             $temp3 = intval($temp2) + 1;
             $selfservice->kodeSS = "RM" . $temp3;
-            $selfservice->description = $description;
-            $selfservice->request_date = $mydate;
-            $selfservice->approval_date = $mydate;
-            if (\Auth::user()->position === 'Team Leader' || \Auth::user()->position === 'Head of HR') {
-                $selfservice->status = 1;
-            }
-            else {
-                $selfservice->status = 0;
-            }
-
-            $selfservice->employee_id = \Auth::user()->id_employee;
         }
 
-    	$reimbursement = new \App\Reimbursement();
-    	$reimbursement->business_purpose = $businesspurpose;
-    	$reimbursement->category = $category;
-    	$reimbursement->date = $date;
+        $selfservice->description = $description;
+        $selfservice->request_date = $mydate;
+        $selfservice->approval_date = $mydate;
+        if (\Auth::user()->position === 'Team Leader' || \Auth::user()->id_employee === 'Head of HR') {
+            $selfservice->status = 1;
+        }
+        else if (\Auth::user()->position == 'Head of Business Unit') {
+            $selfservice->status = 2;
+        }
+        else {
+            $selfservice->status = 0;
+        }
+
+        $selfservice->employee_id = \Auth::user()->id_employee;
+
+        $reimbursement = new \App\Reimbursement();
+        $reimbursement->business_purpose = $businesspurpose;
+        $reimbursement->category = $category;
+        $reimbursement->date = $date;
         $reimbursement->cost = $cost;
         $reimbursement->payment = 0;
 
@@ -113,12 +93,9 @@ class SelfServiceController extends Controller
                 $foto = $kodeSS.".".$extension;
 
                 \Request::file('foto')->move('./foto', $foto);
-                //\Request::file('logo')->move(base_path().'/logo', $logo);
 
                 $reimbursement->photo = $foto;
             }
-        } else {
-            // kalo ga masukin foto
         }
 
         if($selfservice->save()) {
@@ -136,12 +113,8 @@ class SelfServiceController extends Controller
 
     // paid leave
     function formPaidLeave() {
-        if (\Auth::user()->position != 'Head of HR') {
-            return \View::make('selfservice/addPaidLeave');
-        }
-        else {
-            return \View::make('user/homepageGAIS');
-        }
+        $total_leave = 12 - \App\PaidLeave::getTotalLeave();
+        return \View::make('selfservice/addPaidLeave')->with(compact('total_leave'));
     }
 
     function addPaidLeave(Request $request) {
@@ -156,41 +129,24 @@ class SelfServiceController extends Controller
             'category' => 'required',
             'rsnofleave' => 'required',
 
-        ]);
+            ]);
 
         if ($validator->fails()) {
             $in = \Request::all();
             $messages = $validator->errors();
             return \View::make('selfservice/addPaidLeave')
-                        ->with(compact('messages'))
-                        ->with(compact('in'));
+            ->with(compact('messages'))
+            ->with(compact('in'));
         }
 
         date_default_timezone_set("Asia/Jakarta");
         $mydate = date('Y-m-d H:i:s'); //Returns IST
 
-        $pl = DB::table('paidleave')
-            ->join('selfservice','paidleave.selfservice_id','=','selfservice.kodeSS')
-            ->orderBy('selfservice.created_at','desc')
-            ->first();
+        $pl = \App\PaidLeave::getFirstTuple();
 
         if ($pl == "") {
             $selfservice = new \App\SelfService();
             $selfservice->kodeSS = "PL1";
-            $selfservice->description = $description;
-            $selfservice->request_date = $mydate;
-            $selfservice->approval_date = $mydate;
-            if (\Auth::user()->position === 'Team Leader') {
-                $selfservice->status = 1;
-            }
-            else if (\Auth::user()->position === 'Head of Business Unit') {
-                $selfservice->status = 1;
-            }
-            else {
-                $selfservice->status = 0;
-            }
-
-            $selfservice->employee_id = \Auth::user()->id_employee;
         }
         else {
             $selfservice = new \App\SelfService();
@@ -198,28 +154,30 @@ class SelfServiceController extends Controller
             $temp2 = substr($temp, 2);
             $temp3 = intval($temp2) + 1;
             $selfservice->kodeSS = "PL" . $temp3;
-            $selfservice->description = $description;
-            $selfservice->request_date = $mydate;
-            $selfservice->approval_date = $mydate;
-            if (\Auth::user()->position === 'Team Leader') {
-                $selfservice->status = 1;
-            }
-            else if (\Auth::user()->position === 'Head of Business Unit') {
-                $selfservice->status = 1;
-            }
-            else {
-                $selfservice->status = 0;
-            }
-
-            $selfservice->employee_id = \Auth::user()->id_employee;
         }
+
+        $selfservice->description = $description;
+        $selfservice->request_date = $mydate;
+        $selfservice->approval_date = $mydate;
+        if (\Auth::user()->position === 'Team Leader' || \Auth::user()->id_employee === 'Head of Business Unit') {
+            $selfservice->status = 1;
+        }
+        else if (\Auth::user()->position == 'Head of HR') {
+            $selfservice->status = 2;
+        }
+        else {
+            $selfservice->status = 0;
+        }
+
+        $selfservice->employee_id = \Auth::user()->id_employee;
 
         $paidLeave = new \App\PaidLeave();
         $paidLeave->date_hired = $datehired;
         $paidLeave->category = $category;
         $paidLeave->period_of_leave = $periodofleave;
-        $paidLeave->total_leave = 12;
-
+        $total_leave = \App\PaidLeave::getTotalLeave();
+        $paidLeave->total_leave = 12 - $total_leave;
+        
         $selfservice->save();
         $kodeSS = DB::table('selfservice')->where('request_date', $mydate)->value('kodeSS');
 
@@ -229,7 +187,6 @@ class SelfServiceController extends Controller
                 return \Redirect::to('/dashboardNonAdmin');
             }
         }
-
     }
 
     function addPaidLeaveFbd() {
@@ -238,12 +195,7 @@ class SelfServiceController extends Controller
 
     // overtime
     function formOvertime() {
-        if (\Auth::user()->position != 'Head of Business Unit') {
-            return \View::make('selfservice/addOvertime');
-        }
-        else {
-            return \View::make('user/homepageGAIS');
-        }
+        return \View::make('selfservice/addOvertime');
     }
 
     function addOvertime(Request $request) {
@@ -258,42 +210,24 @@ class SelfServiceController extends Controller
             'timeends' => 'required',
             'rsnofot' => 'required',
 
-        ]);
+            ]);
 
         if ($validator->fails()) {
             $in = \Request::all();
             $messages = $validator->errors();
             return \View::make('selfservice/addOvertime')
-                        ->with(compact('messages'))
-                        ->with(compact('in'));
+            ->with(compact('messages'))
+            ->with(compact('in'));
         }
 
         date_default_timezone_set("Asia/Jakarta");
         $mydate = date('Y-m-d H:i:s'); //Returns IST
 
-        $ot = DB::table('overtime')
-            ->join('selfservice','overtime.selfservice_id','=','selfservice.kodeSS')
-            ->orderBy('selfservice.created_at','desc')
-            ->first();
+        $ot = \App\Overtime::getFirstTuple();
 
         if ($ot == "") {
             $selfservice = new \App\SelfService();
             $selfservice->kodeSS = "OT1";
-            $selfservice->description = $description;
-            $selfservice->request_date = $mydate;
-            $selfservice->approval_date = $mydate;
-
-            if (\Auth::user()->position === 'Team Leader') {
-                $selfservice->status = 1;
-            }
-            else if (\Auth::user()->position === 'Head of HR') {
-                $selfservice->status = 1;
-            }
-            else {
-                $selfservice->status = 0;
-            }
-
-            $selfservice->employee_id = \Auth::user()->id_employee;
         }
         else {
             $selfservice = new \App\SelfService();
@@ -301,22 +235,23 @@ class SelfServiceController extends Controller
             $temp2 = substr($temp, 2);
             $temp3 = intval($temp2) + 1;
             $selfservice->kodeSS = "OT" . $temp3;
-            $selfservice->description = $description;
-            $selfservice->request_date = $mydate;
-            $selfservice->approval_date = $mydate;
-
-            if (\Auth::user()->position === 'Team Leader') {
-                $selfservice->status = 1;
-            }
-            else if (\Auth::user()->position === 'Head of HR') {
-                $selfservice->status = 1;
-            }
-            else {
-                $selfservice->status = 0;
-            }
-
-            $selfservice->employee_id = \Auth::user()->id_employee;
         }
+
+        $selfservice->description = $description;
+        $selfservice->request_date = $mydate;
+        $selfservice->approval_date = $mydate;
+
+        if (\Auth::user()->position === 'Team Leader' || \Auth::user()->position === 'Head of HR') {
+            $selfservice->status = 1;
+        }
+        else if (\Auth::user()->position == 'Head of Business Unit') {
+            $selfservice->status = 2;
+        }
+        else {
+            $selfservice->status = 0;
+        }
+
+        $selfservice->employee_id = \Auth::user()->id_employee;
 
         $overtime = new \App\Overtime();
         $overtime->date = $dateot;
@@ -332,7 +267,6 @@ class SelfServiceController extends Controller
                 return \Redirect::to('/dashboardNonAdmin');
             }
         }
-
     }
 
     function addOvertimeFbd() {
@@ -356,7 +290,7 @@ class SelfServiceController extends Controller
         }
     }
 
-     function getDetailAdmin($kodeSS) {
+    function getDetailAdmin($kodeSS) {
         $ss = \App\SelfService::getDetail($kodeSS);
         $rm = \App\Reimbursement::where("selfservice_id", "=", $kodeSS)->first();
         $ot = \App\Overtime::where("selfservice_id", "=", $kodeSS)->first();
@@ -449,65 +383,60 @@ class SelfServiceController extends Controller
     }
 
 
-    function update($kodeSS) {                                                                      // BELOMAN
-        //$ss = \App\SelfService::where("kodeSS","=", $kodeSS)->first();
+    function update($kodeSS) {                                                                      // BELOMAN YAALLAH BU BETTY YAALLAH
         $rm = \App\Reimbursement::where("selfservice_id", "=", $kodeSS)->count();
         $ot = \App\Overtime::where("selfservice_id", "=", $kodeSS)->count();
         $pl = \App\PaidLeave::where("selfservice_id", "=", $kodeSS)->count();
-        $ss = DB::table('selfservice')
-            ->join('employee','employee.id_employee','=','selfservice.employee_id')
-            ->where('kodeSS','=', $kodeSS)
-            ->first();
-        $workson = \App\WorksOn::getWorksOn();
+        $ss = \App\SelfService::getDetail($kodeSS);
+        $total_leave = 12 - \App\PaidLeave::getTotalLeave();
 
         if ($ss->employee_id == \Auth::user()->id_employee) {
             if ($rm > 0) {
                 $rm = \App\Reimbursement::where("selfservice_id", "=", $kodeSS)->first();
                 $id_employee = $ss->employee_id;
                 if($id_employee = \Auth::user()->id_employee) {
-                    return \View::make('selfservice/update')->with(compact('rm'))->with(compact('ss'))->with(compact('workson'));
-                }
-                else {
-                    return \View::make('user/dashboardNonAdmin'); //harusnya dashboard non admin
-                }
-            }
-            else if ($pl > 0) {
-               $pl = \App\PaidLeave::where("selfservice_id", "=", $kodeSS)->first();
-               $id_employee = $ss->employee_id;
-               if($id_employee = \Auth::user()->id_employee) {
-                    return \View::make('selfservice/update')->with(compact('pl'))->with(compact('ss'));
-                }
-                else {
-                    return \View::make('user/dashboardNonAdmin'); //harusnya dashboard non admin
-                }
-            }
-            else if ($ot > 0) {
-                $ot = \App\Overtime::where("selfservice_id", "=", $kodeSS)->first();
-                if($id_employee = \Auth::user()->id_employee) {
-                    return \View::make('selfservice/update')->with(compact('ot'))->with(compact('ss'));
+                    return \View::make('selfservice/update')->with(compact('rm'))->with(compact('ss'));
                 }
                 else {
                     return \View::make('user/dashboardNonAdmin');
                 }
             }
-            else
-            {
-                return \View::make('errors/401');
+            else if ($pl > 0) {
+             $pl = \App\PaidLeave::where("selfservice_id", "=", $kodeSS)->first();
+             $id_employee = $ss->employee_id;
+             if($id_employee = \Auth::user()->id_employee) {
+                return \View::make('selfservice/update')->with(compact('pl'))->with(compact('ss'))->with(compact('total_leave'));
+            }
+            else {
+                return \View::make('user/dashboardNonAdmin');
             }
         }
-        else {
+        else if ($ot > 0) {
+            $ot = \App\Overtime::where("selfservice_id", "=", $kodeSS)->first();
+            if($id_employee = \Auth::user()->id_employee) {
+                return \View::make('selfservice/update')->with(compact('ot'))->with(compact('ss'));
+            }
+            else {
+                return \View::make('user/dashboardNonAdmin');
+            }
+        }
+        else
+        {
             return \View::make('errors/401');
         }
     }
+    else {
+        return \View::make('errors/401');
+    }
+}
 
-    function updatePost($kodeSS, Request $request) {
-        $ss = \App\SelfService::where("kodeSS","=", $kodeSS)->first();
-        $rm = \App\Reimbursement::where("selfservice_id", "=", $kodeSS)->first();
-        $ot = \App\Overtime::where("selfservice_id", "=", $kodeSS)->first();
-        $pl = \App\PaidLeave::where("selfservice_id", "=", $kodeSS)->first();
-        $workson = \App\WorksOn::getWorksOn();
+function updatePost($kodeSS, Request $request) {
+    $ss = \App\SelfService::where("kodeSS","=", $kodeSS)->first();
+    $rm = \App\Reimbursement::where("selfservice_id", "=", $kodeSS)->first();
+    $ot = \App\Overtime::where("selfservice_id", "=", $kodeSS)->first();
+    $pl = \App\PaidLeave::where("selfservice_id", "=", $kodeSS)->first();
 
-        date_default_timezone_set("Asia/Jakarta");
+    date_default_timezone_set("Asia/Jakarta");
         $mydate = date('Y-m-d H:i:s'); //Returns IST
 
         if ($rm != "") {
@@ -528,10 +457,12 @@ class SelfServiceController extends Controller
             if ($validator->fails()) {
                 $in = \Request::all();
                 $messages = $validator->errors();
-                return \View::make('selfservice/addReimbursement')
-                            ->with(compact('workson'))
-                            ->with(compact('messages'))
-                            ->with(compact('in'));
+                return \View::make('selfservice/update')
+                    ->with(compact('workson'))
+                    ->with(compact('rm'))
+                    ->with(compact('ss'))
+                    ->with(compact('messages'))
+                    ->with(compact('in'));
             }
 
             $ss->description = $description;
@@ -573,19 +504,20 @@ class SelfServiceController extends Controller
             $description = \Request::input('rsnofleave');
 
             $validator = \Validator::make($request->all(), [
-            'datehired' => 'required',
-            'periodofleave' => 'required',
-            'category' => 'required',
-            'rsnofleave' => 'required',
-
+                'datehired' => 'required',
+                'periodofleave' => 'required',
+                'category' => 'required',
+                'rsnofleave' => 'required',
             ]);
 
             if ($validator->fails()) {
                 $in = \Request::all();
                 $messages = $validator->errors();
-                return \View::make('selfservice/addPaidLeave')
-                            ->with(compact('messages'))
-                            ->with(compact('in'));
+                return \View::make('selfservice/update')
+                    ->with(compact('messages'))
+                    ->with(compact('pl'))
+                    ->with(compact('ss'))
+                    ->with(compact('in'));
             }
 
             $ss->description = $description;
@@ -596,6 +528,8 @@ class SelfServiceController extends Controller
             $pl->category = $category;
             $pl->period_of_leave = $periodofleave;
 
+            $total_leave = \App\PaidLeave::getTotalLeave();
+            
             $ss->save();
             $kodeSS = DB::table('selfservice')->where('request_date', $mydate)->value('kodeSS');
 
@@ -604,7 +538,6 @@ class SelfServiceController extends Controller
                     return \Redirect::to('/dashboardNonAdmin');
                 }
             }
-
         }
 
         if ($ot != "") {
@@ -614,31 +547,36 @@ class SelfServiceController extends Controller
             $description = \Request::input('rsnofot');
 
             $validator = \Validator::make($request->all(), [
-            'dateot' => 'required',
-            'timestarts' => 'required',
-            'timeends' => 'required',
-            'rsnofot' => 'required',
+                'dateot' => 'required',
+                'timestarts' => 'required',
+                'timeends' => 'required',
+                'rsnofot' => 'required',
 
             ]);
 
             if ($validator->fails()) {
                 $in = \Request::all();
                 $messages = $validator->errors();
-                return \View::make('selfservice/addOvertime')
-                            ->with(compact('messages'))
-                            ->with(compact('in'));
+                return \View::make('selfservice/update')
+                    ->with(compact('messages'))
+                    ->with(compact('ot'))
+                    ->with(compact('ss'))
+                    ->with(compact('in'));
             }
 
             $ss->description = $description;
             $ss->request_date = $mydate;
             $ss->approval_date = $mydate;
 
+            $ss->save();
+
+
             $ot->date = $dateot;
             $ot->time_start = $timestarts;
             $ot->time_end = $timeends;
 
-            $ss->save();
-            $kodeSS = DB::table('selfservice')->where('request_date', $mydate)->value('kodeSS');
+            $ot->save();
+
             if($ss->save()) {
                 if ($ot->save()) {
                     return \Redirect::to('/dashboardNonAdmin');
@@ -684,35 +622,20 @@ class SelfServiceController extends Controller
         }
     }
 
-    function approval($kodeSS) {  //BELOMAN
-        if(\Auth::user()->position == 'Team Leader') {
-            $ss = \App\SelfService::where("kodeSS","=", $kodeSS)->first();
+    function approval($kodeSS) { 
+        if((\Auth::user()->position == 'Team Leader')) {
+            $ss = \App\SelfService::getSS($kodeSS);
             $ss->status = 1;
             $ss->save();
-            if($ss->save()) {
-                $ss = \App\SelfService::where("kodeSS","=", $kodeSS)->first();
-                return \Redirect::to('/myApproval');
-            }
+            
+            return \Redirect::to('/myApproval');
         }
-        else if(\Auth::user()->position == 'Head of Business Unit') {
-            $ss = \App\SelfService::where("kodeSS","=", $kodeSS)->first();
+        else if(\Auth::user()->position == 'Head of Business Unit' || \Auth::user()->position == 'Head of HR') {
+            $ss = \App\SelfService::getSS($kodeSS);
             $ss->status = 2;
             $ss->save();
-            if($ss->save()) {
-                $ss = \App\SelfService::where("kodeSS","=", $kodeSS)->first();
-                return \Redirect::to('/myApproval');
-            }
-        }
-        else if (\Auth::user()->position == 'Head of HR') {
-            $ss = \App\SelfService::where("kodeSS","=", $kodeSS)->first();
-            $pl = \App\PaidLeave::where("selfservice_id", "=", $kodeSS)->first();
-            $ss->status = 2;
-            $pl->total_leave = $pl->total_leave - 1;
-            $ss->save();
-            $pl->save();
-            if($ss->save()) {
-                return \Redirect::to('/myApproval');
-            }
+            
+            return \Redirect::to('/myApproval');
         }
         else {
             return \View::make('user/homepageGAIS');
@@ -720,51 +643,75 @@ class SelfServiceController extends Controller
     }
 
     function rejection($kodeSS) {
-        $ss = \App\SelfService::where("kodeSS","=", $kodeSS)->first();
-        //return ($ss);
+        $ss = \App\SelfService::getSS($kodeSS);
         return \View::make('selfservice/rejection')->with(compact('ss'));
     }
 
     function rejectionPost($kodeSS, Request $request) {
-        $ss = \App\SelfService::where("kodeSS","=", $kodeSS)->first();
+        $ss = \App\SelfService::getSS($kodeSS);
+        $pl = \App\PaidLeave::where("selfservice_id", "=", $kodeSS)->first();
 
         $message = \Request::input('message');
 
         $validator = \Validator::make($request->all(), [
-                'message' => 'required',
-            ]);
+            'message' => 'required',
+        ]);
 
-            if ($validator->fails()) {
-                $in = \Request::all();
-                $messages = $validator->errors();
-                return \View::make('selfservice/rejection')
-                            ->with(compact('messages'))
-                            ->with(compact('ss'))
-                            ->with(compact('in'));
+        if ($validator->fails()) {
+            $in = \Request::all();
+            $messages = $validator->errors();
+            return \View::make('selfservice/rejection')
+                ->with(compact('messages'))
+                ->with(compact('ss'))
+                ->with(compact('in'));
         }
+        
         if(\Auth::user()->position == 'Team Leader') {
-            $ss = \App\SelfService::where("kodeSS","=", $kodeSS)->first();
+            $ss = \App\SelfService::getSS($kodeSS);
             $ss->status = 3;
             $ss->message = $message;
             $ss->save();
-            if($ss->save()) {
-                $ss = \App\SelfService::where("kodeSS","=", $kodeSS)->first();
-                return \Redirect::to('/myApproval');
-            }
+
+            return \Redirect::to('/myApproval');
         }
         else if(\Auth::user()->position == 'Head of Business Unit' || \Auth::user()->position == 'Head of HR') {
-            $ss = \App\SelfService::where("kodeSS","=", $kodeSS)->first();
+            $ss = \App\SelfService::getSS($kodeSS);
             $ss->status = 4;
             $ss->message = $message;
             $ss->save();
-            if($ss->save()) {
-                $ss = \App\SelfService::where("kodeSS","=", $kodeSS)->first();
-                return \Redirect::to('/myApproval');
-            }
+
+            return \Redirect::to('/myApproval');
         }
         else {
             return \View::make('user/homepageGAIS');
         }
     }
 
+    // cek project available 
+    function cekproject($project) {
+        $listproject = \App\WorksOn::getWorksOn();
+        $return = '<select name="project" class="form-control">';
+        foreach ($listproject as $e) {
+            $option = '<option value="'. $e->name .'">' . $e->name . '</option>';
+            $return .= $option;
+        }
+
+        $return .= '</select>';
+
+        return $return;
+    }
+
+    // cek project available 
+    function updateReimbursement($project) {
+        $listproject = \App\WorksOn::getWorksOn();
+        $return = '<select name="project" class="form-control">';
+        foreach ($listproject as $e) {
+            $option = '<option value="'. $e->name .'">' . $e->name . '</option>';
+            $return .= $option;
+        }
+
+        $return .= '</select>';
+
+        return $return;
+    }
 }

@@ -1,10 +1,11 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
+
 <head>
+
   <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/> <!--320-->
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Master">
   <meta name="author" content="Faizal Rahman">
   <meta name="edited by" content="Ariq Fikri Narasaputra">
@@ -42,143 +43,160 @@
   <link rel="stylesheet" type="text/css" href="{{asset('css/bootstrap-theme.css')}}">
   <link rel="stylesheet" type="text/css" href="{{asset('css/bootstrap-datetimepicker.css')}}">
 
-  <!-- CSS Component -->
-  <link rel="stylesheet" href="{{asset('/css/component.css')}}">
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" type="text/css" href="{{asset('css/bower_components/bootstrap/dist/css/bootstrap.min.css')}}">
 
-  <!-- CSS Sidebar -->
-  <link rel="stylesheet" href="{{asset('/css/simple-sidebar.css')}}">
+    <!-- MetisMenu CSS -->
+    <link rel="stylesheet" type="text/css" href="{{asset('css/bower_components/metisMenu/dist/metisMenu.min.css')}}">
+
+    <!-- DataTables CSS -->
+    <link rel="stylesheet" type="text/css" href="{{asset('css/bower_components/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.css')}}">
+
+    <!-- DataTables Responsive CSS -->
+    <link rel="stylesheet" type="text/css" href="{{asset('css/bower_components/datatables-responsive/css/dataTables.responsive.css')}}">
+    <link rel="stylesheet" href="{{asset('/css/datatable.css')}}">
+
+    <!-- Timeline CSS -->
+    <link rel="stylesheet" type="text/css" href="{{asset('css/dist/css/timeline.css')}}">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" type="text/css" href="{{asset('css/dist/css/sb-admin-2.css')}}">
+
+    <!-- Morris Charts CSS -->
+    <link rel="stylesheet" type="text/css" href="{{asset('css/bower_components/morrisjs/morris.css')}}">
+
+    <!-- Custom Fonts -->
+    <link rel="stylesheet" type="text/css" href="{{asset('css/bower_components/font-awesome/css/font-awesome.min.css')}}">
 
 
-  <!-- CSS Pagination and confirmation -->
-  <link rel="stylesheet" href="{{asset('/css/datatable.css')}}">
-  <link rel="stylesheet" href="{{asset('/css/modal.css')}}">
-  @yield('styles')
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
 
 </head>
+
 <body>
-  <header>
-    <nav class="navbar navbar-default navbar-fixed-top">
-      <div class="container-fluid">
-        <!-- Brand and toggle get grouped for better mobile display -->
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand" href="#">
-            <img class="icon-menu" src="{{asset('/img/Logo.png')}}">
-          </a>
-          <a class="navbar-brand title" href="">
-            General Affairs Information System
-          </a>
-        </div>
-
-        <!-- Collect the nav links, forms, and other content for toggling -->
-		    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-          <ul class="nav navbar-nav navbar-right">
-            @if (\Auth::user() !== null)
-            <li>
-              <a href="#" id="togglemenu" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                <img class="icon-menu" src="{{asset('/img/Icon - User.png')}}">
-              </a>
-              <ul class="dropdown-menu" id="menu" role="menu">
-                @if (\Auth::user()->role == 'Admin')
-                <li><a href="{{url('/dashboardAdmin')}}">Administrator</a></li> <!-- ganti jadi dashboard admin -->
-                <li class="divider"></li>
+    <div id="wrapper">
+        <!-- Navigation -->
+        <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+				        <a class="navbar-brand" href="#">
+				      	<img class="icon-menu" src="{{asset('/img/Logo.png')}}">
+                <a class="navbar-brand title" href="{{url('/homepageGAIS')}}">GENERAL AFFAIRS INFORMATION SYSTEM</a>
+            </div>
+            <!-- /.navbar-header -->
+            <ul class="nav navbar-top-links navbar-right">
+                @if (\Auth::user() !== null)
+                <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                        <img class="icon-menu" src="{{asset('/img/Icon - User.png')}}">
+                    </a>
+                    <ul class="dropdown-menu dropdown-messages">
+                      @if (\Auth::user()->role == 'Admin')
+                        <li><a href="{{url('/dashboardAdmin')}}">Administrator</a></li> <!-- ganti jadi dashboard admin -->
+                        <li class="divider"></li>
+                      @endif
+                      <li><a href="{{url('/logout')}}">Logout</a></li>
+                    </ul>
+                    <!-- /.dropdown-messages -->
+                </li>
                 @endif
-                <li><a href="{{url('/logout')}}">Logout</a></li>
-              </ul>
-            </li>
-            @endif
-            <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="" aria-expanded="false">
-
-              </a>
-              <ul class="dropdown-menu" role="menu">
-                <li><a href="#">Action</a></li>
-                <li><a href="#">Another action</a></li>
-                <li><a href="#">Something else here</a></li>
-                <li class="divider"></li>
-                <li><a href="#">Separated link</a></li>
-              </ul>
-
-            </li>
-          </ul>
-        </div><!-- /.navbar-collapse -->
-      </div><!-- /.container-fluid -->
-    </nav>
-  </header>
-
-   @yield('content')
-
-  <footer>
-    <div class="container-fluid">
-      <div class="row">
-        <div class="col-md-6 copyright">
-          All Right Reserved © General Affairs Information System. 2016
-        </div>
-        <div class="col-md-6">
-        </div>
-      </div>
+            </ul>
+            <!-- /.navbar-top-links -->
+            <!-- /.navbar-static-side -->
+        </nav>
+        <!-- The sidebar of your page would go here. -->
+        @yield('contentSidebar')
     </div>
-  </footer>
+    <!-- /#wrapper -->
+    <!-- The content of your page would go here. -->
+    @yield('content')
+    @if(\Auth::user() !== null)
+    <div id="wrapper">
+      <!--Footer -->
+    	<footer class="footer-distributed">
+    		General Affairs Information System. 2016
+    	</footer>
+    </div>
+    @endif
 
-  <script type="text/javascript" src="{{asset('/js/jquery-1.11.1.min.js')}}"></script>
-  <script type="text/javascript" src="{{asset('/js/bootstrap.js')}}"></script>
-  <script type="text/javascript" src="{{asset('/js/bootstrap-select.js')}}"></script>
-  <script type="text/javascript" src="{{asset('/js/bootstrap-slider.min.js')}}js/"></script>
-  <script type="text/javascript" src="{{asset('/js/bootstrap.file-input.js')}}"></script>
-  <script type="text/javascript" src="{{asset('/js/moment-with-locales.js')}}"></script>
-  <script type="text/javascript" src="{{asset('/js/bootstrap-datetimepicker.min.js')}}"></script>
-  <script type="text/javascript" src="{{asset('/js/main.js')}}"></script>
-  <script type="text/javascript" src="{{asset('/js/toggleButton.js')}}"></script>
-   <!-- jQuery -->
+      <!-- jQuery -->
+      <script type="text/javascript" src="{{asset('css/bower_components/jquery/dist/jquery.min.js')}}"></script>
 
-    <!--script src="{{asset('/js/jquery.js')}}"></script-->
+      <!-- Bootstrap Core JavaScript -->
+      <script type="text/javascript" src="{{asset('css/bower_components/bootstrap/dist/js/bootstrap.min.js')}}"></script>
 
-    <!-- Bootstrap Core JavaScript -->
-    <script src="{{asset('/js/bootstrap.min.js')}}"></script>
-    <script src="{{asset('/js/datatable.js')}}"></script>
-    <script type="text/javascript">
-      var elems = document.getElementsByClassName('confirmation');
-      var confirmIt = function (e) {
-        if (!confirm('Are you sure?')) e.preventDefault();
-      };
-        for (var i = 0, l = elems.length; i < l; i++) {
-           elems[i].addEventListener('click', confirmIt, false);
-      }
-    </script>
+      <!-- Metis Menu Plugin JavaScript -->
+      <script type="text/javascript" src="{{asset('css/bower_components/metisMenu/dist/metisMenu.min.js')}}"></script>
 
-    <!-- Menu Toggle Script -->
-    <script>
-    $(document).ready(function(){
-        $('#dataTable').DataTable({bFilter: false});
+     <!-- Custom Theme JavaScript -->
+     <script type="text/javascript" src="{{asset('css/dist/js/sb-admin-2.js')}}"></script>
+     
+     <!-- DataTables JavaScript -->
+     <script type="text/javascript" src="{{asset('css/bower_components/datatables/media/js/jquery.dataTables.min.js')}}"></script>
+     <script type="text/javascript" src="{{asset('css/bower_components/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.min.js')}}"></script>
+      <!-- Custom Theme JavaScript -->
+      <script type="text/javascript" src="{{asset('js/datatable.js')}}"></script>
 
-        $("#notif").click(function() {
-          alert();
-        });
-    });
-    </script>
+      <script type="text/javascript">
+        var elems = document.getElementsByClassName('confirmation');
+        var confirmIt = function (e) {
+          if (!confirm('Are you sure?')) e.preventDefault();
+        };
+          for (var i = 0, l = elems.length; i < l; i++) {
+             elems[i].addEventListener('click', confirmIt, false);
+        }
+      </script>
 
-    <script>
-    $(document).ready(function(){
-        $("#togglemenu").click(function(){
-            $("#menu").toggle();
-        });
-    });
-    </script>
-
-    <script>
+      <!-- Menu Toggle Script -->
+      <script>
       $(document).ready(function(){
-          $(".buttonHomepage").click(function(){
-              $("#conDashboard2").toggle();
+          $('table.display').DataTable({bFilter: false});
+         
+
+          $("#notif").click(function() {
+            alert();
           });
       });
-    </script>
-    <script>
+      </script>
+
+      <script>
+      $(document).ready(function(){
+          $("#togglemenu").click(function(){
+              $("#menu").toggle();
+          });
+      });
+      </script>
+
+      <script>
+        $(document).ready(function(){
+            $("#acticeToggle").click(function(){
+                $("#selfServiceHide").toggle();
+            });
+        });
+      </script>
+      <script>
 				document.getElementById("dateForPage").innerHTML = Date();
-		</script>
+		  </script>
+
+
+    <!-- Page-Level Demo Scripts - Tables - Use for reference -->
+    <script>
+    $(document).ready(function() {
+        $('#dataTables-example').DataTable({
+                responsive: true
+        });
+    });
+    </script>
 </body>
+
 </html>

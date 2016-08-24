@@ -29,12 +29,22 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
-    public static function getOB() {
-        $query = DB::table('employee')
+    public static function getOB($name) {
+        if ($name == null) {
+            $query = DB::table('employee')
             ->where('division','=','Office Boy')
             ->get();
 
-        return ($query);
-    }
+            return ($query);
+        }
+        else {
+            $query = DB::table('employee')
+            ->where('division','=','Office Boy')
+            ->where('name','=',$name)
+            ->value('id_employee');
 
+            return ($query);
+        }
+        
+    }
 }

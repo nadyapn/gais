@@ -1,4 +1,4 @@
-82/*!
+/*!
  * Bootstrap v3.3.4 (http://getbootstrap.com)
  * Copyright 2011-2015 Twitter, Inc.
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
@@ -2368,10 +2368,9 @@ th {
 }
 .table-bordered {
   border: 1px solid #ddd;
-  max-width:20%;
-  min-width: 5%;
-  margin-left: -2.5%;
-  text-align: center;
+  max-width:30%;
+  min-width: 35%;
+  text-align: left;
   padding: 0;
 
 }
@@ -2520,11 +2519,10 @@ table th[class*="col-"] {
 }
 .table-responsive {
   margin:0px auto;
-  max-width:65%;
-  min-width:45%;
-  margin-left: 23%;
+  max-width:80%;
+  min-width:75%;
   display: block;
-
+  margin-left:15px;
 }
 @media screen and (max-width: 767px) {
   .table-responsive {
@@ -2592,13 +2590,12 @@ label {
   display: inline-block;
   max-width: 100%;
   margin-bottom: 10px;
-  font-weight: 400;
-  font-size: 13px;
+  font-weight: normal;
+  font-size: 1.1em;
   line-height: 18px;
 }
 .form-group label {
-    font-family: 'DINPro', 'DIN';;
-    letter-spacing: 0.1em;
+    font-family: inherit;
 }
 .desc-group label {
     font-family: 'DINPro', 'DIN';
@@ -2763,8 +2760,8 @@ output {
 }
 .form-control {
   display: inline-block;
+  max-width: 77%;
   min-width: 35%;
-  max-width: 70%;
   padding: 10px 10px;
   font-size: 14px;
   line-height: 1.42857143;
@@ -3257,6 +3254,7 @@ select[multiple].form-group-lg .form-control {
   margin-bottom: 0;
   font-size: 14px;
   font-weight: normal;
+  font-family: 'DIN','DINPro';
   line-height: 1.42857143;
   text-align: center;
   white-space: nowrap;
@@ -3535,19 +3533,31 @@ fieldset[disabled] .btn-success.active {
   color: #fff;
   background-color: #c0392b;
   border-color: #c0392b;
-  padding: 2px 15px;
+}
+.btn-delete:hover {
+  color: #fff;
+  background-color:#ab3326;
+  border-color: #ab3326;
 }
 .btn-update {
   color: #fff;
-  background-color: #2980b9;
-  border-color: #2980b9;
-  padding: 2px 10px;
+  background-color: #27ae60;
+  border-color: #27ae60;
+}
+.btn-update:hover {
+  color: #fff;
+  background-color: #229955;
+  border-color: #229955;
 }
 .btn-view {
   color: #fff;
-  background-color:#27ae60;
-  border-color: #27ae60;
-  padding: 2px 15px;
+  background-color:#2980b9;
+  border-color: #2980b9;
+}
+.btn-view:hover {
+  color: #fff;
+  background-color:#20638f;
+  border-color: #20638f;
 }
 .btn-secondary2.disabled,
 .btn-secondary2[disabled],
@@ -3836,6 +3846,7 @@ tbody.collapse.in {
   font-size: 14px;
   text-align: left;
   list-style: none;
+  font-family: 'DINPro', 'DIN';
   background-color: #fff;
   -webkit-background-clip: padding-box;
   background-clip: padding-box;
@@ -3860,7 +3871,6 @@ tbody.collapse.in {
   line-height: 1.42857143;
   color: #ffffff;
   white-space: nowrap;
-  background-color: #215181;
 }
 .dropdown-menu > li > a:hover,
 .dropdown-menu > li > a:focus {
@@ -3937,6 +3947,7 @@ tbody.collapse.in {
   .navbar-right .dropdown-menu {
     right: 0;
     left: auto;
+
   }
   .navbar-right .dropdown-menu-left {
     right: auto;
@@ -4311,6 +4322,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
 }
 .nav > li > a > img.icon-menu {
   width: 14px;
+  margin-left:5px;
 }
 .nav-tabs {
   border-bottom: 1px solid #ddd;
@@ -4576,6 +4588,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
   font-size: 18px;
   line-height: 20px;
   border-right: 1px solid #ddd;
+
 }
 .aBrand{
   color:white;
@@ -4637,6 +4650,9 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
   line-height: 20px;
 }
 @media (max-width: 767px) {
+	.dropdown-menu{
+		margin-left:100px;
+	}
   .navbar-nav .open .dropdown-menu {
     position: static;
     float: none;
@@ -5018,6 +5034,7 @@ fieldset[disabled] .navbar-inverse .btn-link:focus {
 .breadcrumb li {
   display: inline-block;
   margin-top:-0.7%;
+  margin-left: 18px;
 }
 .breadcrumb  li + li:before {
   padding: 0 5px;
@@ -7119,6 +7136,11 @@ option{
   padding-top: 1%;
   padding-bottom: 1.4%;
 }
+.move7{
+  display: block;
+  margin-left: 22.4%;
+padding-bottom: 3%;
+}
 .move8 {
   display: inline-block;
   font-size: 1.2em;
@@ -7179,16 +7201,7 @@ option{
 
 }
 
-/* tambahan prima */
-.isi:hover{
-  color: black;
-  text-decoration: none;
-  background-color: #084FAD;
-  border-color: #084FAD;
-}
-td.isi {
-  padding-left:1000%;
-  padding-right:1000%;
-}
+
+
 
 /*# sourceMappingURL=bootstrap.css.map */
