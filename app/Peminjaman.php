@@ -26,7 +26,8 @@ class Peminjaman extends Model
     public static function getMyPeminjaman() {
 	    $query = DB::table('peminjaman')
             ->join('employee','id_employee','=','employee_id')
-            ->join('facilities','facilities_id','=','facilities.kode')
+            ->join('facilities','facilities_id','=','kode')
+            ->select('request_date','peminjaman.status','sfname','kodePinjam')
             ->where('id_employee',\Auth::user()->id_employee)
             ->where('peminjaman.status','>=','0')
             ->get();
@@ -38,6 +39,7 @@ class Peminjaman extends Model
 	    $query = DB::table('peminjaman')
             ->join('employee','id_employee','=','employee_id')
             ->join('facilities','facilities_id','=','facilities.kode')
+            ->select('request_date','peminjaman.status','sfname','kodePinjam','name')
             ->get();
 
 	    return ($query);
@@ -47,9 +49,45 @@ class Peminjaman extends Model
         $query = DB::table('peminjaman')
             ->join('employee','id_employee','=','employee_id')
             ->join('facilities','facilities_id','=','facilities.kode')
+            ->select('kodePinjam','name','sfname','time_start','time_end','peminjaman.description','peminjaman.status','request_date','employee_id')
             ->where('kodePinjam','=',$kodePinjam)
             ->first();
 
+        return ($query);
+    }
+
+    public static function getFirstTuple() {
+        $query = DB::table('peminjaman')
+            ->orderBy('created_at','desc')
+            ->first();
+
+        return ($query);
+    }
+
+    public static function getPeminjamanByMe($tanggal, $waktu, $sfname) {
+        $query = DB::table('peminjaman')
+                ->join('facilities','facilities_id','=','facilities.kode')
+                ->where('used_date', '=', $tanggal)
+                ->where('time_start', '<=', $waktu)
+                ->where('time_end', '>', $waktu)
+                ->where('sfname','=', $sfname)
+                ->where('peminjaman.status',0)
+                ->where('employee_id','=',\Auth::user()->id_employee)
+                ->count();
+        
+        return ($query);
+    }
+
+    public static function getThisPeminjaman($tanggal, $waktu, $sfname) {
+        $query = DB::table('peminjaman')
+                ->join('facilities','facilities_id','=','facilities.kode')
+                ->where('used_date', '=', $tanggal)
+                ->where('time_start', '<=', $waktu)
+                ->where('time_end', '>', $waktu)
+                ->where('sfname','=', $sfname)
+                ->where('peminjaman.status',0)
+                ->count();
+        
         return ($query);
     }
 }

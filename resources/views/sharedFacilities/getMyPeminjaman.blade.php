@@ -26,7 +26,6 @@
 			<table class="display table">
 				<thead>
 					<tr>
-						<th>Requested ID</th>
 						<th>Requested Date</th>
 						<th>Facility</th>
 						<th>Status</th>
@@ -36,22 +35,21 @@
 				</thead>
 				<tbody>
 					@foreach($peminjaman as $e)
-					  		<tr>
-								<td>{{$e->kodePinjam}}</td>
-								<td>{{$e->sfname}}</td>
-								<td>{{$e->request_date}}</td>
-								<td>
-									@if($e->status == 0)
-							  			Booked
-							  		@elseif($e->status == 1)
-							  			Waiting List
-							  		@elseif($e->status == -1)
-							  			Canceled
-							  		@endif
-								</td>
-								<td><a href="{{url('/getDetailPeminjaman/'.$e->kodePinjam)}}" class="btn btn-view">View</td>
-								<td><a href="{{url('/deletePeminjaman/'.$e->kodePinjam)}}" class="btn btn-view" onclick="return confirm('Are you sure?')">Delete</a></td>
-							</tr>
+					<tr>
+						<td>{{$e->request_date}}</td>
+						<td>{{$e->sfname}}</td>
+						<td>
+							@if($e->status == 0)
+								Booked
+							@elseif($e->status == 1)
+								Waiting List
+							@elseif($e->status == -1)
+								Canceled
+							@endif
+						</td>
+						<td><a href="{{url('/getDetailPeminjaman/'.$e->kodePinjam)}}" class="btn btn-view">View</td>
+						<td><a href="{{url('/deletePeminjaman/'.$e->kodePinjam)}}" class="btn btn-view" onclick="return confirm('Are you sure?')">Delete</a></td>
+					</tr>
 					@endforeach
 				</tbody>
 			</table>

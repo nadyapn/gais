@@ -28,8 +28,7 @@
 		<table class="display table">
 			<thead>
 				<tr>
-					<th>Requested ID</th>
-					<th>Facility Name</th>
+					<th>Facility</th>
 					<th>Category</th>
 					<th>Description</th>
 					<th>Delete</th>
@@ -38,11 +37,10 @@
 			<tbody>
 				@foreach($sf as $e)
 					<tr>
-							<td>{{$e->kode}}</td>
-							<td>{{$e->sfname}}</td>
-							<td>{{$e->category}}</td>
-							<td>{{$e->description}}</td>
-							<td><a href="{{url('/deleteFacility/'.$e->kode)}}" onclick="return confirm('Are you sure?')" class="btn btn-delete">Delete</td>
+						<th>{{$e->sfname}}</th>
+						<td>{{$e->category}}</td>
+						<td>{{$e->description}}</td>
+						<td><a href="{{url('/deleteFacility/'.$e->kode)}}" onclick="return confirm('Are you sure?')" class="btn btn-delete">Delete</td>
 					</tr>
 				@endforeach
 			</tbody>

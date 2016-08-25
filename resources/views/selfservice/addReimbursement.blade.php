@@ -104,7 +104,7 @@ function chooseProject(category) {
 	console.log(category);
 	if (category === 'Project') {
 		$.ajax({
-	  		url: "http://localhost/gais/public/createReimbursement/"+category,
+	  		url: "http://localhost/GAIS/public/createReimbursement/"+category,
 	  
 		})
 	  	.done(function( data ) {

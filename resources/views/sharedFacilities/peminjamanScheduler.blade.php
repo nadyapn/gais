@@ -28,11 +28,11 @@
     </div>
     <div class="row">
         <div class="col-lg-12">
-                    <!--HEADER -->
-                    <div class="page-header2">
-            <h2>Shared Facilities Scheduler Request Form</h2>
+          <!--HEADER -->
+          <div class="page-header2">
+            <h2><b>{{$value}} </b>Scheduler Request Form</h2>
             <h4>Choose The Schedule on the empty box</h4>
-                    </div>
+          </div>
         </div>
         <!-- /.col-lg-6 -->
     </div>
@@ -72,20 +72,9 @@
           <th scope="row">{{$time}}</th>
           @foreach($dates as $date)
           <td class="isi btn2 btn-secondary3" tanggal="{{$date}}" waktu="{{$time}}">
-            <?php $isi = \App\Peminjaman::where('used_date', '=', $date)
-                                        ->where('time_start', '<=', $time)
-                                        ->where('time_end', '>', $time)
-                                        ->where('status',0)
-                                        ->count();
-
-                  $isi2 = \App\Peminjaman::where('used_date', '=', $date)
-                  ->where('time_start', '<=', $time)
-                  ->where('time_end', '>', $time)
-                  ->where('status',0)
-                  ->where('employee_id', '=', \Auth::user()->id_employee)
-                  ->count();
+            <?php $isi = \App\Peminjaman::getThisPeminjaman($date, $time, $value);
+                  $isi2 = \App\Peminjaman::getPeminjamanByMe($date, $time, $value);
             ?>
-            
             @if ($isi > 0) 
               <style>
                 .isi[tanggal = "<?php echo $date; ?>" ].isi[waktu = "<?php echo $time; ?>"]{
@@ -101,18 +90,18 @@
               </style>
               <p>BOOKED</p>
               <script>
-                $(document).ready(function() {
-                    $('.isi[tanggal = "<?php echo $date; ?>" ].isi[waktu = "<?php echo $time; ?>"]').click(function() {
-                        var tanggal = $(this).attr('tanggal');
-                        var waktu = $(this).attr('waktu');                        
+              $(document).ready(function() {
+                $('.isi[tanggal = "<?php echo $date; ?>" ].isi[waktu = "<?php echo $time; ?>"]').click(function() {
+                  var tanggal = $(this).attr('tanggal');
+                  var waktu = $(this).attr('waktu');                        
 
-                        @if($isi2 == 0)
-                         window.location = "{{url('/formWaitingList/')}}/"+tanggal+"/"+waktu;
-                        @else
-                          alert("You have booked this facility");
-                        @endif
-                    });
+                  @if($isi2 == 0)
+                    window.location = "{{url('/formWaitingList/')}}/"+tanggal+"/"+waktu;
+                  @else
+                    alert("You have booked this facility");
+                  @endif
                 });
+              });
               </script>
             @endif
           </td>

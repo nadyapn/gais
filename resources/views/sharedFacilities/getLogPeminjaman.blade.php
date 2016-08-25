@@ -6,7 +6,6 @@
 			<ol class="breadcrumb">
 				<li><a href="{{url('/homepageGAIS')}}">Homepage</a></li>
 				<li><a href="{{url('/dashboardAdmin')}}">Dashboard Admin</a></li>
-				<li><a href="{{url('/dashboardNonAdmin')}}">Shared Facilities History</a></li>
 				<li class="active">Shared Facilities Log</li>
 			</ol>
 			<!-- /.col-lg-6 -->
@@ -37,21 +36,21 @@
 				</thead>
 				<tbody>
 					@foreach($peminjaman as $e)
-						<tr>
-								<td>{{$e->kodePinjam}}</td>
-								<td>{{$e->name}}</td>
-								<td>{{$e->sfname}}</td>
-								<td>
-									@if($e->status == 0)
-								  	Booked
-									@elseif($e->status == 1)
-								  	Waiting List
-								  @elseif($e->status == -1)
-								  	Canceled
-								  @endif
-								</td>
-								<td><a href="{{url('/getDetailAdmin/'.$e->kodePinjam)}}" class="btn btn-view">View</td>
-						</tr>
+					<tr>
+						<td>{{$e->kodePinjam}}</td>
+						<td>{{$e->name}}</td>
+						<td>{{$e->sfname}}</td>
+						<td>
+							@if($e->status == 0)
+							Booked
+							@elseif($e->status == 1)
+							Waiting List
+							@elseif($e->status == -1)
+							Canceled
+							@endif
+						</td>
+						<td><a href="{{url('/getDetailAdminPeminjaman/'.$e->kodePinjam)}}" class="btn btn-view">View</td>
+					</tr>
 					@endforeach
 				</tbody>
 			</table>

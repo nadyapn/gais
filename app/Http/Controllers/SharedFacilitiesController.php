@@ -34,9 +34,9 @@ class SharedFacilitiesController extends Controller
             $in = \Request::all();
             $messages = $validator->errors();
             return \View::make('sharedfacilities/addSF')
-                        ->with(compact('messages'))
-                        ->with(compact('sf'))
-                        ->with(compact('in'));
+                ->with(compact('messages'))
+                ->with(compact('sf'))
+                ->with(compact('in'));
         }
 
         $request->session()->put('sfname', $sfname);
@@ -53,7 +53,10 @@ class SharedFacilitiesController extends Controller
     // return view form peminjaman
     function formPeminjaman($tanggal, $waktu) {
         $salahjam = "";
-        return \View::make('sharedfacilities/formPeminjaman')->with(compact('tanggal'))->with(compact('waktu'))->with(compact('salahjam'));
+        return \View::make('sharedfacilities/formPeminjaman')
+            ->with(compact('tanggal'))
+            ->with(compact('waktu'))
+            ->with(compact('salahjam'));
     }
 
     // post peminjaman
@@ -66,7 +69,18 @@ class SharedFacilitiesController extends Controller
             'description' => 'required',
         ]);
 
-        if ($validator->fails()) {
+        if ($validator->fails() && $endtime <= $waktu) {
+            $in = \Request::all();
+            $messages = $validator->errors();
+            $salahjam = "End time is not valid";
+            return \View::make('sharedfacilities/formPeminjaman')
+                        ->with(compact('messages'))
+                        ->with(compact('tanggal'))
+                        ->with(compact('waktu'))
+                        ->with(compact('salahjam'))
+                        ->with(compact('in'));
+        }
+        else if ($validator->fails()) {
             $in = \Request::all();
             $messages = $validator->errors();
             return \View::make('sharedfacilities/formPeminjaman')
@@ -94,34 +108,26 @@ class SharedFacilitiesController extends Controller
         $facilities_id = $sf = \App\Facilities::where('sfname','=',$value)->value('kode');
 
         // cek database
-        $peminjamansf = DB::table('peminjaman')
-            ->orderBy('created_at','desc')
-            ->first();
+        $peminjamansf = \App\Peminjaman::getFirstTuple();
 
         if ($peminjamansf == "") {
             $peminjaman = new \App\Peminjaman();
             $peminjaman->kodePinjam = "1";
-            $peminjaman->request_date = $mydate;
-            $peminjaman->used_date = date("Y-m-d", strtotime($tanggal));
-            $peminjaman->time_start = $waktu;
-            $peminjaman->time_end = $endtime;
-            $peminjaman->description = $desc;
-            $peminjaman->employee_id = \Auth::user()->id_employee;
-            $peminjaman->facilities_id = $facilities_id;
         }
         else {
             $peminjaman = new \App\Peminjaman();
             $temp = (string) $peminjamansf->kodePinjam;
             $temp2 = intval($temp) + 1;
             $peminjaman->kodePinjam = $temp2;
-            $peminjaman->request_date = $mydate;
-            $peminjaman->used_date = date("Y-m-d", strtotime($tanggal));
-            $peminjaman->time_start = $waktu;
-            $peminjaman->time_end = $endtime;
-            $peminjaman->description = $desc;
-            $peminjaman->employee_id = \Auth::user()->id_employee;
-            $peminjaman->facilities_id = $facilities_id;
         }
+
+        $peminjaman->request_date = $mydate;
+        $peminjaman->used_date = date("Y-m-d", strtotime($tanggal));
+        $peminjaman->time_start = $waktu;
+        $peminjaman->time_end = $endtime;
+        $peminjaman->description = $desc;
+        $peminjaman->employee_id = \Auth::user()->id_employee;
+        $peminjaman->facilities_id = $facilities_id;
 
         if($peminjaman->save()) {
             return \Redirect::to('/dashboardNonAdmin');
@@ -130,20 +136,15 @@ class SharedFacilitiesController extends Controller
 
     // return view form waiting list
     function formWaitingList($tanggal, $waktu) {
-        $isi = \App\Peminjaman::where('used_date', '=', $tanggal)
-                                        ->where('time_start', '<=', $waktu)
-                                        ->where('time_end', '>', $waktu)
-                                        ->where('status',0)
-                                        ->where('employee_id','=',\Auth::user()->id_employee)
-                                        ->count();
-        if($isi > 0) {
-            return ('you have booked this room');
-        }
-
+        $isi = \App\Peminjaman::getPeminjamanByMe($tanggal, $waktu, $value);
         $value = session()->get('sfname', 'default');
         $facilities_id = $sf = \App\Facilities::where('sfname','=',$value)->value('kode');
         $salahjam = "";
         $wl = \App\Peminjaman::getWaitingList($facilities_id);
+
+        if($isi > 0) {
+            return ('You have booked this room');
+        }
         return \View::make('sharedfacilities/formWaitingList')
             ->with(compact('tanggal'))
             ->with(compact('waktu'))
@@ -164,27 +165,36 @@ class SharedFacilitiesController extends Controller
             'description' => 'required',
         ]);
 
-        if ($validator->fails()) {
+        if ($validator->fails() && $endtime <= $waktu) {
             $in = \Request::all();
             $messages = $validator->errors();
-            return \View::make('sharedfacilities/formWaitingList')
+            $salahjam = "End time is not valid";
+            return \View::make('sharedfacilities/formPeminjaman')
                         ->with(compact('messages'))
                         ->with(compact('tanggal'))
                         ->with(compact('waktu'))
-                        ->with(compact('in'))
-                        ->with(compact('wl'));
+                        ->with(compact('salahjam'))
+                        ->with(compact('in'));
+        }
+        else if ($validator->fails()) {
+            $in = \Request::all();
+            $messages = $validator->errors();
+            return \View::make('sharedfacilities/formPeminjaman')
+                        ->with(compact('messages'))
+                        ->with(compact('tanggal'))
+                        ->with(compact('waktu'))
+                        ->with(compact('in'));
         }
         else if ($endtime <= $waktu) {
             $in = \Request::all();
             $messages = $validator->errors();
             $salahjam = "End time is not valid";
-            return \View::make('sharedfacilities/formWaitingList')
+            return \View::make('sharedfacilities/formPeminjaman')
                         ->with(compact('messages'))
                         ->with(compact('tanggal'))
                         ->with(compact('waktu'))
                         ->with(compact('salahjam'))
-                        ->with(compact('in'))
-                        ->with(compact('wl'));
+                        ->with(compact('in'));
         }
 
         date_default_timezone_set("Asia/Jakarta"); 
@@ -194,9 +204,7 @@ class SharedFacilitiesController extends Controller
         $facilities_id = $sf = \App\Facilities::where('sfname','=',$value)->value('kode');
 
         // cek database
-        $peminjamansf = DB::table('peminjaman')
-            ->orderBy('created_at','desc')
-            ->first();
+        $peminjamansf = \App\Peminjaman::getFirstTuple();
 
         $peminjaman = new \App\Peminjaman();
         $temp = (string) $peminjamansf->kodePinjam;
@@ -323,19 +331,17 @@ class SharedFacilitiesController extends Controller
         if ($sf == "") {
             $facility = new \App\Facilities();
             $facility->kode = "1";
-            $facility->description = $description;
-            $facility->sfname = $name;
-            $facility->category = $category;
         }
         else {
             $facility = new \App\Facilities();
             $temp = (string) $sf->kode;
             $temp2 = intval($temp) + 1;
             $facility->kode = $temp2;
-            $facility->description = $description;
-            $facility->sfname = $name;
-            $facility->category = $category;
         }
+
+        $facility->description = $description;
+        $facility->sfname = $name;
+        $facility->category = $category;
 
         if($facility->save()) {
             return \Redirect::to('/deleteFacility');
